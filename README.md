@@ -1,4 +1,4 @@
-# strapi_graphql_auth
+# Flutter Authentication using Strapi, JWT and GraphQL
 
 A new Flutter project.
 
