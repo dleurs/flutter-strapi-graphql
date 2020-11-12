@@ -28,6 +28,9 @@ To launch the project, use
 ```bash
 yarn develop
 ```
+Then, from your browser, you can access :
+- http://localhost:1337/admin
+- http://localhost:1337/graphql
 
 ### Creation of the API 
 
