@@ -1,0 +1,1766 @@
+directive @specifiedBy(url: String!) on SCALAR
+type AdminUser {
+  id: ID!
+  username: String
+  firstname: String!
+  lastname: String!
+}
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
+}
+
+type Category {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  restaurants(sort: String, limit: Int, start: Int, where: JSON): [Restaurant]
+}
+
+type CategoryAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type CategoryConnection {
+  values: [Category]
+  groupBy: CategoryGroupBy
+  aggregate: CategoryAggregator
+}
+
+type CategoryConnectionCreated_at {
+  key: DateTime
+  connection: CategoryConnection
+}
+
+type CategoryConnectionId {
+  key: ID
+  connection: CategoryConnection
+}
+
+type CategoryConnectionName {
+  key: String
+  connection: CategoryConnection
+}
+
+type CategoryConnectionUpdated_at {
+  key: DateTime
+  connection: CategoryConnection
+}
+
+type CategoryGroupBy {
+  id: [CategoryConnectionId]
+  created_at: [CategoryConnectionCreated_at]
+  updated_at: [CategoryConnectionUpdated_at]
+  name: [CategoryConnectionName]
+}
+
+input CategoryInput {
+  name: String
+  restaurants: [ID]
+  previous_: JSON
+  author_: JSON
+  created_by: ID
+  updated_by: ID
+}
+
+type ComponentRestaurantMeta {
+  id: ID!
+  name: String!
+  content: String!
+}
+
+input ComponentRestaurantMetaInput {
+  name: String!
+  content: String!
+}
+
+input ComponentRestaurantOpeningHourInput {
+  day_interval: String!
+  opening_hour: String
+  closing_hour: String
+}
+
+type ComponentRestaurantOpeningHours {
+  id: ID!
+  day_interval: String!
+  opening_hour: String
+  closing_hour: String
+}
+
+type ComponentRestaurantSeo {
+  id: ID!
+  title: String!
+  description: String!
+  meta: [ComponentRestaurantMeta]
+}
+
+input ComponentRestaurantSeoInput {
+  title: String!
+  description: String!
+  meta: [ComponentRestaurantMetaInput]
+}
+
+type ComponentRestaurantSlider {
+  id: ID!
+  title: String
+  image(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+}
+
+input ComponentRestaurantSliderInput {
+  image: [ID]
+  title: String
+}
+
+type ComponentRestaurantText {
+  id: ID!
+  title: String
+  content: String
+}
+
+input ComponentRestaurantTextInput {
+  title: String
+  content: String
+}
+
+input createCategoryInput {
+  data: CategoryInput
+}
+
+type createCategoryPayload {
+  category: Category
+}
+
+input createHistoryInput {
+  data: HistoryInput
+}
+
+type createHistoryPayload {
+  history: History
+}
+
+input createLikeInput {
+  data: LikeInput
+}
+
+type createLikePayload {
+  like: Like
+}
+
+input createRestaurantInput {
+  data: RestaurantInput
+}
+
+type createRestaurantPayload {
+  restaurant: Restaurant
+}
+
+input createReviewInput {
+  data: ReviewInput
+}
+
+type createReviewPayload {
+  review: Review
+}
+
+input createRoleInput {
+  data: RoleInput
+}
+
+type createRolePayload {
+  role: UsersPermissionsRole
+}
+
+input createTodoInput {
+  data: TodoInput
+}
+
+type createTodoPayload {
+  todo: Todos
+}
+
+input createUserInput {
+  data: UserInput
+}
+
+type createUserPayload {
+  user: UsersPermissionsUser
+}
+
+scalar Date
+
+scalar DateTime
+
+input deleteCategoryInput {
+  where: InputID
+}
+
+type deleteCategoryPayload {
+  category: Category
+}
+
+input deleteFileInput {
+  where: InputID
+}
+
+type deleteFilePayload {
+  file: UploadFile
+}
+
+input deleteHistoryInput {
+  where: InputID
+}
+
+type deleteHistoryPayload {
+  history: History
+}
+
+type deleteHomepagePayload {
+  homepage: Homepage
+}
+
+input deleteLikeInput {
+  where: InputID
+}
+
+type deleteLikePayload {
+  like: Like
+}
+
+input deleteRestaurantInput {
+  where: InputID
+}
+
+type deleteRestaurantPayload {
+  restaurant: Restaurant
+}
+
+input deleteReviewInput {
+  where: InputID
+}
+
+type deleteReviewPayload {
+  review: Review
+}
+
+input deleteRoleInput {
+  where: InputID
+}
+
+type deleteRolePayload {
+  role: UsersPermissionsRole
+}
+
+input deleteTodoInput {
+  where: InputID
+}
+
+type deleteTodoPayload {
+  todo: Todos
+}
+
+input deleteUserInput {
+  where: InputID
+}
+
+type deleteUserPayload {
+  user: UsersPermissionsUser
+}
+
+input editCategoryInput {
+  name: String
+  restaurants: [ID]
+  previous_: JSON
+  author_: JSON
+  created_by: ID
+  updated_by: ID
+}
+
+input editComponentRestaurantMetaInput {
+  id: ID
+  name: String
+  content: String
+}
+
+input editComponentRestaurantOpeningHourInput {
+  id: ID
+  day_interval: String
+  opening_hour: String
+  closing_hour: String
+}
+
+input editComponentRestaurantSeoInput {
+  id: ID
+  title: String
+  description: String
+  meta: [editComponentRestaurantMetaInput]
+}
+
+input editComponentRestaurantSliderInput {
+  id: ID
+  image: [ID]
+  title: String
+}
+
+input editComponentRestaurantTextInput {
+  id: ID
+  title: String
+  content: String
+}
+
+input editFileInput {
+  name: String
+  alternativeText: String
+  caption: String
+  width: Int
+  height: Int
+  formats: JSON
+  hash: String
+  ext: String
+  mime: String
+  size: Float
+  url: String
+  previewUrl: String
+  provider: String
+  provider_metadata: JSON
+  related: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editHistoryInput {
+  action: String
+  contenttype: String
+  author: JSON
+  before: JSON
+  after: JSON
+  created_by: ID
+  updated_by: ID
+}
+
+input editHomepageInput {
+  title: String
+  seo: editComponentRestaurantSeoInput
+  body: [HomepageBodyDynamicZoneInput!]
+  created_by: ID
+  updated_by: ID
+}
+
+input editLikeInput {
+  author: ID
+  review: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input editRestaurantInput {
+  cover: [ID]
+  name: String
+  description: String
+  address: String
+  website: String
+  phone: String
+  price: ENUM_RESTAURANT_PRICE
+  district: ENUM_RESTAURANT_DISTRICT
+  publish_at: DateTime
+  reviews: [ID]
+  category: ID
+  opening_hours: [editComponentRestaurantOpeningHourInput]
+  seo: editComponentRestaurantSeoInput
+  previous_: JSON
+  author_: JSON
+  published_at: DateTime
+  created_by: ID
+  updated_by: ID
+}
+
+input editReviewInput {
+  content: String
+  note: Int
+  author: ID
+  likes: [ID]
+  restaurant: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input editRoleInput {
+  name: String
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editTodoInput {
+  name: String
+  published_at: DateTime
+  created_by: ID
+  updated_by: ID
+}
+
+input editUserInput {
+  username: String
+  email: String
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  reviews: [ID]
+  likes: [ID]
+  picture: ID
+  created_by: ID
+  updated_by: ID
+}
+
+enum ENUM_RESTAURANT_DISTRICT {
+  _1st
+  _2nd
+  _3rd
+  _4th
+  _5th
+  _6th
+  _7th
+  _8th
+  _9th
+  _10th
+  _11th
+  _12th
+  _13th
+  _14th
+  _15th
+  _16th
+  _17th
+  _18th
+  _19th
+  _20th
+}
+
+enum ENUM_RESTAURANT_PRICE {
+  _1
+  _2
+  _3
+  _4
+}
+
+input FileInfoInput {
+  name: String
+  alternativeText: String
+  caption: String
+}
+
+input FileInput {
+  name: String!
+  alternativeText: String
+  caption: String
+  width: Int
+  height: Int
+  formats: JSON
+  hash: String!
+  ext: String
+  mime: String!
+  size: Float!
+  url: String!
+  previewUrl: String
+  provider: String!
+  provider_metadata: JSON
+  related: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+type History {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  action: String
+  contenttype: String
+  author: JSON
+  before: JSON
+  after: JSON
+}
+
+type HistoryAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type HistoryConnection {
+  values: [History]
+  groupBy: HistoryGroupBy
+  aggregate: HistoryAggregator
+}
+
+type HistoryConnectionAction {
+  key: String
+  connection: HistoryConnection
+}
+
+type HistoryConnectionAfter {
+  key: JSON
+  connection: HistoryConnection
+}
+
+type HistoryConnectionAuthor {
+  key: JSON
+  connection: HistoryConnection
+}
+
+type HistoryConnectionBefore {
+  key: JSON
+  connection: HistoryConnection
+}
+
+type HistoryConnectionContenttype {
+  key: String
+  connection: HistoryConnection
+}
+
+type HistoryConnectionCreated_at {
+  key: DateTime
+  connection: HistoryConnection
+}
+
+type HistoryConnectionId {
+  key: ID
+  connection: HistoryConnection
+}
+
+type HistoryConnectionUpdated_at {
+  key: DateTime
+  connection: HistoryConnection
+}
+
+type HistoryGroupBy {
+  id: [HistoryConnectionId]
+  created_at: [HistoryConnectionCreated_at]
+  updated_at: [HistoryConnectionUpdated_at]
+  action: [HistoryConnectionAction]
+  contenttype: [HistoryConnectionContenttype]
+  author: [HistoryConnectionAuthor]
+  before: [HistoryConnectionBefore]
+  after: [HistoryConnectionAfter]
+}
+
+input HistoryInput {
+  action: String
+  contenttype: String
+  author: JSON
+  before: JSON
+  after: JSON
+  created_by: ID
+  updated_by: ID
+}
+
+type Homepage {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title: String
+  seo: ComponentRestaurantSeo
+  body: [HomepageBodyDynamicZone]
+}
+
+union HomepageBodyDynamicZone =
+    ComponentRestaurantSlider
+  | ComponentRestaurantText
+scalar HomepageBodyDynamicZoneInput
+
+input HomepageInput {
+  title: String
+  seo: ComponentRestaurantSeoInput!
+  body: [HomepageBodyDynamicZoneInput!]
+  created_by: ID
+  updated_by: ID
+}
+
+input InputID {
+  id: ID!
+}
+
+scalar JSON
+
+type Like {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  author: UsersPermissionsUser
+  review: Review
+}
+
+type LikeAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type LikeConnection {
+  values: [Like]
+  groupBy: LikeGroupBy
+  aggregate: LikeAggregator
+}
+
+type LikeConnectionAuthor {
+  key: ID
+  connection: LikeConnection
+}
+
+type LikeConnectionCreated_at {
+  key: DateTime
+  connection: LikeConnection
+}
+
+type LikeConnectionId {
+  key: ID
+  connection: LikeConnection
+}
+
+type LikeConnectionReview {
+  key: ID
+  connection: LikeConnection
+}
+
+type LikeConnectionUpdated_at {
+  key: DateTime
+  connection: LikeConnection
+}
+
+type LikeGroupBy {
+  id: [LikeConnectionId]
+  created_at: [LikeConnectionCreated_at]
+  updated_at: [LikeConnectionUpdated_at]
+  author: [LikeConnectionAuthor]
+  review: [LikeConnectionReview]
+}
+
+input LikeInput {
+  author: ID
+  review: ID
+  created_by: ID
+  updated_by: ID
+}
+
+scalar Long
+
+union Morph =
+    RestaurantNote
+  | UsersPermissionsMe
+  | UsersPermissionsMeRole
+  | UsersPermissionsLoginPayload
+  | UserPermissionsPasswordPayload
+  | Category
+  | CategoryConnection
+  | CategoryAggregator
+  | CategoryGroupBy
+  | CategoryConnectionId
+  | CategoryConnectionCreated_at
+  | CategoryConnectionUpdated_at
+  | CategoryConnectionName
+  | createCategoryPayload
+  | updateCategoryPayload
+  | deleteCategoryPayload
+  | History
+  | HistoryConnection
+  | HistoryAggregator
+  | HistoryGroupBy
+  | HistoryConnectionId
+  | HistoryConnectionCreated_at
+  | HistoryConnectionUpdated_at
+  | HistoryConnectionAction
+  | HistoryConnectionContenttype
+  | HistoryConnectionAuthor
+  | HistoryConnectionBefore
+  | HistoryConnectionAfter
+  | createHistoryPayload
+  | updateHistoryPayload
+  | deleteHistoryPayload
+  | Homepage
+  | updateHomepagePayload
+  | deleteHomepagePayload
+  | Like
+  | LikeConnection
+  | LikeAggregator
+  | LikeGroupBy
+  | LikeConnectionId
+  | LikeConnectionCreated_at
+  | LikeConnectionUpdated_at
+  | LikeConnectionAuthor
+  | LikeConnectionReview
+  | createLikePayload
+  | updateLikePayload
+  | deleteLikePayload
+  | Restaurant
+  | RestaurantConnection
+  | RestaurantAggregator
+  | RestaurantGroupBy
+  | RestaurantConnectionId
+  | RestaurantConnectionCreated_at
+  | RestaurantConnectionUpdated_at
+  | RestaurantConnectionName
+  | RestaurantConnectionDescription
+  | RestaurantConnectionAddress
+  | RestaurantConnectionWebsite
+  | RestaurantConnectionPhone
+  | RestaurantConnectionPrice
+  | RestaurantConnectionDistrict
+  | RestaurantConnectionPublish_at
+  | RestaurantConnectionCategory
+  | RestaurantConnectionSeo
+  | RestaurantConnectionPublished_at
+  | createRestaurantPayload
+  | updateRestaurantPayload
+  | deleteRestaurantPayload
+  | Review
+  | ReviewConnection
+  | ReviewAggregator
+  | ReviewAggregatorSum
+  | ReviewAggregatorAvg
+  | ReviewAggregatorMin
+  | ReviewAggregatorMax
+  | ReviewGroupBy
+  | ReviewConnectionId
+  | ReviewConnectionCreated_at
+  | ReviewConnectionUpdated_at
+  | ReviewConnectionContent
+  | ReviewConnectionNote
+  | ReviewConnectionAuthor
+  | ReviewConnectionRestaurant
+  | createReviewPayload
+  | updateReviewPayload
+  | deleteReviewPayload
+  | Todos
+  | TodosConnection
+  | TodosAggregator
+  | TodosGroupBy
+  | TodosConnectionId
+  | TodosConnectionCreated_at
+  | TodosConnectionUpdated_at
+  | TodosConnectionName
+  | TodosConnectionPublished_at
+  | createTodoPayload
+  | updateTodoPayload
+  | deleteTodoPayload
+  | UploadFile
+  | UploadFileConnection
+  | UploadFileAggregator
+  | UploadFileAggregatorSum
+  | UploadFileAggregatorAvg
+  | UploadFileAggregatorMin
+  | UploadFileAggregatorMax
+  | UploadFileGroupBy
+  | UploadFileConnectionId
+  | UploadFileConnectionCreated_at
+  | UploadFileConnectionUpdated_at
+  | UploadFileConnectionName
+  | UploadFileConnectionAlternativeText
+  | UploadFileConnectionCaption
+  | UploadFileConnectionWidth
+  | UploadFileConnectionHeight
+  | UploadFileConnectionFormats
+  | UploadFileConnectionHash
+  | UploadFileConnectionExt
+  | UploadFileConnectionMime
+  | UploadFileConnectionSize
+  | UploadFileConnectionUrl
+  | UploadFileConnectionPreviewUrl
+  | UploadFileConnectionProvider
+  | UploadFileConnectionProvider_metadata
+  | deleteFilePayload
+  | UsersPermissionsPermission
+  | UsersPermissionsRole
+  | UsersPermissionsRoleConnection
+  | UsersPermissionsRoleAggregator
+  | UsersPermissionsRoleGroupBy
+  | UsersPermissionsRoleConnectionId
+  | UsersPermissionsRoleConnectionName
+  | UsersPermissionsRoleConnectionDescription
+  | UsersPermissionsRoleConnectionType
+  | createRolePayload
+  | updateRolePayload
+  | deleteRolePayload
+  | UsersPermissionsUser
+  | UsersPermissionsUserConnection
+  | UsersPermissionsUserAggregator
+  | UsersPermissionsUserGroupBy
+  | UsersPermissionsUserConnectionId
+  | UsersPermissionsUserConnectionCreated_at
+  | UsersPermissionsUserConnectionUpdated_at
+  | UsersPermissionsUserConnectionUsername
+  | UsersPermissionsUserConnectionEmail
+  | UsersPermissionsUserConnectionProvider
+  | UsersPermissionsUserConnectionConfirmed
+  | UsersPermissionsUserConnectionBlocked
+  | UsersPermissionsUserConnectionRole
+  | UsersPermissionsUserConnectionPicture
+  | createUserPayload
+  | updateUserPayload
+  | deleteUserPayload
+  | ComponentRestaurantMeta
+  | ComponentRestaurantOpeningHours
+  | ComponentRestaurantSeo
+  | ComponentRestaurantSlider
+  | ComponentRestaurantText
+type Mutation {
+  createCategory(input: createCategoryInput): createCategoryPayload
+  updateCategory(input: updateCategoryInput): updateCategoryPayload
+  deleteCategory(input: deleteCategoryInput): deleteCategoryPayload
+  createHistory(input: createHistoryInput): createHistoryPayload
+  updateHistory(input: updateHistoryInput): updateHistoryPayload
+  deleteHistory(input: deleteHistoryInput): deleteHistoryPayload
+  updateHomepage(input: updateHomepageInput): updateHomepagePayload
+  deleteHomepage: deleteHomepagePayload
+  createLike(input: createLikeInput): createLikePayload
+  updateLike(input: updateLikeInput): updateLikePayload
+  deleteLike(input: deleteLikeInput): deleteLikePayload
+  createRestaurant(input: createRestaurantInput): createRestaurantPayload
+  updateRestaurant(input: updateRestaurantInput): updateRestaurantPayload
+  deleteRestaurant(input: deleteRestaurantInput): deleteRestaurantPayload
+  createReview(input: createReviewInput): createReviewPayload
+  updateReview(input: updateReviewInput): updateReviewPayload
+  deleteReview(input: deleteReviewInput): deleteReviewPayload
+  createTodo(input: createTodoInput): createTodoPayload
+  updateTodo(input: updateTodoInput): updateTodoPayload
+  deleteTodo(input: deleteTodoInput): deleteTodoPayload
+  deleteFile(input: deleteFileInput): deleteFilePayload
+  createRole(input: createRoleInput): createRolePayload
+  updateRole(input: updateRoleInput): updateRolePayload
+  deleteRole(input: deleteRoleInput): deleteRolePayload
+  createUser(input: createUserInput): createUserPayload
+  updateUser(input: updateUserInput): updateUserPayload
+  deleteUser(input: deleteUserInput): deleteUserPayload
+  upload(
+    refId: ID
+    ref: String
+    field: String
+    source: String
+    file: Upload!
+  ): UploadFile!
+  multipleUpload(
+    refId: ID
+    ref: String
+    field: String
+    source: String
+    files: [Upload]!
+  ): [UploadFile]!
+  updateFileInfo(id: ID!, info: FileInfoInput!): UploadFile!
+  login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
+  register(input: UsersPermissionsRegisterInput!): UsersPermissionsLoginPayload!
+  forgotPassword(email: String!): UserPermissionsPasswordPayload
+  resetPassword(
+    password: String!
+    passwordConfirmation: String!
+    code: String!
+  ): UsersPermissionsLoginPayload
+  emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
+}
+
+enum PublicationState {
+  LIVE
+  PREVIEW
+}
+
+type Query {
+  category(id: ID!, publicationState: PublicationState): Category
+  categories(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [Category]
+  categoriesConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): CategoryConnection
+  history(id: ID!, publicationState: PublicationState): History
+  histories(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [History]
+  historiesConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): HistoryConnection
+  homepage(publicationState: PublicationState): Homepage
+  like(id: ID!, publicationState: PublicationState): Like
+  likes(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [Like]
+  likesConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): LikeConnection
+  restaurant(id: ID!, publicationState: PublicationState): Restaurant
+  restaurants(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [Restaurant]
+  restaurantsConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): RestaurantConnection
+  review(id: ID!, publicationState: PublicationState): Review
+  reviews(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [Review]
+  reviewsConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): ReviewConnection
+  todo(id: ID!, publicationState: PublicationState): Todos
+  todos(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [Todos]
+  todosConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): TodosConnection
+  files(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [UploadFile]
+  filesConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): UploadFileConnection
+  role(id: ID!, publicationState: PublicationState): UsersPermissionsRole
+  roles(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [UsersPermissionsRole]
+  rolesConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): UsersPermissionsRoleConnection
+  user(id: ID!, publicationState: PublicationState): UsersPermissionsUser
+  users(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+    publicationState: PublicationState
+  ): [UsersPermissionsUser]
+  usersConnection(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): UsersPermissionsUserConnection
+  me: UsersPermissionsMe
+}
+
+type Restaurant {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  description: String
+  address: String
+  website: String
+  phone: String
+  price: ENUM_RESTAURANT_PRICE
+  district: ENUM_RESTAURANT_DISTRICT
+  publish_at: DateTime
+  category: Category
+  opening_hours: [ComponentRestaurantOpeningHours]
+  seo: ComponentRestaurantSeo
+  published_at: DateTime
+  cover(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  reviews(sort: String, limit: Int, start: Int, where: JSON): [Review]
+  note: Float
+  noteDetails: [RestaurantNote!]!
+}
+
+type RestaurantAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type RestaurantConnection {
+  values: [Restaurant]
+  groupBy: RestaurantGroupBy
+  aggregate: RestaurantAggregator
+}
+
+type RestaurantConnectionAddress {
+  key: String
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionCategory {
+  key: ID
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionCreated_at {
+  key: DateTime
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionDescription {
+  key: String
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionDistrict {
+  key: String
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionId {
+  key: ID
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionName {
+  key: String
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionPhone {
+  key: String
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionPrice {
+  key: String
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionPublish_at {
+  key: DateTime
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionPublished_at {
+  key: DateTime
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionSeo {
+  key: ID
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionUpdated_at {
+  key: DateTime
+  connection: RestaurantConnection
+}
+
+type RestaurantConnectionWebsite {
+  key: String
+  connection: RestaurantConnection
+}
+
+type RestaurantGroupBy {
+  id: [RestaurantConnectionId]
+  created_at: [RestaurantConnectionCreated_at]
+  updated_at: [RestaurantConnectionUpdated_at]
+  name: [RestaurantConnectionName]
+  description: [RestaurantConnectionDescription]
+  address: [RestaurantConnectionAddress]
+  website: [RestaurantConnectionWebsite]
+  phone: [RestaurantConnectionPhone]
+  price: [RestaurantConnectionPrice]
+  district: [RestaurantConnectionDistrict]
+  publish_at: [RestaurantConnectionPublish_at]
+  category: [RestaurantConnectionCategory]
+  seo: [RestaurantConnectionSeo]
+  published_at: [RestaurantConnectionPublished_at]
+}
+
+input RestaurantInput {
+  cover: [ID]
+  name: String
+  description: String
+  address: String
+  website: String
+  phone: String
+  price: ENUM_RESTAURANT_PRICE
+  district: ENUM_RESTAURANT_DISTRICT
+  publish_at: DateTime
+  reviews: [ID]
+  category: ID
+  opening_hours: [ComponentRestaurantOpeningHourInput!]
+  seo: ComponentRestaurantSeoInput
+  previous_: JSON
+  author_: JSON
+  published_at: DateTime
+  created_by: ID
+  updated_by: ID
+}
+
+type RestaurantNote {
+  note: Int
+  count: Int
+}
+
+type Review {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  content: String
+  note: Int
+  author: UsersPermissionsUser
+  restaurant: Restaurant
+  likes(sort: String, limit: Int, start: Int, where: JSON): [Like]
+}
+
+type ReviewAggregator {
+  count: Int
+  totalCount: Int
+  sum: ReviewAggregatorSum
+  avg: ReviewAggregatorAvg
+  min: ReviewAggregatorMin
+  max: ReviewAggregatorMax
+}
+
+type ReviewAggregatorAvg {
+  note: Float
+}
+
+type ReviewAggregatorMax {
+  note: Float
+}
+
+type ReviewAggregatorMin {
+  note: Float
+}
+
+type ReviewAggregatorSum {
+  note: Float
+}
+
+type ReviewConnection {
+  values: [Review]
+  groupBy: ReviewGroupBy
+  aggregate: ReviewAggregator
+}
+
+type ReviewConnectionAuthor {
+  key: ID
+  connection: ReviewConnection
+}
+
+type ReviewConnectionContent {
+  key: String
+  connection: ReviewConnection
+}
+
+type ReviewConnectionCreated_at {
+  key: DateTime
+  connection: ReviewConnection
+}
+
+type ReviewConnectionId {
+  key: ID
+  connection: ReviewConnection
+}
+
+type ReviewConnectionNote {
+  key: Int
+  connection: ReviewConnection
+}
+
+type ReviewConnectionRestaurant {
+  key: ID
+  connection: ReviewConnection
+}
+
+type ReviewConnectionUpdated_at {
+  key: DateTime
+  connection: ReviewConnection
+}
+
+type ReviewGroupBy {
+  id: [ReviewConnectionId]
+  created_at: [ReviewConnectionCreated_at]
+  updated_at: [ReviewConnectionUpdated_at]
+  content: [ReviewConnectionContent]
+  note: [ReviewConnectionNote]
+  author: [ReviewConnectionAuthor]
+  restaurant: [ReviewConnectionRestaurant]
+}
+
+input ReviewInput {
+  content: String
+  note: Int
+  author: ID
+  likes: [ID]
+  restaurant: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+scalar Time
+
+input TodoInput {
+  name: String
+  published_at: DateTime
+  created_by: ID
+  updated_by: ID
+}
+
+type Todos {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  published_at: DateTime
+}
+
+type TodosAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type TodosConnection {
+  values: [Todos]
+  groupBy: TodosGroupBy
+  aggregate: TodosAggregator
+}
+
+type TodosConnectionCreated_at {
+  key: DateTime
+  connection: TodosConnection
+}
+
+type TodosConnectionId {
+  key: ID
+  connection: TodosConnection
+}
+
+type TodosConnectionName {
+  key: String
+  connection: TodosConnection
+}
+
+type TodosConnectionPublished_at {
+  key: DateTime
+  connection: TodosConnection
+}
+
+type TodosConnectionUpdated_at {
+  key: DateTime
+  connection: TodosConnection
+}
+
+type TodosGroupBy {
+  id: [TodosConnectionId]
+  created_at: [TodosConnectionCreated_at]
+  updated_at: [TodosConnectionUpdated_at]
+  name: [TodosConnectionName]
+  published_at: [TodosConnectionPublished_at]
+}
+
+input updateCategoryInput {
+  where: InputID
+  data: editCategoryInput
+}
+
+type updateCategoryPayload {
+  category: Category
+}
+
+input updateHistoryInput {
+  where: InputID
+  data: editHistoryInput
+}
+
+type updateHistoryPayload {
+  history: History
+}
+
+input updateHomepageInput {
+  data: editHomepageInput
+}
+
+type updateHomepagePayload {
+  homepage: Homepage
+}
+
+input updateLikeInput {
+  where: InputID
+  data: editLikeInput
+}
+
+type updateLikePayload {
+  like: Like
+}
+
+input updateRestaurantInput {
+  where: InputID
+  data: editRestaurantInput
+}
+
+type updateRestaurantPayload {
+  restaurant: Restaurant
+}
+
+input updateReviewInput {
+  where: InputID
+  data: editReviewInput
+}
+
+type updateReviewPayload {
+  review: Review
+}
+
+input updateRoleInput {
+  where: InputID
+  data: editRoleInput
+}
+
+type updateRolePayload {
+  role: UsersPermissionsRole
+}
+
+input updateTodoInput {
+  where: InputID
+  data: editTodoInput
+}
+
+type updateTodoPayload {
+  todo: Todos
+}
+
+input updateUserInput {
+  where: InputID
+  data: editUserInput
+}
+
+type updateUserPayload {
+  user: UsersPermissionsUser
+}
+
+scalar Upload
+
+type UploadFile {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String!
+  alternativeText: String
+  caption: String
+  width: Int
+  height: Int
+  formats: JSON
+  hash: String!
+  ext: String
+  mime: String!
+  size: Float!
+  url: String!
+  previewUrl: String
+  provider: String!
+  provider_metadata: JSON
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
+}
+
+type UploadFileAggregator {
+  count: Int
+  totalCount: Int
+  sum: UploadFileAggregatorSum
+  avg: UploadFileAggregatorAvg
+  min: UploadFileAggregatorMin
+  max: UploadFileAggregatorMax
+}
+
+type UploadFileAggregatorAvg {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileAggregatorMax {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileAggregatorMin {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileAggregatorSum {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileConnection {
+  values: [UploadFile]
+  groupBy: UploadFileGroupBy
+  aggregate: UploadFileAggregator
+}
+
+type UploadFileConnectionAlternativeText {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCaption {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCreated_at {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionExt {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionFormats {
+  key: JSON
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionHash {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionHeight {
+  key: Int
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionId {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionMime {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionName {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionPreviewUrl {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionProvider {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionProvider_metadata {
+  key: JSON
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSize {
+  key: Float
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUpdated_at {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUrl {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionWidth {
+  key: Int
+  connection: UploadFileConnection
+}
+
+type UploadFileGroupBy {
+  id: [UploadFileConnectionId]
+  created_at: [UploadFileConnectionCreated_at]
+  updated_at: [UploadFileConnectionUpdated_at]
+  name: [UploadFileConnectionName]
+  alternativeText: [UploadFileConnectionAlternativeText]
+  caption: [UploadFileConnectionCaption]
+  width: [UploadFileConnectionWidth]
+  height: [UploadFileConnectionHeight]
+  formats: [UploadFileConnectionFormats]
+  hash: [UploadFileConnectionHash]
+  ext: [UploadFileConnectionExt]
+  mime: [UploadFileConnectionMime]
+  size: [UploadFileConnectionSize]
+  url: [UploadFileConnectionUrl]
+  previewUrl: [UploadFileConnectionPreviewUrl]
+  provider: [UploadFileConnectionProvider]
+  provider_metadata: [UploadFileConnectionProvider_metadata]
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  reviews: [ID]
+  likes: [ID]
+  picture: ID
+  created_by: ID
+  updated_by: ID
+}
+
+type UserPermissionsPasswordPayload {
+  ok: Boolean!
+}
+
+input UsersPermissionsLoginInput {
+  identifier: String!
+  password: String!
+  provider: String = "local"
+}
+
+type UsersPermissionsLoginPayload {
+  jwt: String
+  user: UsersPermissionsMe!
+}
+
+type UsersPermissionsMe {
+  id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+}
+
+type UsersPermissionsPermission {
+  id: ID!
+  type: String!
+  controller: String!
+  action: String!
+  enabled: Boolean!
+  policy: String
+  role: UsersPermissionsRole
+}
+
+input UsersPermissionsRegisterInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+type UsersPermissionsRole {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  permissions(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): [UsersPermissionsPermission]
+  users(
+    sort: String
+    limit: Int
+    start: Int
+    where: JSON
+  ): [UsersPermissionsUser]
+}
+
+type UsersPermissionsRoleAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type UsersPermissionsRoleConnection {
+  values: [UsersPermissionsRole]
+  groupBy: UsersPermissionsRoleGroupBy
+  aggregate: UsersPermissionsRoleAggregator
+}
+
+type UsersPermissionsRoleConnectionDescription {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionId {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionName {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionType {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleGroupBy {
+  id: [UsersPermissionsRoleConnectionId]
+  name: [UsersPermissionsRoleConnectionName]
+  description: [UsersPermissionsRoleConnectionDescription]
+  type: [UsersPermissionsRoleConnectionType]
+}
+
+type UsersPermissionsUser {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsRole
+  picture: UploadFile
+  reviews(sort: String, limit: Int, start: Int, where: JSON): [Review]
+  likes(sort: String, limit: Int, start: Int, where: JSON): [Like]
+}
+
+type UsersPermissionsUserAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type UsersPermissionsUserConnection {
+  values: [UsersPermissionsUser]
+  groupBy: UsersPermissionsUserGroupBy
+  aggregate: UsersPermissionsUserAggregator
+}
+
+type UsersPermissionsUserConnectionBlocked {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionConfirmed {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionCreated_at {
+  key: DateTime
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionEmail {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionId {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionPicture {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionProvider {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionRole {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUpdated_at {
+  key: DateTime
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUsername {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserGroupBy {
+  id: [UsersPermissionsUserConnectionId]
+  created_at: [UsersPermissionsUserConnectionCreated_at]
+  updated_at: [UsersPermissionsUserConnectionUpdated_at]
+  username: [UsersPermissionsUserConnectionUsername]
+  email: [UsersPermissionsUserConnectionEmail]
+  provider: [UsersPermissionsUserConnectionProvider]
+  confirmed: [UsersPermissionsUserConnectionConfirmed]
+  blocked: [UsersPermissionsUserConnectionBlocked]
+  role: [UsersPermissionsUserConnectionRole]
+  picture: [UsersPermissionsUserConnectionPicture]
+}
+

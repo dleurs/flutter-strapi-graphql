@@ -1,0 +1,33 @@
+# To execute : flutter pub run build_runner build
+# Read about `build.yaml` at https://pub.dartlang.org/packages/build_config
+
+targets:
+  $default:
+    sources:
+      - lib/**
+      - schema*.graphql
+    builders:
+      artemis:
+        options:
+          schema_mapping:
+            #- output: lib/generated/graphql/authentication_api.graphql.dart
+            #  schema: lib/graphql/authentication/schema_auth.graphql
+            #  queries_glob: lib/graphql/authentication/queries/*.graphql
+            - output: lib/generated/graphql/todo_api.graphql.dart
+              schema: lib/graphql/schema.graphql
+              queries_glob: lib/graphql/todos/queries/*.graphql
+          scalar_mapping:
+            - graphql_type: UUID
+              dart_type: String
+            - graphql_type: URL
+              dart_type: String
+            - graphql_type: Language
+              dart_type: String
+            - graphql_type: EmailAddress
+              dart_type: String
+            - graphql_type: UInt
+              dart_type: Int
+            #- custom_parser_import: 'package:flutter-starter/graphql/custom_parser.dart'
+            #  graphql_type: Date
+            #  dart_type: DateTime
+      json_serializable:

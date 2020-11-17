@@ -1,0 +1,6 @@
+query getTodos {
+  todos {
+    id
+    name
+  }
+}
