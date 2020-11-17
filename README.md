@@ -1,6 +1,31 @@
 # Flutter Strapi
 
-## GraphQL on Flutter
+Link Flutter and Strapi locally 
+
+![](/assets/phone.dart)
+
+![](/assets/bash-strapi.dart)
+
+Strapi locally<a href="https://stackoverflow.com/questions/60001536/flutter-socketexception-socketexception-os-error-connection-refused-errno"> does not work with Flutter Android</a> but works with Flutter iOS.
+
+To run strapi locally :
+```bash
+cd backend-strapi;
+yarn develop;
+```
+You can also setup an online demo of strapi <a href="https://strapi.io/demo">here</a>. Instructions to setup this live demo below.
+
+
+To run flutter : 
+```bash
+cd frontend;
+flutter run; # or F5 in vscode
+```
+
+
+
+
+# GraphQL on Flutter
 https://medium.com/better-programming/how-to-use-graphql-in-flutter-7decd04a511f
 
 https://github.com/zino-app/graphql-flutter
@@ -15,12 +40,12 @@ VSCode :<br/>
 - Prisma
 - GraphQL
 
-## Tutorial
+# Tutorial
 
 https://www.youtube.com/watch?v=M7PvukaN6PM<br/>
 https://github.com/itsmaheshkariya/flutter-strapi-crud
 
-## Backend Strapi 
+# Backend Strapi 
 
 A quick description of your strapi application
 
