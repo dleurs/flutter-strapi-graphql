@@ -2,9 +2,9 @@
 
 Link Flutter and Strapi locally 
 
-![](/assets/phone.dart)
+![](/assets/phone.png)
 
-![](/assets/bash-strapi.dart)
+![](/assets/bash-strapi.png)
 
 Strapi locally<a href="https://stackoverflow.com/questions/60001536/flutter-socketexception-socketexception-os-error-connection-refused-errno"> does not work with Flutter Android</a> but works with Flutter iOS.
 
