@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/models/route_config.dart';
+import 'package:frontend/src/resource/login_repository.dart';
 import 'package:frontend/src/ui/screen/home_screen.dart';
 import 'package:frontend/src/ui/screen/login_screen.dart';
+
+import 'bloc/authentication/authentication_bloc.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      onGenerateRoute: _generateRoute,
-    );
+    return BlocProvider<AuthenticationBloc>(
+        create: (context) => AuthenticationBloc(LoginRepository()),
+        child: MaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          onGenerateRoute: _generateRoute,
+        ));
   }
 
   Route<dynamic> _generateRoute(RouteSettings settings) {

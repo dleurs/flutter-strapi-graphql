@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/src/bloc/authentication/authentication_bloc.dart';
+import 'package:frontend/src/bloc/authentication/authentication_event.dart';
+import 'package:frontend/src/bloc/authentication/authentication_state.dart';
 import 'package:frontend/src/helpers/log.dart';
 
 abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
@@ -51,13 +55,21 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
   Widget build(BuildContext context) {
     Log.debug(
         "ScreenLifecycle: ${this.widget.toStringShort()}: build ${this.toString()}");
-    return Scaffold(
-      backgroundColor: this.backgroundColor,
-      appBar: this.buildAppBar(context),
-      body: this.buildScreen(context),
-      bottomNavigationBar: this.buildBottomNavigationBar(context),
-      floatingActionButton: this.buildFloatingActionButton(context),
-    );
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state is LoggedOut) {
+            this.onLoggedOut();
+          } else if (state is AuthenticationSuccess) {
+            this.onLoggedIn();
+          }
+        },
+        child: Scaffold(
+          backgroundColor: this.backgroundColor,
+          appBar: this.buildAppBar(context),
+          body: this.buildScreen(context),
+          bottomNavigationBar: this.buildBottomNavigationBar(context),
+          floatingActionButton: this.buildFloatingActionButton(context),
+        ));
   }
 
   Widget buildScreen(BuildContext context);
@@ -97,8 +109,8 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
   /// Sends a log in event
   ///
   void doLogin(String login, String password) {
-    //BlocProvider.of<AuthenticationBloc>(context)
-    //   .add(LoginEvent(login, password));
+    BlocProvider.of<AuthenticationBloc>(context)
+        .add(LoginEvent(login, password));
   }
 
   ///
