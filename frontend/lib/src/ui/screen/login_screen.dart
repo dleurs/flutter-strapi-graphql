@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/src/helpers/log.dart';
+import 'package:frontend/src/helpers/toList.dart';
 import 'dart:io';
 import 'package:frontend/src/helpers/validator.dart';
 import 'package:frontend/src/models/todo.dart';
@@ -26,18 +27,30 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
 
   bool _showPasswordEyeIcon = false;
   bool _showSearchingEmailIcon = false;
+  bool _showSpinningCircleStartSearchingEmail = false;
 
-  bool _showLogin = false;
-  bool _startSearchingEmail = false;
+  bool _showLoginForm = false;
+  bool _showSignUpForm = false;
+
   Timer _waitingToStartSearchingMail;
 
   void _startTimer() {
     // https://stackoverflow.com/questions/17552757/is-there-any-way-to-cancel-a-dart-future
     setState(() {
-      _waitingToStartSearchingMail = Timer(Duration(seconds: 2), () {
+      _waitingToStartSearchingMail = Timer(Duration(milliseconds: 500), () {
         setState(() {
           Log.debug("BEGIN searching");
-          _startSearchingEmail = true;
+          _showSpinningCircleStartSearchingEmail = true;
+          setState(() {
+            _waitingToStartSearchingMail =
+                Timer(Duration(milliseconds: 3000), () {
+              setState(() {
+                Log.debug("END searching");
+                _showSpinningCircleStartSearchingEmail = false;
+                _showLoginForm = true;
+              });
+            });
+          });
         });
       });
     });
@@ -59,9 +72,11 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
             ? IconButton(
                 icon: Icon(Icons.person_search),
                 onPressed: () {
-                  setState(() {
-                    _startSearchingEmail = true;
-                  });
+                  if (!_showSpinningCircleStartSearchingEmail) {
+                    setState(() {
+                      _showSpinningCircleStartSearchingEmail = true;
+                    });
+                  }
                 },
               )
             : SizedBox(),
@@ -70,7 +85,8 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
       onChanged: (String email) {
-        _startSearchingEmail = false;
+        _showSpinningCircleStartSearchingEmail = false;
+        _showLoginForm = false;
         if (_waitingToStartSearchingMail != null) {
           _waitingToStartSearchingMail.cancel();
         }
@@ -89,7 +105,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
 
     final password = TextFormField(
       autofocus: false,
-      obscureText: !_showLogin,
+      obscureText: !_showLoginForm,
       controller: _password,
       validator: Validator.validatePassword,
       onChanged: (String password) {
@@ -114,7 +130,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                 icon: Icon(Icons.remove_red_eye_outlined),
                 onPressed: () {
                   setState(() {
-                    _showLogin = !_showLogin;
+                    _showLoginForm = !_showLoginForm;
                   });
                 },
               )
@@ -130,46 +146,71 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
       Form(
           key: _emailFormKey,
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                //crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(height: 24.0),
-                  email,
-                  SizedBox(height: 24.0),
-                  _startSearchingEmail
-                      ? SpinKitCircle(
-                          color: Theme.of(context).accentColor,
-                          size: 70.0,
-                        )
-                      : SizedBox(),
-                  SizedBox(height: 24.0),
-                  password,
-                  SizedBox(height: 24.0),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Validate returns true if the form is valid, otherwise false.
-                      if (_emailFormKey.currentState.validate()) {
-                        // If the form is valid, display a snackbar. In the real world,
-                        // you'd often call a server or save the information in a database.
-
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('Processing Data')));
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: toList(
+                    () sync* {
+                      yield SizedBox(height: 24.0);
+                      if (!_showLoginForm && !_showLoginForm)
+                        yield Text(
+                          "Enter your email address",
+                          style: Theme.of(context).textTheme.headline6,
+                        );
+                      else if (_showLoginForm) {
+                        yield Text(
+                          "Email found. Please login",
+                          style: Theme.of(context).textTheme.headline6,
+                        );
+                      } else {
+                        yield Text(
+                          "Email not found. Please sign up",
+                          style: Theme.of(context).textTheme.headline6,
+                        );
                       }
+                      yield SizedBox(height: 24.0);
+                      yield email;
+                      if (_showSpinningCircleStartSearchingEmail)
+                        yield* [
+                          SizedBox(height: 24.0),
+                          SpinKitCircle(
+                            color: Theme.of(context).accentColor,
+                            size: 70.0,
+                          )
+                        ];
+
+                      if (_showLoginForm)
+                        yield* [
+                          SizedBox(height: 24.0),
+                          password,
+                          SizedBox(height: 24.0),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Validate returns true if the form is valid, otherwise false.
+                              if (_emailFormKey.currentState.validate()) {
+                                // If the form is valid, display a snackbar. In the real world,
+                                // you'd often call a server or save the information in a database.
+
+                                Scaffold.of(context).showSnackBar(
+                                    SnackBar(content: Text('Processing Data')));
+                              }
+                            },
+                            child: Text(
+                              'Enter',
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .headline5
+                                      .fontSize),
+                            ),
+                          )
+                        ];
                     },
-                    child: Text(
-                      'Enter',
-                      style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.headline5.fontSize),
-                    ),
                   ),
-                ],
-              ),
-            ),
-          ))
+                ),
+              )))
     ]);
     /* Column(
       children: <Widget>[
