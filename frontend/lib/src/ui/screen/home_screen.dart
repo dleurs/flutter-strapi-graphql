@@ -27,32 +27,35 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
   }
 
   @override
+  PreferredSizeWidget buildAppBar(BuildContext context) {
+    return AppBar(title: Text('Home Screen'), actions: <Widget>[
+      IconButton(icon: Icon(Icons.power_settings_new), onPressed: this.doLogout)
+    ]);
+  }
+
+  @override
   Widget buildScreen(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: BlocBuilder<TodosBloc, TodosState>(
-          cubit: _bloc,
-          builder: (context, state) {
-            Log.debug("TodosBloc: state is $state");
-            if (state is GetTodosLoading) {
-              return Text("Loading");
-            }
-            if (state is GetTodosSuccess) {
-              return ListView.builder(
-                itemCount: state.todos.length,
-                itemBuilder: (_, index) {
-                  return ListTile(
-                    leading: Icon(Icons.card_travel),
-                    title: Text(state.todos[index].name),
-                    subtitle: Text(state.todos[index].id.toString()),
-                  );
-                },
+    return BlocBuilder<TodosBloc, TodosState>(
+      cubit: _bloc,
+      builder: (context, state) {
+        Log.debug("TodosBloc: state is $state");
+        if (state is GetTodosLoading) {
+          return Text("Loading");
+        }
+        if (state is GetTodosSuccess) {
+          return ListView.builder(
+            itemCount: state.todos.length,
+            itemBuilder: (_, index) {
+              return ListTile(
+                leading: Icon(Icons.card_travel),
+                title: Text(state.todos[index].name),
+                subtitle: Text(state.todos[index].id.toString()),
               );
-            }
-            return Text("Error");
-          },
-        ));
+            },
+          );
+        }
+        return Text("Error");
+      },
+    );
   }
 }

@@ -4,6 +4,7 @@ import 'package:frontend/src/bloc/authentication/authentication_bloc.dart';
 import 'package:frontend/src/bloc/authentication/authentication_event.dart';
 import 'package:frontend/src/bloc/authentication/authentication_state.dart';
 import 'package:frontend/src/helpers/log.dart';
+import 'package:frontend/src/models/route_config.dart';
 
 abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
   @protected
@@ -64,7 +65,7 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
           }
         },
         child: Scaffold(
-          backgroundColor: this.backgroundColor,
+          //backgroundColor: this.backgroundColor,
           appBar: this.buildAppBar(context),
           body: this.buildScreen(context),
           bottomNavigationBar: this.buildBottomNavigationBar(context),
@@ -117,7 +118,7 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
   /// Sends a logout event
   ///
   void doLogout() {
-    //BlocProvider.of<AuthenticationBloc>(context).add(LogoutEvent());
+    BlocProvider.of<AuthenticationBloc>(context).add(LogoutEvent());
   }
 
   ///
@@ -127,7 +128,7 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
   /// once a user has been logged out
   ///
   void onLoggedOut() {
-    //Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (r) => false);
+    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.login, (r) => false);
   }
 
   ///
