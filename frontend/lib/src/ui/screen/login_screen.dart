@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'dart:io';
 import 'package:frontend/src/helpers/validator.dart';
+import 'package:frontend/src/models/todo.dart';
 import 'package:frontend/src/ui/screen/base_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,10 +24,24 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
 
-  bool _showPassword = false;
-  bool _showSeePasswordIcon = false;
+  bool _showPasswordEyeIcon = false;
   bool _showSearchingEmailIcon = false;
+
+  bool _showLogin = false;
   bool _startSearchingEmail = false;
+  Timer _waitingToStartSearchingMail;
+
+  void _startTimer() {
+    // https://stackoverflow.com/questions/17552757/is-there-any-way-to-cancel-a-dart-future
+    setState(() {
+      _waitingToStartSearchingMail = Timer(Duration(seconds: 2), () {
+        setState(() {
+          Log.debug("BEGIN searching");
+          _startSearchingEmail = true;
+        });
+      });
+    });
+  }
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -53,11 +69,15 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
-      onChanged: (String email) async {
+      onChanged: (String email) {
         _startSearchingEmail = false;
+        if (_waitingToStartSearchingMail != null) {
+          _waitingToStartSearchingMail.cancel();
+        }
         if (Validator.validateEmail(_email.text) == null) {
-          setState(() {
+          setState(() async {
             _showSearchingEmailIcon = true;
+            _startTimer();
           });
         } else {
           setState(() {
@@ -69,17 +89,17 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
 
     final password = TextFormField(
       autofocus: false,
-      obscureText: !_showPassword,
+      obscureText: !_showLogin,
       controller: _password,
       validator: Validator.validatePassword,
       onChanged: (String password) {
         if (password.isNotEmpty ?? false) {
           setState(() {
-            _showSeePasswordIcon = true;
+            _showPasswordEyeIcon = true;
           });
         } else {
           setState(() {
-            _showSeePasswordIcon = false;
+            _showPasswordEyeIcon = false;
           });
         }
       },
@@ -89,12 +109,12 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
           color: Colors.grey,
         ), // icon is 48px widget.
 
-        suffixIcon: _showSeePasswordIcon
+        suffixIcon: _showPasswordEyeIcon
             ? IconButton(
                 icon: Icon(Icons.remove_red_eye_outlined),
                 onPressed: () {
                   setState(() {
-                    _showPassword = !_showPassword;
+                    _showLogin = !_showLogin;
                   });
                 },
               )

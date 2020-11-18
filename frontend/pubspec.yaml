@@ -24,6 +24,7 @@ dependencies:
   flutter:
     sdk: flutter
   artemis: ^5.1.0
+  async: ^2.4.2
   cupertino_icons: ^1.0.0
   flutter_bloc: ^6.1.1
   flutter_secure_storage: ^3.3.5
