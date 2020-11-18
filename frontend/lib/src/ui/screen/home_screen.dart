@@ -5,7 +5,8 @@ import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/ui/screen/base_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key}) : super(key: key);
+  final String title;
+  HomeScreen({Key key, @required this.title}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -27,27 +28,31 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return BlocBuilder<TodosBloc, TodosState>(
-      cubit: _bloc,
-      builder: (context, state) {
-        Log.debug("state is $state");
-        if (state is GetTodosLoading) {
-          return Text("Loading");
-        }
-        if (state is GetTodosSuccess) {
-          return ListView.builder(
-            itemCount: state.todos.length,
-            itemBuilder: (_, index) {
-              return ListTile(
-                leading: Icon(Icons.card_travel),
-                title: Text(state.todos[index].name),
-                subtitle: Text(state.todos[index].id.toString()),
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: BlocBuilder<TodosBloc, TodosState>(
+          cubit: _bloc,
+          builder: (context, state) {
+            Log.debug("TodosBloc: state is $state");
+            if (state is GetTodosLoading) {
+              return Text("Loading");
+            }
+            if (state is GetTodosSuccess) {
+              return ListView.builder(
+                itemCount: state.todos.length,
+                itemBuilder: (_, index) {
+                  return ListTile(
+                    leading: Icon(Icons.card_travel),
+                    title: Text(state.todos[index].name),
+                    subtitle: Text(state.todos[index].id.toString()),
+                  );
+                },
               );
-            },
-          );
-        }
-        return Text("Error");
-      },
-    );
+            }
+            return Text("Error");
+          },
+        ));
   }
 }

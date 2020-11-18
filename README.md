@@ -45,6 +45,11 @@ VSCode :<br/>
 https://www.youtube.com/watch?v=M7PvukaN6PM<br/>
 https://github.com/itsmaheshkariya/flutter-strapi-crud
 
+
+# Json_serializable
+
+https://flutter.dev/docs/development/data-and-backend/json#code-generation
+
 # Backend Strapi 
 
 A quick description of your strapi application
