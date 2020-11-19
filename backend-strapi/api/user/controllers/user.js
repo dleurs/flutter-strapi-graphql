@@ -7,13 +7,13 @@ module.exports = {
    * @return {Object}
    */
 
-  async findOneByUsername(ctx) {
+  async isEmailExist(ctx) {
     // async findOneByUsername(ctx, { username }) { username == undefined 
-    console.log(ctx.params.username);
-    const { username } = ctx.params;
+    console.log(ctx.params.email);
+    const { email } = ctx.params;
     //console.log(username);
 
-    const entity = await strapi.plugins['users-permissions'].services.user.fetch({ username: username });
+    const entity = await strapi.plugins['users-permissions'].services.user.fetch({ email: email });
     if (entity == null) {
       ctx.response.status = 404;
       return ctx.response;

@@ -2,8 +2,8 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/user/findonebyusername/:username",
-      "handler": "user.findOneByUsername",
+      "path": "/user/isemailexist/:email",
+      "handler": "user.isEmailExist",
       "config": {
         "policies": []
       }

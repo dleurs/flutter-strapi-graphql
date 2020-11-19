@@ -2,20 +2,22 @@ const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
   query: `
-    userByUsername(username: String): UsersPermissionsUser
+    isEmailExist(email: String): Boolean
   `,
   resolver: {
     Query: {
-      userByUsername: {
+      isEmailExist: {
         plugin: 'users-permissions',
-        resolverOf: 'User.findOneByUsername',
-        async resolver(ctx, { username }) {
-            console.log(username);
-            const entity = await strapi.plugins['users-permissions'].services.user.fetch({ username: username });
+        resolverOf: 'User.isEmailExist',
+        async resolver(ctx, { email }) {
+            console.log(email);
+            const entity = await strapi.plugins['users-permissions'].services.user.fetch({ email: email });
             if (entity == null) {
-              return;
+              return false;
             }
-            return sanitizeEntity(entity, { model: strapi.plugins['users-permissions'].models.user });
+            return true;
+            //return sanitizeEntity(entity, { model: strapi.plugins['users-permissions'].models.user });
+            // userByUsername(username: String): UsersPermissionsUser 
           },
       },
     },
