@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:frontend/src/api/authentication_api_provider.dart';
 import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/models/route_config.dart';
-import 'package:frontend/src/resource/login_repository.dart';
 import 'package:frontend/src/ui/screen/home_screen.dart';
 import 'package:frontend/src/ui/screen/login_screen.dart';
 
@@ -13,7 +13,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<AuthenticationBloc>(
-        create: (context) => AuthenticationBloc(LoginRepository()),
+        create: (context) => AuthenticationBloc(AuthenticationApiProvider()),
         child: MaterialApp(
           title: 'Flutter Demo',
           theme: ThemeData(

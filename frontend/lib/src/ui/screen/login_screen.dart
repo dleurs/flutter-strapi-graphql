@@ -9,6 +9,7 @@ import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/helpers/toList.dart';
 import 'dart:io';
 import 'package:frontend/src/helpers/validator.dart';
+import 'package:frontend/src/models/authentication/token.dart';
 import 'package:frontend/src/models/todo.dart';
 import 'package:frontend/src/ui/screen/base_screen.dart';
 
@@ -204,30 +205,37 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                                   SizedBox(height: 17.0),
                                   password,
                                   SizedBox(height: 24.0),
-                                  ElevatedButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      snapshot.data ? 'Login' : 'Sign Up',
-                                      style: TextStyle(
-                                          fontSize: Theme.of(context)
-                                              .textTheme
-                                              .headline5
-                                              .fontSize),
-                                    ),
-                                  ),
+                                  snapshot.data
+                                      ? ElevatedButton(
+                                          onPressed: () async {
+                                            Token token =
+                                                await AuthenticationApiProvider()
+                                                    .login(
+                                                        email: _email.text,
+                                                        password:
+                                                            _password.text);
+                                          },
+                                          child: Text(
+                                            'Login',
+                                            style: TextStyle(
+                                                fontSize: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5
+                                                    .fontSize),
+                                          ))
+                                      : ElevatedButton(
+                                          onPressed: () async {},
+                                          child: Text(
+                                            'Sign Up',
+                                            style: TextStyle(
+                                                fontSize: Theme.of(context)
+                                                    .textTheme
+                                                    .headline5
+                                                    .fontSize),
+                                          ),
+                                        ),
                                 ],
                               );
-                              if (snapshot.data) {
-                                return Text(
-                                  "Login",
-                                  style: Theme.of(context).textTheme.headline4,
-                                );
-                              } else {
-                                return Text(
-                                  "SignUp",
-                                  style: Theme.of(context).textTheme.headline4,
-                                );
-                              }
                             }
                           },
                         );

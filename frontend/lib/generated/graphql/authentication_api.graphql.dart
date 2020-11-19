@@ -79,3 +79,114 @@ class IsEmailExistQuery
   IsEmailExist$Query parse(Map<String, dynamic> json) =>
       IsEmailExist$Query.fromJson(json);
 }
+
+@JsonSerializable(explicitToJson: true)
+class Login$Mutation$UsersPermissionsLoginPayload with EquatableMixin {
+  Login$Mutation$UsersPermissionsLoginPayload();
+
+  factory Login$Mutation$UsersPermissionsLoginPayload.fromJson(
+          Map<String, dynamic> json) =>
+      _$Login$Mutation$UsersPermissionsLoginPayloadFromJson(json);
+
+  String jwt;
+
+  @override
+  List<Object> get props => [jwt];
+  Map<String, dynamic> toJson() =>
+      _$Login$Mutation$UsersPermissionsLoginPayloadToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Login$Mutation with EquatableMixin {
+  Login$Mutation();
+
+  factory Login$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$Login$MutationFromJson(json);
+
+  Login$Mutation$UsersPermissionsLoginPayload login;
+
+  @override
+  List<Object> get props => [login];
+  Map<String, dynamic> toJson() => _$Login$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LoginArguments extends JsonSerializable with EquatableMixin {
+  LoginArguments({@required this.email, @required this.password});
+
+  factory LoginArguments.fromJson(Map<String, dynamic> json) =>
+      _$LoginArgumentsFromJson(json);
+
+  final String email;
+
+  final String password;
+
+  @override
+  List<Object> get props => [email, password];
+  Map<String, dynamic> toJson() => _$LoginArgumentsToJson(this);
+}
+
+class LoginMutation extends GraphQLQuery<Login$Mutation, LoginArguments> {
+  LoginMutation({this.variables});
+
+  @override
+  final DocumentNode document = DocumentNode(definitions: [
+    OperationDefinitionNode(
+        type: OperationType.mutation,
+        name: NameNode(value: 'login'),
+        variableDefinitions: [
+          VariableDefinitionNode(
+              variable: VariableNode(name: NameNode(value: 'email')),
+              type: NamedTypeNode(
+                  name: NameNode(value: 'String'), isNonNull: true),
+              defaultValue: DefaultValueNode(value: null),
+              directives: []),
+          VariableDefinitionNode(
+              variable: VariableNode(name: NameNode(value: 'password')),
+              type: NamedTypeNode(
+                  name: NameNode(value: 'String'), isNonNull: true),
+              defaultValue: DefaultValueNode(value: null),
+              directives: [])
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+              name: NameNode(value: 'login'),
+              alias: null,
+              arguments: [
+                ArgumentNode(
+                    name: NameNode(value: 'input'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                          name: NameNode(value: 'identifier'),
+                          value: VariableNode(name: NameNode(value: 'email'))),
+                      ObjectFieldNode(
+                          name: NameNode(value: 'password'),
+                          value:
+                              VariableNode(name: NameNode(value: 'password')))
+                    ]))
+              ],
+              directives: [],
+              selectionSet: SelectionSetNode(selections: [
+                FieldNode(
+                    name: NameNode(value: 'jwt'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null)
+              ]))
+        ]))
+  ]);
+
+  @override
+  final String operationName = 'login';
+
+  @override
+  final LoginArguments variables;
+
+  @override
+  List<Object> get props => [document, operationName, variables];
+  @override
+  Login$Mutation parse(Map<String, dynamic> json) =>
+      Login$Mutation.fromJson(json);
+}

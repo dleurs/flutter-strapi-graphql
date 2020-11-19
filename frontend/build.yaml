@@ -11,11 +11,11 @@ targets:
         options:
           schema_mapping:
             - output: lib/generated/graphql/authentication_api.graphql.dart
-              schema: lib/graphql/schema.graphql
               queries_glob: lib/graphql/authentication/queries/*.graphql
-            - output: lib/generated/graphql/todo_api.graphql.dart
               schema: lib/graphql/schema.graphql
+            - output: lib/generated/graphql/todo_api.graphql.dart
               queries_glob: lib/graphql/todos/queries/*.graphql
+              schema: lib/graphql/schema.graphql
           scalar_mapping:
             - graphql_type: UUID
               dart_type: String

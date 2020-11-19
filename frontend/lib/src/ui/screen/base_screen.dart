@@ -111,7 +111,7 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
   ///
   void doLogin(String login, String password) {
     BlocProvider.of<AuthenticationBloc>(context)
-        .add(LoginEvent(login, password));
+        .add(LoginEvent(login: login, password: password));
   }
 
   ///

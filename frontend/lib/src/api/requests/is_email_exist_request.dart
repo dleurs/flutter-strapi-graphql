@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:frontend/generated/graphql/authentication_api.graphql.dart';
 import 'package:json_annotation/src/json_serializable.dart';
 
-import 'package:frontend/generated/graphql/todo_api.graphql.dart';
 import 'package:frontend/src/api/base/graphql_request.dart';
-import 'package:frontend/src/models/todo.dart';
 
 class IsEmailExistRequest extends GraphQLRequest<bool, IsEmailExist$Query> {
-  String email;
+  final String email;
   IsEmailExistRequest(ArtemisClient client, {@required this.email})
       : super(client);
 

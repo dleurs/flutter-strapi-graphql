@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 abstract class AuthenticationEvent extends Equatable {}
 
@@ -6,7 +7,7 @@ class LoginEvent extends AuthenticationEvent {
   final String login;
   final String password;
 
-  LoginEvent(this.login, this.password);
+  LoginEvent({@required this.login, @required this.password});
 
   @override
   List<Object> get props => [login];

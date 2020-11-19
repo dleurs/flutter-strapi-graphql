@@ -1,17 +1,17 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:frontend/src/api/authentication_api_provider.dart';
 import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/models/authentication/token.dart';
-import 'package:frontend/src/resource/login_repository.dart';
 
 import './bloc.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final LoginRepository _repository;
+  final AuthenticationApiProvider _provider;
 
-  AuthenticationBloc(this._repository) : super(InitialAuthenticationState());
+  AuthenticationBloc(this._provider) : super(InitialAuthenticationState());
 
   @override
   Stream<AuthenticationState> mapEventToState(
@@ -19,7 +19,8 @@ class AuthenticationBloc
     yield AuthenticationProcessing();
     if (event is LoginEvent) {
       try {
-        Token token = await _repository.login(event.login, event.password);
+        Token token =
+            await _provider.login(email: event.login, password: event.password);
         await AuthenticationManager.instance
             .doLogin(event.login, event.password, token);
         yield AuthenticationSuccess();
@@ -29,7 +30,7 @@ class AuthenticationBloc
       }
     }
     if (event is LogoutEvent) {
-      await _repository.logout();
+      await _provider.logout();
       AuthenticationManager.instance.doLogout();
       yield LoggedOut();
     }
