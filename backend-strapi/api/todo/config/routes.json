@@ -25,14 +25,6 @@
       }
     },
     {
-      "method": "GET",
-      "path": "/user/findonebyusername/:username",
-      "handler": "todo.findOneByUsername",
-      "config": {
-        "policies": []
-      }
-    },
-    {
       "method": "POST",
       "path": "/todos",
       "handler": "todo.create",
