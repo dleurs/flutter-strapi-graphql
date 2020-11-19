@@ -88,6 +88,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
       onChanged: (String email) {
         _showSpinningCircleStartSearchingEmail = false;
         _showLoginForm = false;
+        _password.text = "";
         if (_waitingToStartSearchingMail != null) {
           _waitingToStartSearchingMail.cancel();
         }
@@ -188,6 +189,34 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                                 size: 70.0,
                               );
                             } else {
+                              return Column(
+                                children: [
+                                  SizedBox(height: 17.0),
+                                  Text(
+                                      snapshot.data
+                                          ? 'Email found'
+                                          : 'New email',
+                                      style: TextStyle(
+                                          fontSize: Theme.of(context)
+                                              .textTheme
+                                              .headline6
+                                              .fontSize)),
+                                  SizedBox(height: 17.0),
+                                  password,
+                                  SizedBox(height: 24.0),
+                                  ElevatedButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      snapshot.data ? 'Login' : 'Sign Up',
+                                      style: TextStyle(
+                                          fontSize: Theme.of(context)
+                                              .textTheme
+                                              .headline5
+                                              .fontSize),
+                                    ),
+                                  ),
+                                ],
+                              );
                               if (snapshot.data) {
                                 return Text(
                                   "Login",

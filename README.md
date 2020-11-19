@@ -2,7 +2,7 @@
 
 Link Flutter and Strapi locally 
 
-![](/assets/phone.png)
+![](/assets/phone.gif)
 
 ![](/assets/bash-strapi.png)
 
@@ -23,8 +23,6 @@ To run flutter :
 cd frontend;
 flutter run; # or F5 in vscode
 ```
-
-
 
 
 # GraphQL on Flutter
