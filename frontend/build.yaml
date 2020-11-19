@@ -1,4 +1,4 @@
-# To execute : flutter pub run build_runner build
+# To execute : flutter pub run build_runner build --verbose --delete-conflicting-outputs
 # Read about `build.yaml` at https://pub.dartlang.org/packages/build_config
 
 targets:
@@ -10,9 +10,9 @@ targets:
       artemis:
         options:
           schema_mapping:
-            #- output: lib/generated/graphql/authentication_api.graphql.dart
-            #  schema: lib/graphql/authentication/schema_auth.graphql
-            #  queries_glob: lib/graphql/authentication/queries/*.graphql
+            - output: lib/generated/graphql/authentication_api.graphql.dart
+              schema: lib/graphql/schema.graphql
+              queries_glob: lib/graphql/authentication/queries/*.graphql
             - output: lib/generated/graphql/todo_api.graphql.dart
               schema: lib/graphql/schema.graphql
               queries_glob: lib/graphql/todos/queries/*.graphql

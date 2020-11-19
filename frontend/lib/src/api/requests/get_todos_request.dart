@@ -17,7 +17,7 @@ class GetTodosRequest extends GraphQLRequest<List<Todo>, GetTodos$Query> {
   @override
   List<Todo> buildResponse(GetTodos$Query data) {
     List<Todo> myTodos = List<Todo>();
-    for (GetTodos$Query$Todos todo in data.todos) {
+    for (GetTodos$Query$Todo todo in data.todos) {
       myTodos.add(Todo(id: int.parse(todo.id), name: todo.name));
     }
     return myTodos;

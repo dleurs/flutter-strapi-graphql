@@ -6,14 +6,14 @@ part of 'todo_api.graphql.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-GetTodos$Query$Todos _$GetTodos$Query$TodosFromJson(Map<String, dynamic> json) {
-  return GetTodos$Query$Todos()
+GetTodos$Query$Todo _$GetTodos$Query$TodoFromJson(Map<String, dynamic> json) {
+  return GetTodos$Query$Todo()
     ..id = json['id'] as String
     ..name = json['name'] as String;
 }
 
-Map<String, dynamic> _$GetTodos$Query$TodosToJson(
-        GetTodos$Query$Todos instance) =>
+Map<String, dynamic> _$GetTodos$Query$TodoToJson(
+        GetTodos$Query$Todo instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -24,7 +24,7 @@ GetTodos$Query _$GetTodos$QueryFromJson(Map<String, dynamic> json) {
     ..todos = (json['todos'] as List)
         ?.map((e) => e == null
             ? null
-            : GetTodos$Query$Todos.fromJson(e as Map<String, dynamic>))
+            : GetTodos$Query$Todo.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 

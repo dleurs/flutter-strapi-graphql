@@ -4,6 +4,7 @@ import 'package:async/async.dart';
 import 'package:dart_strapi/dart_strapi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:frontend/src/api/authentication_api_provider.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/helpers/toList.dart';
 import 'dart:io';
@@ -40,27 +41,20 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
   void _startTimer() {
     // https://stackoverflow.com/questions/17552757/is-there-any-way-to-cancel-a-dart-future
     setState(() {
-      _waitingToStartSearchingMail = Timer(Duration(milliseconds: 500), () {
-        setState(() async {
+      _waitingToStartSearchingMail = Timer(Duration(milliseconds: 1000), () {
+        setState(() {
           Log.debug("BEGIN searching");
           _showSpinningCircleStartSearchingEmail = true;
-
-          final records = await strapiClient.findOne('todos', '1');
-          print(records.toString());
-
-          /* setState(() {
-            _waitingToStartSearchingMail =
-                Timer(Duration(milliseconds: 3000), () {
-              setState(() {
-                Log.debug("END searching");
-                _showSpinningCircleStartSearchingEmail = false;
-                _showLoginForm = true;
-              });
-            });
-          }); */
         });
       });
     });
+  }
+
+  Future<bool> _searchEmail({@required String email}) async {
+    bool isEmailExist =
+        await AuthenticationApiProvider().isEmailExist(email: _email.text);
+    print("isEmailExist : " + isEmailExist.toString());
+    return isEmailExist;
   }
 
   @override
@@ -160,45 +154,54 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                   //crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: toList(
                     () sync* {
-                      yield SizedBox(height: 24.0);
-                      yield Text(
+                      yield SizedBox(height: 34.0);
+                      /*  yield Text(
                         (!_showLoginForm && !_showLoginForm)
                             ? "Enter your email address"
                             : (_showLoginForm)
                                 ? "Email found"
                                 : "Email not found",
                         style: Theme.of(context).textTheme.headline6,
-                      );
+                      ); */
                       yield SizedBox(height: 24.0);
                       yield email;
                       if (_showSpinningCircleStartSearchingEmail)
-                        yield* [
-                          SizedBox(height: 24.0),
-                          SpinKitCircle(
-                            color: Theme.of(context).accentColor,
-                            size: 70.0,
-                          )
-                        ];
-                      if (_showLoginForm || _showSignUpForm)
-                        yield* [
-                          SizedBox(height: 24.0),
-                          password,
-                          SizedBox(height: 24.0),
-                          ElevatedButton(
-                            onPressed: () {
-                              // Validate returns true if the form is valid, otherwise false.
-                              if (_emailFormKey.currentState.validate()) {}
-                            },
-                            child: Text(
-                              _showLoginForm ? 'Login' : 'Sign Up',
-                              style: TextStyle(
-                                  fontSize: Theme.of(context)
-                                      .textTheme
-                                      .headline5
-                                      .fontSize),
-                            ),
-                          )
-                        ];
+                        yield FutureBuilder<bool>(
+                          future: AuthenticationApiProvider()
+                              .isEmailExist(email: _email.text),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Text(
+                                "Error",
+                                style: Theme.of(context).textTheme.headline4,
+                              );
+                            } else if (snapshot.connectionState ==
+                                    ConnectionState.none &&
+                                snapshot.hasData == null) {
+                              return Text(
+                                "No internet",
+                                style: Theme.of(context).textTheme.headline4,
+                              );
+                            } else if (!snapshot.hasData) {
+                              return SpinKitCircle(
+                                color: Theme.of(context).accentColor,
+                                size: 70.0,
+                              );
+                            } else {
+                              if (snapshot.data) {
+                                return Text(
+                                  "Login",
+                                  style: Theme.of(context).textTheme.headline4,
+                                );
+                              } else {
+                                return Text(
+                                  "SignUp",
+                                  style: Theme.of(context).textTheme.headline4,
+                                );
+                              }
+                            }
+                          },
+                        );
                     },
                   ),
                 ),

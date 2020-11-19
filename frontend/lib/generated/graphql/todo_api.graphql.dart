@@ -8,11 +8,11 @@ import 'package:gql/ast.dart';
 part 'todo_api.graphql.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class GetTodos$Query$Todos with EquatableMixin {
-  GetTodos$Query$Todos();
+class GetTodos$Query$Todo with EquatableMixin {
+  GetTodos$Query$Todo();
 
-  factory GetTodos$Query$Todos.fromJson(Map<String, dynamic> json) =>
-      _$GetTodos$Query$TodosFromJson(json);
+  factory GetTodos$Query$Todo.fromJson(Map<String, dynamic> json) =>
+      _$GetTodos$Query$TodoFromJson(json);
 
   String id;
 
@@ -20,7 +20,7 @@ class GetTodos$Query$Todos with EquatableMixin {
 
   @override
   List<Object> get props => [id, name];
-  Map<String, dynamic> toJson() => _$GetTodos$Query$TodosToJson(this);
+  Map<String, dynamic> toJson() => _$GetTodos$Query$TodoToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -30,7 +30,7 @@ class GetTodos$Query with EquatableMixin {
   factory GetTodos$Query.fromJson(Map<String, dynamic> json) =>
       _$GetTodos$QueryFromJson(json);
 
-  List<GetTodos$Query$Todos> todos;
+  List<GetTodos$Query$Todo> todos;
 
   @override
   List<Object> get props => [todos];
