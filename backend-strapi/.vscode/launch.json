@@ -1,0 +1,15 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "attach",
+            //"debug": "node --inspect=127.0.0.1:1337 ./node_modules/strapi/bin/strapi.js develop",
+            "name": "Attach to strapi",
+            "port": 1337
+        }
+    ]
+}

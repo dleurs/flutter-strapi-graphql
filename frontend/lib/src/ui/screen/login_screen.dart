@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:async/async.dart';
+import 'package:dart_strapi/dart_strapi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/src/helpers/log.dart';
@@ -20,6 +21,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends BaseScreenState<LoginScreen> {
+  final strapiClient = Strapi.newClient();
+
   final _emailFormKey = GlobalKey<FormState>();
 
   TextEditingController _email = new TextEditingController();
@@ -38,10 +41,14 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
     // https://stackoverflow.com/questions/17552757/is-there-any-way-to-cancel-a-dart-future
     setState(() {
       _waitingToStartSearchingMail = Timer(Duration(milliseconds: 500), () {
-        setState(() {
+        setState(() async {
           Log.debug("BEGIN searching");
           _showSpinningCircleStartSearchingEmail = true;
-          setState(() {
+
+          final records = await strapiClient.findOne('todos', '1');
+          print(records.toString());
+
+          /* setState(() {
             _waitingToStartSearchingMail =
                 Timer(Duration(milliseconds: 3000), () {
               setState(() {
@@ -50,7 +57,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                 _showLoginForm = true;
               });
             });
-          });
+          }); */
         });
       });
     });
@@ -154,22 +161,14 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                   children: toList(
                     () sync* {
                       yield SizedBox(height: 24.0);
-                      if (!_showLoginForm && !_showLoginForm)
-                        yield Text(
-                          "Enter your email address",
-                          style: Theme.of(context).textTheme.headline6,
-                        );
-                      else if (_showLoginForm) {
-                        yield Text(
-                          "Email found. Please login",
-                          style: Theme.of(context).textTheme.headline6,
-                        );
-                      } else {
-                        yield Text(
-                          "Email not found. Please sign up",
-                          style: Theme.of(context).textTheme.headline6,
-                        );
-                      }
+                      yield Text(
+                        (!_showLoginForm && !_showLoginForm)
+                            ? "Enter your email address"
+                            : (_showLoginForm)
+                                ? "Email found"
+                                : "Email not found",
+                        style: Theme.of(context).textTheme.headline6,
+                      );
                       yield SizedBox(height: 24.0);
                       yield email;
                       if (_showSpinningCircleStartSearchingEmail)
@@ -180,8 +179,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                             size: 70.0,
                           )
                         ];
-
-                      if (_showLoginForm)
+                      if (_showLoginForm || _showSignUpForm)
                         yield* [
                           SizedBox(height: 24.0),
                           password,
@@ -189,16 +187,10 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                           ElevatedButton(
                             onPressed: () {
                               // Validate returns true if the form is valid, otherwise false.
-                              if (_emailFormKey.currentState.validate()) {
-                                // If the form is valid, display a snackbar. In the real world,
-                                // you'd often call a server or save the information in a database.
-
-                                Scaffold.of(context).showSnackBar(
-                                    SnackBar(content: Text('Processing Data')));
-                              }
+                              if (_emailFormKey.currentState.validate()) {}
                             },
                             child: Text(
-                              'Enter',
+                              _showLoginForm ? 'Login' : 'Sign Up',
                               style: TextStyle(
                                   fontSize: Theme.of(context)
                                       .textTheme

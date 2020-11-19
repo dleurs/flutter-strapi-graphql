@@ -5,7 +5,6 @@ import 'package:json_annotation/src/json_serializable.dart';
 import 'package:frontend/generated/graphql/todo_api.graphql.dart';
 import 'package:frontend/src/api/base/graphql_request.dart';
 import 'package:frontend/src/models/todo.dart';
-import 'package:frontend/generated/graphql/todo_api.graphql.dart';
 
 class GetTodosRequest extends GraphQLRequest<List<Todo>, GetTodos$Query> {
   GetTodosRequest(ArtemisClient client) : super(client);

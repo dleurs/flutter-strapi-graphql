@@ -26,6 +26,7 @@ dependencies:
   artemis: ^5.1.0
   async: ^2.4.2
   cupertino_icons: ^1.0.0
+  dart_strapi: ^0.0.3
   flutter_bloc: ^6.1.1
   flutter_secure_storage: ^3.3.5
   flutter_spinkit: ^4.1.2+1
