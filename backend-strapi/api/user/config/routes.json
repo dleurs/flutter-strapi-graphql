@@ -1,0 +1,13 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/user/findonebyusername/:username",
+      "handler": "user.findOneByUsername",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
+  
