@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:frontend/src/bloc/todos/todos_bloc.dart';
+import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/ui/screen/base_screen.dart';
 
@@ -35,27 +36,47 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    return BlocBuilder<TodosBloc, TodosState>(
-      cubit: _bloc,
-      builder: (context, state) {
-        Log.debug("TodosBloc: state is $state");
-        if (state is GetTodosLoading) {
-          return Text("Loading");
-        }
-        if (state is GetTodosSuccess) {
-          return ListView.builder(
-            itemCount: state.todos.length,
-            itemBuilder: (_, index) {
-              return ListTile(
-                leading: Icon(Icons.card_travel),
-                title: Text(state.todos[index].name),
-                subtitle: Text(state.todos[index].id.toString()),
-              );
+    AuthenticationManager auth = AuthenticationManager.instance;
+
+    return ListView(
+      children: [
+        Center(
+          child: BlocBuilder<TodosBloc, TodosState>(
+            cubit: _bloc,
+            builder: (context, state) {
+              Log.debug("TodosBloc: state is $state");
+              if (state is GetTodosLoading) {
+                return Text("Loading");
+              }
+              if (state is GetTodosSuccess) {
+                return ListView.builder(
+                  itemCount: state.todos.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                      leading: Icon(Icons.card_travel),
+                      title: Text(state.todos[index].name),
+                      subtitle: Text(state.todos[index].id.toString()),
+                    );
+                  },
+                );
+              }
+              return Text("Error",
+                  style: Theme.of(context).textTheme.headline6);
             },
-          );
-        }
-        return Text("Error");
-      },
+          ),
+        ),
+        SizedBox(height: 50),
+        Center(
+          child: Text(
+            "Logged in as " +
+                auth.login +
+                " " +
+                auth.password +
+                " " +
+                auth.token.toString(),
+          ),
+        ),
+      ],
     );
   }
 }

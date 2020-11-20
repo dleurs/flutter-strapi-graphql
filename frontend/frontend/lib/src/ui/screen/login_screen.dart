@@ -208,12 +208,14 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                                   snapshot.data
                                       ? ElevatedButton(
                                           onPressed: () async {
-                                            Token token =
+                                            this.doLogin(
+                                                _email.text, _password.text);
+                                            /* Token token =
                                                 await AuthenticationApiProvider()
                                                     .login(
                                                         email: _email.text,
                                                         password:
-                                                            _password.text);
+                                                            _password.text); */
                                           },
                                           child: Text(
                                             'Login',
