@@ -89,7 +89,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
       onChanged: (String email) {
         _showSpinningCircleStartSearchingEmail = false;
         _showLoginForm = false;
-        _password.text = "";
+        //_password.text = "";
         if (_waitingToStartSearchingMail != null) {
           _waitingToStartSearchingMail.cancel();
         }
