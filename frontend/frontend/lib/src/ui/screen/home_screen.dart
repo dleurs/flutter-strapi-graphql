@@ -30,7 +30,13 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
   @override
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(title: Text('Home Screen'), actions: <Widget>[
-      IconButton(icon: Icon(Icons.power_settings_new), onPressed: this.doLogout)
+      IconButton(
+          icon: Icon(Icons.refresh),
+          onPressed: () {
+            _bloc.add(GetTodos());
+          }),
+      IconButton(
+          icon: Icon(Icons.power_settings_new), onPressed: this.doLogout),
     ]);
   }
 
@@ -40,6 +46,11 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
 
     return ListView(
       children: [
+        SizedBox(height: 20),
+        Center(
+            child: Text("Your todos",
+                style: Theme.of(context).textTheme.headline5)),
+        SizedBox(height: 20),
         Center(
           child: BlocBuilder<TodosBloc, TodosState>(
             cubit: _bloc,
@@ -49,16 +60,20 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
                 return Text("Loading");
               }
               if (state is GetTodosSuccess) {
-                return ListView.builder(
-                  itemCount: state.todos.length,
-                  itemBuilder: (_, index) {
-                    return ListTile(
-                      leading: Icon(Icons.card_travel),
-                      title: Text(state.todos[index].name),
-                      subtitle: Text(state.todos[index].id.toString()),
-                    );
-                  },
-                );
+                return ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: 330),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: state.todos.length,
+                      itemBuilder: (_, index) {
+                        return ListTile(
+                          leading: Icon(Icons.card_travel),
+                          title: Text(state.todos[index].name),
+                          subtitle: Text(state.todos[index].id.toString()),
+                        );
+                      },
+                    ));
               }
               return Text("Error",
                   style: Theme.of(context).textTheme.headline6);
