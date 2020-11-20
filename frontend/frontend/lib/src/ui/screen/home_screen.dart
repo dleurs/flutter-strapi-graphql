@@ -18,6 +18,7 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
 
   @override
   void initState() {
+    super.initState();
     _bloc = TodosBloc();
     _bloc.add(GetTodos());
   }
@@ -25,6 +26,7 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
   @override
   void dispose() {
     _bloc.close();
+    super.dispose();
   }
 
   @override
@@ -67,11 +69,15 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
                       physics: ClampingScrollPhysics(),
                       itemCount: state.todos.length,
                       itemBuilder: (_, index) {
-                        return ListTile(
-                          leading: Icon(Icons.card_travel),
-                          title: Text(state.todos[index].name),
-                          subtitle: Text(state.todos[index].id.toString()),
-                        );
+                        return Card(
+                            elevation: 4.0,
+                            margin: new EdgeInsets.symmetric(
+                                horizontal: 6.0, vertical: 4.0),
+                            child: ListTile(
+                              leading: Icon(Icons.card_travel),
+                              title: Text(state.todos[index].name),
+                              subtitle: Text(state.todos[index].id.toString()),
+                            ));
                       },
                     ));
               }
