@@ -25,7 +25,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends BaseScreenState<LoginScreen> {
   final strapiClient = Strapi.newClient();
 
-  final _emailFormKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   TextEditingController _email = new TextEditingController();
   TextEditingController _password = new TextEditingController();
@@ -35,7 +35,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
   bool _showSpinningCircleStartSearchingEmail = false;
 
   bool _showLoginForm = false;
-  bool _showSignUpForm = false;
+  bool _showRegisterForm = false;
 
   Timer _waitingToStartSearchingMail;
 
@@ -147,7 +147,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
 
     return ListView(children: [
       Form(
-          key: _emailFormKey,
+          key: _formKey,
           child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: SingleChildScrollView(
@@ -208,14 +208,11 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                                   snapshot.data
                                       ? ElevatedButton(
                                           onPressed: () async {
-                                            this.doLogin(
-                                                _email.text, _password.text);
-                                            /* Token token =
-                                                await AuthenticationApiProvider()
-                                                    .login(
-                                                        email: _email.text,
-                                                        password:
-                                                            _password.text); */
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              this.doLogin(
+                                                  _email.text, _password.text);
+                                            }
                                           },
                                           child: Text(
                                             'Login',
@@ -226,9 +223,19 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                                                     .fontSize),
                                           ))
                                       : ElevatedButton(
-                                          onPressed: () async {},
+                                          onPressed: () async {
+                                            if (_formKey.currentState
+                                                .validate()) {
+                                              await AuthenticationApiProvider()
+                                                  .register(
+                                                      email: _email.text,
+                                                      password: _password.text);
+                                              this.doLogin(
+                                                  _email.text, _password.text);
+                                            }
+                                          },
                                           child: Text(
-                                            'Sign Up',
+                                            'Register',
                                             style: TextStyle(
                                                 fontSize: Theme.of(context)
                                                     .textTheme
@@ -262,7 +269,7 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
 
   @override
   PreferredSizeWidget buildAppBar(BuildContext context) {
-    return AppBar(title: Text('Signup & Login'));
+    return AppBar(title: Text('Register & Login'));
   }
 
   @override

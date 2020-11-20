@@ -6,6 +6,7 @@ import 'package:frontend/src/api/base/graphql_client.dart';
 import 'package:frontend/src/api/interceptor/authorization_interceptor.dart';
 import 'package:frontend/src/api/requests/is_email_exist_request.dart';
 import 'package:frontend/src/api/requests/login_request.dart';
+import 'package:frontend/src/api/requests/register_request.dart';
 import 'package:frontend/src/models/authentication/token.dart';
 
 class AuthenticationApiProvider {
@@ -19,6 +20,10 @@ class AuthenticationApiProvider {
 
   Future<Token> login({@required String email, @required String password}) {
     return LoginRequest(_client, email: email, password: password).call();
+  }
+
+  Future<Token> register({@required String email, @required String password}) {
+    return RegisterRequest(_client, email: email, password: password).call();
   }
 
   Future<void> logout() {

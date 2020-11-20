@@ -66,31 +66,36 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
                 );
               }
               if (state is GetTodosSuccess) {
-/*                 return ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 330),
-                    child:  */
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: ClampingScrollPhysics(),
-                  itemCount: state.todos.length,
-                  itemBuilder: (_, index) {
-                    return Card(
-                        elevation: 4.0,
-                        margin: new EdgeInsets.symmetric(
-                            horizontal: 6.0, vertical: 4.0),
-                        child: ListTile(
-                          leading: Icon(Icons.card_travel),
-                          title: Text(state.todos[index].name),
-                          subtitle: Text(state.todos[index].id.toString()),
-                        ));
-                  },
-                );
+                return ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.65),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      itemCount: state.todos.length,
+                      itemBuilder: (_, index) {
+                        return Card(
+                            elevation: 4.0,
+                            margin: new EdgeInsets.symmetric(
+                                horizontal: 6.0, vertical: 4.0),
+                            child: ListTile(
+                              leading: Icon(Icons.card_travel),
+                              title: Text(state.todos[index].name),
+                              subtitle: Text(state.todos[index].id.toString()),
+                            ));
+                      },
+                    ));
               }
               return Text("Error",
                   style: Theme.of(context).textTheme.headline6);
             },
           ),
         ),
+        SizedBox(height: 20),
+        Center(
+            child: Text(
+          AuthenticationManager.instance.toString(),
+        )),
       ],
     );
   }
