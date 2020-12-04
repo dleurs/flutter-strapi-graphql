@@ -1,15 +1,9 @@
-import 'dart:async';
-
-import 'package:async/async.dart';
-import 'package:dart_strapi/dart_strapi.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/src/api/authentication_api_provider.dart';
-import 'package:frontend/src/bloc/authentication/bloc.dart';
 import 'package:frontend/src/bloc/formLoginSignUp/bloc.dart';
 import 'package:frontend/src/helpers/constant.dart';
-import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/helpers/toList.dart';
 import 'package:frontend/src/helpers/validator.dart';
 import 'package:frontend/src/ui/screen/base_screen.dart';
@@ -25,7 +19,6 @@ class LoginSignupScreen extends StatefulWidget {
 }
 
 class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
-  final strapiClient = Strapi.newClient();
   FormLoginSignupBloc _bloc;
 
   @override
@@ -46,6 +39,7 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
   TextEditingController _password = new TextEditingController();
 
   bool _showPasswordEyeIcon = false;
+  bool _passwordObscur = true;
   bool _showModifyEmailIcon = false;
 
   @override
@@ -63,38 +57,32 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
         suffixIcon: _showModifyEmailIcon
             ? IconButton(
                 onPressed: () {
+                  _showModifyEmailIcon = false;
+                  _email.text = "";
                   _bloc.add(CheckEmailReset());
                 },
-                icon: Icon(Icons.person_search))
+                icon: Icon(Icons.delete_outline))
             : SizedBox(),
         hintText: 'Email',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
       onChanged: (String email) {
-        if (Validator.validateEmail(_email.text) == null) {
-          setState(() async {
-            _showModifyEmailIcon = true;
-          });
-        }
+        setState(() {
+          _showModifyEmailIcon = true;
+        });
       },
     );
 
     final password = TextFormField(
       autofocus: false,
-      obscureText: !_showPasswordEyeIcon,
+      obscureText: _passwordObscur,
       controller: _password,
       validator: Validator.validatePassword,
       onChanged: (String password) {
-        if (password.isNotEmpty ?? false) {
-          setState(() {
-            _showPasswordEyeIcon = true;
-          });
-        } else {
-          setState(() {
-            _showPasswordEyeIcon = false;
-          });
-        }
+        setState(() {
+          _showPasswordEyeIcon = true;
+        });
       },
       decoration: InputDecoration(
         prefixIcon: Icon(
@@ -103,7 +91,13 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
         ), // icon is 48px widget.
 
         suffixIcon: _showPasswordEyeIcon
-            ? Icon(Icons.remove_red_eye_outlined)
+            ? IconButton(
+                onPressed: () {
+                  setState(() {
+                    _passwordObscur = !_passwordObscur;
+                  });
+                },
+                icon: Icon(Icons.remove_red_eye_outlined))
             : SizedBox(), // icon is 48px widget.
 
         hintText: 'Password',
@@ -159,6 +153,52 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                             return SpinKitCircle(
                               color: Theme.of(context).accentColor,
                               size: 70.0,
+                            );
+                          }
+                          if (state is CheckEmailAlreadyExist ||
+                              state is CheckEmailDoesNotExist) {
+                            return Column(
+                              children: [
+                                Text(
+                                    (state is CheckEmailAlreadyExist)
+                                        ? 'Email exists'
+                                        : 'New email',
+                                    style: TextStyle(
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .fontSize)),
+                                SizedBox(height: Const.smallHeight),
+                                password,
+                                SizedBox(height: Const.smallHeight),
+                                (state is CheckEmailAlreadyExist)
+                                    ? ElevatedButton(
+                                        onPressed: () async {
+                                          if (_formKey.currentState
+                                              .validate()) {
+                                            this.doLogin(
+                                                _email.text, _password.text);
+                                          }
+                                        },
+                                        child: Text(
+                                          'Login',
+                                          style: TextStyle(
+                                              fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5
+                                                  .fontSize),
+                                        ))
+                                    : ElevatedButton(
+                                        onPressed: () {},
+                                        child: Text(
+                                          'Signup',
+                                          style: TextStyle(
+                                              fontSize: Theme.of(context)
+                                                  .textTheme
+                                                  .headline5
+                                                  .fontSize),
+                                        ))
+                              ],
                             );
                           }
 

@@ -26,7 +26,7 @@ class FormLoginSignupBloc
         yield CheckEmailError(error: 'Login failed');
       }
     }
-    if (event is CheckEmailEvent) {
+    if (event is CheckEmailReset) {
       yield FormLoginSignupInitial();
     }
   }

@@ -176,13 +176,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  dart_strapi:
-    dependency: "direct main"
-    description:
-      name: dart_strapi
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   dart_style:
     dependency: transitive
     description:
@@ -190,13 +183,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.10"
-  dio:
-    dependency: transitive
-    description:
-      name: dio
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.10"
   equatable:
     dependency: transitive
     description:
