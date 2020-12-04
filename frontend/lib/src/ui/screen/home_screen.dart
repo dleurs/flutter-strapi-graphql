@@ -45,8 +45,6 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    AuthenticationManager auth = AuthenticationManager.instance;
-
     return ListView(
       children: [
         SizedBox(height: 20),

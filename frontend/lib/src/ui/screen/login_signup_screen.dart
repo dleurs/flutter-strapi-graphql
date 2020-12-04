@@ -61,7 +61,7 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                   _email.text = "";
                   _bloc.add(CheckEmailReset());
                 },
-                icon: Icon(Icons.delete_outline))
+                icon: Icon(Icons.cached_outlined))
             : SizedBox(),
         hintText: 'Email',
         contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
@@ -155,12 +155,12 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                               size: 70.0,
                             );
                           }
-                          if (state is CheckEmailAlreadyExist ||
-                              state is CheckEmailDoesNotExist) {
+                          if (state is EmailAlreadyExist ||
+                              state is EmailDoesNotExist) {
                             return Column(
                               children: [
                                 Text(
-                                    (state is CheckEmailAlreadyExist)
+                                    (state is EmailAlreadyExist)
                                         ? 'Email exists'
                                         : 'New email',
                                     style: TextStyle(
@@ -171,7 +171,7 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                                 SizedBox(height: Const.smallHeight),
                                 password,
                                 SizedBox(height: Const.smallHeight),
-                                (state is CheckEmailAlreadyExist)
+                                (state is EmailAlreadyExist)
                                     ? ElevatedButton(
                                         onPressed: () async {
                                           if (_formKey.currentState
@@ -205,106 +205,11 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                           return SizedBox();
                         },
                       );
-
-                      /* if (_showSpinningCircleStartSearchingEmail)
-                        yield FutureBuilder<bool>(
-                          future: AuthenticationApiProvider()
-                              .isEmailExist(email: _email.text),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return Text(
-                                "Error",
-                                style: Theme.of(context).textTheme.headline4,
-                              );
-                            } else if (snapshot.connectionState ==
-                                    ConnectionState.none &&
-                                snapshot.h,
-    )asData == null) {
-                          return Text(
-                            "No internet",
-                            style: Theme.of(context).textTheme.headline4,
-                          );
-                        } else if (!snapshot.hasData) {
-                          return SpinKitCircle(
-                            color: Theme.of(context).accentColor,
-                            size: 70.0,
-                          );
-                        } else {
-                          return Column(
-                            children: [
-                              SizedBox(height: 17.0),
-                              Text(
-                                  snapshot.data
-                                      ? 'Email exists. Please login :'
-                                      : 'New email. Please sign Up : ',
-                                  style: TextStyle(
-                                      fontSize: Theme.of(context)
-                                          .textTheme
-                                          .headline6
-                                          .fontSize)),
-                              SizedBox(height: 17.0),
-                              password,
-                              SizedBox(height: 24.0),
-                              snapshot.data
-                                  ? ElevatedButton(
-                                      onPressed: () async {
-                                        if (_formKey.currentState
-                                            .validate()) {
-                                          this.doLogin(
-                                              _email.text, _password.text);
-                                        }
-                                      },
-                                      child: Text(
-                                        'Login',
-                                        style: TextStyle(
-                                            fontSize: Theme.of(context)
-                                                .textTheme
-                                                .headline5
-                                                .fontSize),
-                                      ))
-                                  : ElevatedButton(
-                                      onPressed: () async {
-                                        if (_formKey.currentState
-                                            .validate()) {
-                                          await AuthenticationApiProvider()
-                                              .register(
-                                                  email: _email.text,
-                                                  password: _password.text);
-                                          this.doLogin(
-                                              _email.text, _password.text);
-                                        }
-                                      },
-                                      child: Text(
-                                        'Register',
-                                        style: TextStyle(
-                                            fontSize: Theme.of(context)
-                                                .textTheme
-                                                .headline5
-                                                .fontSize),
-                                      ),
-                                    ),
-                            ],
-                          );
-                        }
-                      },
-                    ); */
                     },
                   ),
                 ),
               )))
     ]);
-    /* Column(
-      children: <Widget>[
-        ,
-        RaisedButton(
-          onPressed: () {
-            this.doLogin("username", "password");
-          },
-          child: Text('Enter', style: Theme.of(context).textTheme.headline5),
-          key: Key("LoginButton"),
-        )
-      ],
-    ); */
   }
 
   @override

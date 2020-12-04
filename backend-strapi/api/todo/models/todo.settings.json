@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "todos",
   "info": {
-    "name": "todo"
+    "name": "todo",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -12,6 +13,15 @@
   "attributes": {
     "name": {
       "type": "string"
+    },
+    "location": {
+      "model": "location",
+      "via": "todos"
+    },
+    "author": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "todos"
     }
   }
 }

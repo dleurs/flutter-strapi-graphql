@@ -18,9 +18,9 @@ class FormLoginSignupBloc
       try {
         bool isEmailExist = await _provider.isEmailExist(email: event.email);
         if (isEmailExist) {
-          yield CheckEmailAlreadyExist();
+          yield EmailAlreadyExist();
         } else {
-          yield CheckEmailDoesNotExist();
+          yield EmailDoesNotExist();
         }
       } catch (e) {
         yield CheckEmailError(error: 'Login failed');
