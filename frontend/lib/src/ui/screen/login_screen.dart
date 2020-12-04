@@ -157,14 +157,10 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                   children: toList(
                     () sync* {
                       yield SizedBox(height: 34.0);
-                      /*  yield Text(
-                        (!_showLoginForm && !_showLoginForm)
-                            ? "Enter your email address"
-                            : (_showLoginForm)
-                                ? "Email found"
-                                : "Email not found",
-                        style: Theme.of(context).textTheme.headline6,
-                      ); */
+                      yield Text(
+                        "Welcome",
+                        style: Theme.of(context).textTheme.headline5,
+                      );
                       yield SizedBox(height: 24.0);
                       yield email;
                       if (_showSpinningCircleStartSearchingEmail)
@@ -195,8 +191,8 @@ class _LoginScreenState extends BaseScreenState<LoginScreen> {
                                   SizedBox(height: 17.0),
                                   Text(
                                       snapshot.data
-                                          ? 'Email found'
-                                          : 'New email',
+                                          ? 'Email exists. Please login :'
+                                          : 'New email. Please sign Up : ',
                                       style: TextStyle(
                                           fontSize: Theme.of(context)
                                               .textTheme

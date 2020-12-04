@@ -1,51 +1,31 @@
+import 'package:flutter/material.dart';
 import 'package:frontend/src/core/storage_manager.dart';
 import 'package:frontend/src/models/authentication/token.dart';
 
-class AuthenticationManager {
-  AuthenticationManager._privateConstructor();
-
-  static final AuthenticationManager _instance =
-      AuthenticationManager._privateConstructor();
-
-  static AuthenticationManager get instance => _instance;
-
-  static const String _AUTH_KEY = "frontend.authentication";
-
-  static const String IS_LOGGED_IN = "isLoggedIn";
-
-  static const String LOGIN = "login";
-
-  static const String PASSWORD = "password";
-
-  static const String TOKEN = "token";
-
-  static const String USER_ID = "userId";
-
-  static void load() async {
-    await _instance._load();
-  }
-
-  final StorageManager _storageManager = StorageManager(_AUTH_KEY);
-
+class AuthProvider extends ChangeNotifier {
   bool _isLoggedIn;
-
   bool get isLoggedIn => _isLoggedIn;
 
   String _login;
-
   String get login => _login;
 
   String _password;
-
   String get password => _password;
 
   Token _token;
-
   Token get token => _token;
 
   String _userId;
-
   String get userId => _userId;
+
+  final StorageManager _storageManager = StorageManager(_AUTH_KEY);
+
+  static const String _AUTH_KEY = "frontend.authentication";
+  static const String IS_LOGGED_IN = "isLoggedIn";
+  static const String LOGIN = "login";
+  static const String PASSWORD = "password";
+  static const String TOKEN = "token";
+  static const String USER_ID = "userId";
 
   Future<void> _load() async {
     await _storageManager.open();
@@ -57,6 +37,7 @@ class AuthenticationManager {
     if (tokenJson != null) {
       _token = Token.fromJson(tokenJson);
     }
+    notifyListeners();
   }
 
   Future<void> doLogin(String login, String password, Token token) async {
@@ -64,28 +45,7 @@ class AuthenticationManager {
     _login = login;
     _password = password;
     _token = token;
-    await _save();
-  }
-
-  Future<void> saveUserId(String userId) async {
-    _userId = userId;
-    await _save();
-  }
-
-  Future<void> updateCredentials(
-      {String login, String password, Token token}) async {
-    if (login != null) {
-      _login = login;
-    }
-
-    if (password != null) {
-      _password = password;
-    }
-
-    if (token != null) {
-      _token = token;
-    }
-
+    notifyListeners();
     await _save();
   }
 
