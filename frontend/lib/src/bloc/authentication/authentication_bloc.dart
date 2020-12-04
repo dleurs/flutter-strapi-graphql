@@ -17,10 +17,11 @@ class AuthenticationBloc
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
     yield AuthenticationProcessing();
+
     if (event is LoginEvent) {
       try {
-        Token token =
-            await _provider.login(email: event.login, password: event.password);
+        Token token = await _provider.login(
+            email: event.login.toLowerCase(), password: event.password);
         await AuthenticationManager.instance
             .doLogin(event.login, event.password, token);
         yield AuthenticationSuccess();
@@ -30,9 +31,11 @@ class AuthenticationBloc
       }
     }
     if (event is LogoutEvent) {
-      await _provider.logout();
-      AuthenticationManager.instance.doLogout();
-      yield LoggedOut();
+      try {
+        await _provider.logout();
+        AuthenticationManager.instance.doLogout();
+        yield LoggedOut();
+      } catch (e) {}
     }
   }
 }

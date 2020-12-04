@@ -5,7 +5,7 @@ import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/models/route_config.dart';
 import 'package:frontend/src/ui/screen/home_screen.dart';
-import 'package:frontend/src/ui/screen/login_screen.dart';
+import 'package:frontend/src/ui/screen/login_signup_screen.dart';
 
 import 'bloc/authentication/authentication_bloc.dart';
 
@@ -31,7 +31,8 @@ class App extends StatelessWidget {
       } else {
         Log.debug('Login for route named: ${settings.name}');
         return MaterialPageRoute(
-            builder: (context) => LoginScreen(targetRouteName: settings.name));
+            builder: (context) =>
+                LoginSignupScreen(targetRouteName: settings.name));
       }
     } else {
       return _buildAuthorizedRoute(settings);
@@ -47,7 +48,8 @@ class App extends StatelessWidget {
                 HomeScreen(title: 'Flutter Demo Starter App'));
       case AppRoutes.login:
         return MaterialPageRoute(
-            builder: (context) => LoginScreen(targetRouteName: AppRoutes.home));
+            builder: (context) =>
+                LoginSignupScreen(targetRouteName: AppRoutes.home));
       default:
         return MaterialPageRoute(
             builder: (context) =>
