@@ -23,7 +23,7 @@ class FormLoginSignupBloc
           yield EmailDoesNotExist();
         }
       } catch (e) {
-        yield CheckEmailError(error: 'Login failed');
+        yield CheckEmailError(error: 'Checking email failed');
       }
     }
     if (event is CheckEmailReset) {

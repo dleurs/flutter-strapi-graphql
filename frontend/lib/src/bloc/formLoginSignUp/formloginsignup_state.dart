@@ -17,14 +17,14 @@ class CheckEmailProcessing extends FormLoginSignupState {
   }
 }
 
-class CheckEmailAlreadyExist extends FormLoginSignupState {
+class EmailAlreadyExist extends FormLoginSignupState {
   @override
   String toString() {
     return 'CheckEmailAlreadyExist';
   }
 }
 
-class CheckEmailDoesNotExist extends FormLoginSignupState {
+class EmailDoesNotExist extends FormLoginSignupState {
   @override
   String toString() {
     return 'CheckEmailDoesNotExist';

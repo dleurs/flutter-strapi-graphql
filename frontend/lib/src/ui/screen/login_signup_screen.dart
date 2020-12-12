@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/src/api/authentication_api_provider.dart';
+import 'package:frontend/src/bloc/authentication/bloc.dart';
 import 'package:frontend/src/bloc/formLoginSignUp/bloc.dart';
 import 'package:frontend/src/helpers/constant.dart';
 import 'package:frontend/src/helpers/toList.dart';
@@ -19,17 +20,17 @@ class LoginSignupScreen extends StatefulWidget {
 }
 
 class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
-  FormLoginSignupBloc _bloc;
+  FormLoginSignupBloc _blocForm;
 
   @override
   void initState() {
     super.initState();
-    _bloc = FormLoginSignupBloc(AuthenticationApiProvider());
+    _blocForm = FormLoginSignupBloc(AuthenticationApiProvider());
   }
 
   @override
   void dispose() {
-    _bloc.close();
+    _blocForm.close();
     super.dispose();
   }
 
@@ -44,35 +45,40 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      controller: _email,
-      validator: Validator.validateEmail,
-      decoration: InputDecoration(
-        prefixIcon: Icon(
-          Icons.email,
-          color: Colors.grey,
+    TextFormField email({@required bool emailVerified}) {
+      return TextFormField(
+        readOnly: emailVerified,
+        style:
+            TextStyle(color: emailVerified ? Colors.grey[700] : Colors.black),
+        keyboardType: TextInputType.emailAddress,
+        autofocus: false,
+        controller: _email,
+        validator: Validator.validateEmail,
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.email,
+            color: Colors.grey,
+          ),
+          suffixIcon: _showModifyEmailIcon
+              ? IconButton(
+                  onPressed: () {
+                    _showModifyEmailIcon = false;
+                    _email.text = "";
+                    _blocForm.add(CheckEmailReset());
+                  },
+                  icon: Icon(Icons.cached_outlined))
+              : SizedBox(),
+          hintText: 'Email',
+          contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
         ),
-        suffixIcon: _showModifyEmailIcon
-            ? IconButton(
-                onPressed: () {
-                  _showModifyEmailIcon = false;
-                  _email.text = "";
-                  _bloc.add(CheckEmailReset());
-                },
-                icon: Icon(Icons.cached_outlined))
-            : SizedBox(),
-        hintText: 'Email',
-        contentPadding: EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-      onChanged: (String email) {
-        setState(() {
-          _showModifyEmailIcon = true;
-        });
-      },
-    );
+        onChanged: (String email) {
+          setState(() {
+            _showModifyEmailIcon = true;
+          });
+        },
+      );
+    }
 
     final password = TextFormField(
       autofocus: false,
@@ -125,79 +131,122 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                         style: Theme.of(context).textTheme.headline5,
                       );
                       yield SizedBox(height: Const.smallHeight);
-                      yield email;
-                      yield SizedBox(height: Const.smallHeight);
+
                       yield BlocBuilder<FormLoginSignupBloc,
                           FormLoginSignupState>(
-                        cubit: _bloc,
-                        builder: (context, state) {
-                          if (state is FormLoginSignupInitial) {
-                            return ElevatedButton(
-                              child: Text(
-                                'Login / Signup',
-                                style: TextStyle(
-                                    fontSize: Theme.of(context)
-                                        .textTheme
-                                        .headline6
-                                        .fontSize),
-                              ),
-                              onPressed: () async {
-                                if (_formKey.currentState.validate()) {
-                                  _bloc
-                                      .add(CheckEmailEvent(email: _email.text));
-                                }
-                              },
-                            );
-                          }
-                          if (state is CheckEmailProcessing) {
-                            return SpinKitCircle(
-                              color: Theme.of(context).accentColor,
-                              size: 70.0,
-                            );
-                          }
-                          if (state is EmailAlreadyExist ||
-                              state is EmailDoesNotExist) {
+                        cubit: _blocForm,
+                        builder: (context, formState) {
+                          if (formState is FormLoginSignupInitial) {
                             return Column(
                               children: [
-                                Text(
-                                    (state is EmailAlreadyExist)
-                                        ? 'Email exists'
-                                        : 'New email',
+                                email(emailVerified: false),
+                                SizedBox(height: Const.smallHeight),
+                                ElevatedButton(
+                                  child: Text(
+                                    'Login / Signup',
+                                    style: TextStyle(
+                                        fontSize: Theme.of(context)
+                                            .textTheme
+                                            .headline6
+                                            .fontSize),
+                                  ),
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      _blocForm.add(
+                                          CheckEmailEvent(email: _email.text));
+                                    }
+                                  },
+                                ),
+                              ],
+                            );
+                          }
+                          if (formState is CheckEmailProcessing) {
+                            return Column(
+                              children: [
+                                email(emailVerified: false),
+                                SizedBox(height: Const.smallHeight),
+                                SpinKitCircle(
+                                  color: Theme.of(context).accentColor,
+                                  size: 70.0,
+                                ),
+                              ],
+                            );
+                          }
+                          if (formState is CheckEmailError) {
+                            return Column(
+                              children: [
+                                email(emailVerified: false),
+                                SizedBox(height: Const.smallHeight),
+                                Text("An error occured. Do you have internet ?",
                                     style: TextStyle(
                                         fontSize: Theme.of(context)
                                             .textTheme
                                             .headline6
                                             .fontSize)),
+                              ],
+                            );
+                          }
+                          if (formState is EmailAlreadyExist ||
+                              formState is EmailDoesNotExist) {
+                            return Column(
+                              children: [
+                                email(emailVerified: true),
                                 SizedBox(height: Const.smallHeight),
-                                password,
-                                SizedBox(height: Const.smallHeight),
-                                (state is EmailAlreadyExist)
-                                    ? ElevatedButton(
-                                        onPressed: () async {
-                                          if (_formKey.currentState
-                                              .validate()) {
-                                            this.doLogin(
-                                                _email.text, _password.text);
-                                          }
-                                        },
-                                        child: Text(
-                                          'Login',
+                                BlocBuilder<AuthenticationBloc,
+                                        AuthenticationState>(
+                                    builder: (context, authState) {
+                                  print(authState);
+                                  return Column(
+                                    children: [
+                                      Text(
+                                          (formState is EmailAlreadyExist)
+                                              ? 'Email exists'
+                                              : 'New email',
                                           style: TextStyle(
                                               fontSize: Theme.of(context)
                                                   .textTheme
-                                                  .headline5
-                                                  .fontSize),
-                                        ))
-                                    : ElevatedButton(
-                                        onPressed: () {},
-                                        child: Text(
-                                          'Signup',
-                                          style: TextStyle(
-                                              fontSize: Theme.of(context)
-                                                  .textTheme
-                                                  .headline5
-                                                  .fontSize),
-                                        ))
+                                                  .headline6
+                                                  .fontSize)),
+                                      SizedBox(height: Const.smallHeight),
+                                      password,
+                                      (authState is WrongPassword)
+                                          ? Text(
+                                              'Wrong password',
+                                              style:
+                                                  TextStyle(color: Colors.red),
+                                            )
+                                          : SizedBox(),
+                                      SizedBox(height: Const.smallHeight),
+                                      (formState is EmailAlreadyExist)
+                                          ? ElevatedButton(
+                                              onPressed: () async {
+                                                if (_formKey.currentState
+                                                    .validate()) {
+                                                  this.doLogin(_email.text,
+                                                      _password.text);
+                                                }
+                                              },
+                                              child: Text(
+                                                'Login',
+                                                style: TextStyle(
+                                                    fontSize: Theme.of(context)
+                                                        .textTheme
+                                                        .headline5
+                                                        .fontSize),
+                                              ))
+                                          : ElevatedButton(
+                                              onPressed: () {},
+                                              child: Text(
+                                                'Signup',
+                                                style: TextStyle(
+                                                    fontSize: Theme.of(context)
+                                                        .textTheme
+                                                        .headline5
+                                                        .fontSize),
+                                              )),
+                                    ],
+                                  );
+                                }),
                               ],
                             );
                           }

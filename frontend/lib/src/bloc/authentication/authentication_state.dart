@@ -35,6 +35,17 @@ class AuthenticationError extends AuthenticationState {
   }
 }
 
+class WrongPassword extends AuthenticationState {
+  final String error;
+
+  WrongPassword({this.error});
+
+  @override
+  String toString() {
+    return 'WrongPassword';
+  }
+}
+
 class LoggedOut extends AuthenticationState {
   @override
   String toString() {

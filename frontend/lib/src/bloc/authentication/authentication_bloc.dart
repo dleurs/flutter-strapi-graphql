@@ -26,8 +26,14 @@ class AuthenticationBloc
             .doLogin(event.login, event.password, token);
         yield AuthenticationSuccess();
       } catch (e) {
-        await AuthenticationManager.instance.doLogout();
-        yield AuthenticationError(error: 'Login failed');
+        if ((e?.errors?.last?.extensions["exception"]["data"]["message"]
+                    .last["messages"]?.last["message"] ??
+                "") ==
+            "Identifier or password invalid.") {
+          yield WrongPassword(error: "Wrong password");
+        } else {
+          yield AuthenticationError(error: 'Login failed');
+        }
       }
     }
     if (event is LogoutEvent) {
