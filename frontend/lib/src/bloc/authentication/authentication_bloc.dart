@@ -27,7 +27,7 @@ class AuthenticationBloc
         yield AuthenticationSuccess();
       } catch (e) {
         if ((e?.errors?.last?.extensions["exception"]["data"]["message"]
-                    .last["messages"]?.last["message"] ??
+                    .last["messages"]?.last["message"] ?? //TODO
                 "") ==
             "Identifier or password invalid.") {
           yield WrongPassword(error: "Wrong password");

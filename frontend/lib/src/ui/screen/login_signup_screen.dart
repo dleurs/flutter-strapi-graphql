@@ -177,12 +177,28 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                               children: [
                                 email(emailVerified: false),
                                 SizedBox(height: Const.smallHeight),
-                                Text("An error occured. Do you have internet ?",
+                                ElevatedButton(
+                                  child: Text(
+                                    'Login / Signup',
                                     style: TextStyle(
                                         fontSize: Theme.of(context)
                                             .textTheme
                                             .headline6
-                                            .fontSize)),
+                                            .fontSize),
+                                  ),
+                                  onPressed: () async {
+                                    if (_formKey.currentState.validate()) {
+                                      _blocForm.add(
+                                          CheckEmailEvent(email: _email.text));
+                                    }
+                                  },
+                                ),
+                                SizedBox(height: Const.smallHeight),
+                                Center(
+                                  child: Text(
+                                      "An error occured. Internet or server problem.",
+                                      style: TextStyle(color: Colors.red)),
+                                ),
                               ],
                             );
                           }
@@ -212,38 +228,48 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                                       (authState is WrongPassword)
                                           ? Text(
                                               'Wrong password',
-                                              style:
-                                                  TextStyle(color: Colors.red),
+                                              style: TextStyle(
+                                                  color: Colors.red,
+                                                  fontSize:
+                                                      Const.mediumFontSize),
                                             )
                                           : SizedBox(),
                                       SizedBox(height: Const.smallHeight),
-                                      (formState is EmailAlreadyExist)
-                                          ? ElevatedButton(
-                                              onPressed: () async {
-                                                if (_formKey.currentState
-                                                    .validate()) {
-                                                  this.doLogin(_email.text,
-                                                      _password.text);
-                                                }
-                                              },
-                                              child: Text(
-                                                'Login',
-                                                style: TextStyle(
-                                                    fontSize: Theme.of(context)
-                                                        .textTheme
-                                                        .headline5
-                                                        .fontSize),
-                                              ))
-                                          : ElevatedButton(
-                                              onPressed: () {},
-                                              child: Text(
-                                                'Signup',
-                                                style: TextStyle(
-                                                    fontSize: Theme.of(context)
-                                                        .textTheme
-                                                        .headline5
-                                                        .fontSize),
-                                              )),
+                                      (authState is AuthenticationProcessing)
+                                          ? SpinKitCircle(
+                                              color:
+                                                  Theme.of(context).accentColor,
+                                              size: 70.0,
+                                            )
+                                          : (formState is EmailAlreadyExist)
+                                              ? ElevatedButton(
+                                                  onPressed: () async {
+                                                    if (_formKey.currentState
+                                                        .validate()) {
+                                                      this.doLogin(_email.text,
+                                                          _password.text);
+                                                    }
+                                                  },
+                                                  child: Text(
+                                                    'Login',
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .headline5
+                                                                .fontSize),
+                                                  ))
+                                              : ElevatedButton(
+                                                  onPressed: () {}, //TODO
+                                                  child: Text(
+                                                    'Signup',
+                                                    style: TextStyle(
+                                                        fontSize:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .headline5
+                                                                .fontSize),
+                                                  )),
                                     ],
                                   );
                                 }),
