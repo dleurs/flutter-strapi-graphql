@@ -62,6 +62,8 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
             this.onLoggedOut();
           } else if (state is AuthenticationSuccess) {
             this.onLoggedIn();
+          } else if (state is WrongPassword) {
+            this.onWrongPassword();
           }
         },
         child: Scaffold(
@@ -137,4 +139,6 @@ abstract class BaseScreenState<T extends StatefulWidget> extends State<T> {
   /// once a user has been logged in
   ///
   void onLoggedIn() {}
+
+  void onWrongPassword() {}
 }

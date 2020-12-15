@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:frontend/src/bloc/authentication/bloc.dart';
 
 class Validator {
   static String validateEmail(String value) {
@@ -28,7 +29,7 @@ class Validator {
       return null;
   }
 
-  static String validatePseudo(String value) { 
+  static String validatePseudo(String value) {
     Pattern pattern = r"^[a-z0-9 \u0401\u0451\u0410-\u044f]{2,14}$";
     RegExp regex = new RegExp(pattern, caseSensitive: false);
     if (!regex.hasMatch(value))
@@ -37,7 +38,7 @@ class Validator {
       return null;
   }
 
-    static String validateTrbClcArtName(String value) { 
+  static String validateTrbClcArtName(String value) {
     //Pattern pattern = r"^[a-zA-Z0-9 ]{1,20}$";
     //Pattern pattern = r"^[a-zA-Z0-9 \u00a9\u00ae\u2000-\u3300\ud83c\ud000-\udfff\ud83d\ud000-\udfff\ud83e\ud000-\udfff]{3,16}$";
     Pattern pattern = r"^.{2,25}$";
@@ -76,7 +77,6 @@ class Validator {
     }
   }
 }
-
 
 class PseudoAlredyUsedException implements Exception {
   const PseudoAlredyUsedException();

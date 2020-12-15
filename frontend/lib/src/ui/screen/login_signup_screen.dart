@@ -34,6 +34,13 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
     super.dispose();
   }
 
+  @override
+  void onWrongPassword() {
+    setState(() {
+      _wrongPassword = true;
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _email = new TextEditingController();
@@ -42,6 +49,7 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
   bool _showPasswordEyeIcon = false;
   bool _passwordObscur = true;
   bool _showModifyEmailIcon = false;
+  bool _wrongPassword = false;
 
   @override
   Widget buildScreen(BuildContext context) {
@@ -63,7 +71,7 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
               ? IconButton(
                   onPressed: () {
                     _showModifyEmailIcon = false;
-                    _email.text = "";
+                    //_email.text = "";
                     _blocForm.add(CheckEmailReset());
                   },
                   icon: Icon(Icons.cached_outlined))
@@ -80,38 +88,45 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
       );
     }
 
-    final password = TextFormField(
-      autofocus: false,
-      obscureText: _passwordObscur,
-      controller: _password,
-      validator: Validator.validatePassword,
-      onChanged: (String password) {
-        setState(() {
-          _showPasswordEyeIcon = true;
-        });
-      },
-      decoration: InputDecoration(
-        prefixIcon: Icon(
-          Icons.lock,
-          color: Colors.grey,
-        ), // icon is 48px widget.
+    TextFormField password(BuildContext context, bool wrongPassword) {
+      return TextFormField(
+        autofocus: false,
+        obscureText: _passwordObscur,
+        controller: _password,
+        validator: (password) {
+          return Validator.validatePassword(password);
+        },
+        onChanged: (String password) {
+          BlocProvider.of<AuthenticationBloc>(context).add(ResetEvent());
+          setState(() {
+            _showPasswordEyeIcon = true;
+            _wrongPassword = false;
+          });
+        },
+        decoration: InputDecoration(
+          prefixIcon: Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ), // icon is 48px widget.
+          errorText: (wrongPassword) ? "Wrong password." : null,
 
-        suffixIcon: _showPasswordEyeIcon
-            ? IconButton(
-                onPressed: () {
-                  setState(() {
-                    _passwordObscur = !_passwordObscur;
-                  });
-                },
-                icon: Icon(Icons.remove_red_eye_outlined))
-            : SizedBox(), // icon is 48px widget.
+          suffixIcon: _showPasswordEyeIcon
+              ? IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _passwordObscur = !_passwordObscur;
+                    });
+                  },
+                  icon: Icon(Icons.remove_red_eye_outlined))
+              : SizedBox(), // icon is 48px widget.
 
-        hintText: 'Password',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(Const.mediumHeight)),
-      ),
-    );
+          hintText: 'Password',
+          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(Const.mediumHeight)),
+        ),
+      );
+    }
 
     return ListView(children: [
       Form(
@@ -224,16 +239,7 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                                                   .headline6
                                                   .fontSize)),
                                       SizedBox(height: Const.smallHeight),
-                                      password,
-                                      (authState is WrongPassword)
-                                          ? Text(
-                                              'Wrong password',
-                                              style: TextStyle(
-                                                  color: Colors.red,
-                                                  fontSize:
-                                                      Const.mediumFontSize),
-                                            )
-                                          : SizedBox(),
+                                      password(context, _wrongPassword),
                                       SizedBox(height: Const.smallHeight),
                                       (authState is AuthenticationProcessing)
                                           ? SpinKitCircle(

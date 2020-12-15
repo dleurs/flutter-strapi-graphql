@@ -43,5 +43,8 @@ class AuthenticationBloc
         yield LoggedOut();
       } catch (e) {}
     }
+    if (event is ResetEvent) {
+      yield InitialAuthenticationState();
+    }
   }
 }
