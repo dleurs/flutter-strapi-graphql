@@ -18,6 +18,14 @@ class AuthenticationBloc
       AuthenticationEvent event) async* {
     yield AuthenticationProcessing();
 
+    if (event is LoadLocalAuthenticationManager) {
+      if (AuthenticationManager.instance.isLoggedIn == null ||
+          !AuthenticationManager.instance.isLoggedIn) {
+        await AuthenticationManager.load();
+      }
+      yield AuthenticationLocalLoaded();
+    }
+
     if (event is LoginEvent) {
       try {
         Token token = await _provider.login(

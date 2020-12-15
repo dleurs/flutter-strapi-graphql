@@ -6,6 +6,7 @@ import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/models/route_config.dart';
 import 'package:frontend/src/ui/screen/home_screen.dart';
 import 'package:frontend/src/ui/screen/login_signup_screen.dart';
+import 'package:frontend/src/ui/screen/splash_screen.dart';
 
 import 'bloc/authentication/authentication_bloc.dart';
 
@@ -42,6 +43,9 @@ class App extends StatelessWidget {
   Route<dynamic> _buildAuthorizedRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.initial:
+        return MaterialPageRoute(
+            builder: (context) =>
+                SplashScreen(targetRouteName: AppRoutes.home));
       case AppRoutes.home:
         return MaterialPageRoute(
             builder: (context) =>

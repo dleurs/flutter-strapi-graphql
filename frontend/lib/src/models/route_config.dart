@@ -11,7 +11,7 @@ class AppRoutes {
   static const String logout = '/logout';
 
   static final Map<String, RouteConfig> configs = {
-    initial: RouteConfig(true),
+    initial: RouteConfig(false),
     home: RouteConfig(true),
     login: RouteConfig(false),
     logout: RouteConfig(false)

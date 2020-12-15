@@ -21,7 +21,7 @@ class AuthenticationManager {
 
   static const String USER_ID = "userId";
 
-  static void load() async {
+  static Future<void> load() async {
     await _instance._load();
   }
 

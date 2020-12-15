@@ -32,3 +32,8 @@ class ResetEvent extends AuthenticationEvent {
   @override
   List<Object> get props => [];
 }
+
+class LoadLocalAuthenticationManager extends AuthenticationEvent {
+  @override
+  List<Object> get props => [];
+}
