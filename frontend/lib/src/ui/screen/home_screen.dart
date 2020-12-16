@@ -51,7 +51,7 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
   Widget buildFloatingActionButton(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.pushNamed(context, AppRoutes.todo);
+        Navigator.pushNamed(context, AppRoutes.createTodo);
       },
       tooltip: 'Add todo',
       child: Icon(Icons.add),
@@ -94,7 +94,7 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
                             child: ListTile(
                               leading: Icon(Icons.card_travel),
                               title: Text(state.todos[index].name),
-                              subtitle: Text(state.todos[index].id.toString()),
+                              subtitle: Text(state.todos[index].id),
                             ));
                       },
                     ));

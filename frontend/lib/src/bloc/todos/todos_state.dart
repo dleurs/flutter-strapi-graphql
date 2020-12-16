@@ -17,3 +17,12 @@ class GetTodosSuccess extends TodosState {
 class GetTodosLoading extends TodosState {}
 
 class GetTodosError extends TodosState {}
+
+class CreateTodoSuccess extends TodosState {
+  final todo;
+  CreateTodoSuccess(this.todo);
+}
+
+class CreateTodoLoading extends TodosState {}
+
+class CreateTodoError extends TodosState {}

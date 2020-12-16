@@ -1,10 +1,11 @@
 query getTodos($userId: ID!) {
   todos(where: {author: $userId}) {
-    id
-    name
+    id,
+    name,
+    done,
     author {
       id,
       email
-    }
+    },
   }
 }

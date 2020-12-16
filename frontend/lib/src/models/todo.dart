@@ -1,5 +1,9 @@
+import 'package:frontend/src/models/user.dart';
+
 class Todo {
-  int id;
+  String id;
   String name;
-  Todo({this.id, this.name});
+  bool done;
+  User author;
+  Todo({this.id, this.name, this.done, this.author});
 }
