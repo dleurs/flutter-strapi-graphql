@@ -23,7 +23,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
             await TodoApiProvider().getTodos(userId: event.userId);
         yield GetTodosSuccess(todos);
       } catch (e) {
-        yield GetTodosError();
+        yield GetTodosError(error: e);
       }
     }
 
@@ -36,7 +36,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
             userId: event.userId);
         yield CreateTodoSuccess(todo);
       } catch (e) {
-        yield CreateTodoError();
+        yield CreateTodoError(error: e);
       }
     }
   }
