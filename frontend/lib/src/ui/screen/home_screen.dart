@@ -4,11 +4,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/src/bloc/todos/todos_bloc.dart';
 import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/helpers/log.dart';
+import 'package:frontend/src/models/route_config.dart';
 import 'package:frontend/src/ui/screen/base_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String title;
-  HomeScreen({Key key, @required this.title}) : super(key: key);
+  HomeScreen({Key key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -20,9 +20,6 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    print("AuthenticationManager.instance.userId : " +
-            AuthenticationManager.instance.userId.toString() ??
-        null);
     _bloc = TodosBloc();
     _bloc.add(
       GetTodos(
@@ -48,6 +45,17 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
       IconButton(
           icon: Icon(Icons.power_settings_new), onPressed: this.doLogout),
     ]);
+  }
+
+  @override
+  Widget buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.pushNamed(context, AppRoutes.todo);
+      },
+      tooltip: 'Add todo',
+      child: Icon(Icons.add),
+    );
   }
 
   @override

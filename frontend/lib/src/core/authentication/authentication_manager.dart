@@ -113,4 +113,14 @@ class AuthenticationManager {
     await _storageManager.open();
     await _storageManager.clear();
   }
+
+  String toString() {
+    String str = "AuthenticationManager{";
+    str += "_isLoggedIn:" + _isLoggedIn.toString() + ", ";
+    str += "_login:" + _login + ", ";
+    str += "_token:" + _token.toShortString() + ", ";
+    str += "_userId:" + _userId;
+    str += "}";
+    return str;
+  }
 }

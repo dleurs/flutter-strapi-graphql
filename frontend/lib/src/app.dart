@@ -7,6 +7,7 @@ import 'package:frontend/src/models/route_config.dart';
 import 'package:frontend/src/ui/screen/home_screen.dart';
 import 'package:frontend/src/ui/screen/login_signup_screen.dart';
 import 'package:frontend/src/ui/screen/splash_screen.dart';
+import 'package:frontend/src/ui/screen/todo_screen.dart';
 
 import 'bloc/authentication/authentication_bloc.dart';
 
@@ -47,9 +48,9 @@ class App extends StatelessWidget {
             builder: (context) =>
                 SplashScreen(targetRouteName: AppRoutes.home));
       case AppRoutes.home:
-        return MaterialPageRoute(
-            builder: (context) =>
-                HomeScreen(title: 'Flutter Demo Starter App'));
+        return MaterialPageRoute(builder: (context) => HomeScreen());
+      case AppRoutes.todo:
+        return MaterialPageRoute(builder: (context) => TodoScreen());
       case AppRoutes.login:
         return MaterialPageRoute(
             builder: (context) =>
