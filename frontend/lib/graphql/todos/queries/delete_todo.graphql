@@ -1,0 +1,9 @@
+mutation deleteTodo($todoId: ID!) {
+  deleteTodo(input:{
+    where:{ id:$todoId} }) {
+    todo {
+      id,
+      name
+    }
+  }
+}

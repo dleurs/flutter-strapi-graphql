@@ -6,7 +6,7 @@ import 'package:frontend/config.dart';
 import 'package:frontend/src/api/base/graphql_client.dart';
 import 'package:frontend/src/api/base/request_errors.dart';
 import 'package:frontend/src/api/errors/user.dart';
-import 'package:frontend/src/api/requests/login_request.dart';
+import 'package:frontend/src/api/requests/auth/login_request.dart';
 import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/models/authentication/token.dart';

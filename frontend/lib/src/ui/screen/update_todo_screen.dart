@@ -45,6 +45,17 @@ class _UpdateTodoScreenState extends BaseScreenState<UpdateTodoScreen> {
   }
 
   @override
+  Widget buildFloatingActionButton(BuildContext context) {
+    return FloatingActionButton(
+      onPressed: () {
+        _bloc.add(DeleteTodo(todoId: widget.todo.id));
+      },
+      tooltip: 'Delete',
+      child: Icon(Icons.delete),
+    );
+  }
+
+  @override
   Widget buildScreen(BuildContext context) {
     final todoName = TextFormField(
       keyboardType: TextInputType.emailAddress,
@@ -97,12 +108,14 @@ class _UpdateTodoScreenState extends BaseScreenState<UpdateTodoScreen> {
                             return ElevatedButton(
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
-                                  _bloc.add(UpdateTodo(
-                                      todoId: widget.todo.id,
-                                      todoName: _todoName.text,
-                                      todoDone: _todoDone,
-                                      userId: AuthenticationManager
-                                          .instance.userId));
+                                  _bloc.add(
+                                    UpdateTodo(
+                                        todoId: widget.todo.id,
+                                        todoName: _todoName.text,
+                                        todoDone: _todoDone,
+                                        userId: AuthenticationManager
+                                            .instance.userId),
+                                  );
                                 }
                               },
                               child: Text(
@@ -115,17 +128,27 @@ class _UpdateTodoScreenState extends BaseScreenState<UpdateTodoScreen> {
                               ),
                             );
                           }
-                          if (state is UpdateDeleteTodoLoading) {
+                          if (state is UpdateTodoLoading ||
+                              state is DeleteTodoLoading) {
                             return SpinKitCircle(
                               color: Theme.of(context).accentColor,
                               size: 70.0,
                             );
-                          }
-                          if (state is UpdateTodoSuccess) {
+                          } else if (state is UpdateTodoSuccess) {
                             return Column(
                               children: [
                                 Text(
                                   "Todo edited",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
+                                Text(state.todo.toString()),
+                              ],
+                            );
+                          } else if (state is DeleteTodoSuccess) {
+                            return Column(
+                              children: [
+                                Text(
+                                  "Todo deleted",
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
                                 Text(state.todo.toString()),
@@ -138,7 +161,10 @@ class _UpdateTodoScreenState extends BaseScreenState<UpdateTodoScreen> {
                                   "Error",
                                   style: Theme.of(context).textTheme.headline5,
                                 ),
-                                (state is UpdateDeleteTodoError)
+                                (state is UpdateTodoError)
+                                    ? Text(state.error)
+                                    : SizedBox(),
+                                (state is DeleteTodoError) // UpdateTodoError || DeleteTodoError does not worked
                                     ? Text(state.error)
                                     : SizedBox(),
                               ],

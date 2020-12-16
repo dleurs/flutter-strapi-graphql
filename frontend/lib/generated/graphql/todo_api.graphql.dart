@@ -584,3 +584,138 @@ class UpdateTodoMutation
   UpdateTodo$Mutation parse(Map<String, dynamic> json) =>
       UpdateTodo$Mutation.fromJson(json);
 }
+
+@JsonSerializable(explicitToJson: true)
+class DeleteTodo$Mutation$deleteTodoPayload$Todo with EquatableMixin {
+  DeleteTodo$Mutation$deleteTodoPayload$Todo();
+
+  factory DeleteTodo$Mutation$deleteTodoPayload$Todo.fromJson(
+          Map<String, dynamic> json) =>
+      _$DeleteTodo$Mutation$deleteTodoPayload$TodoFromJson(json);
+
+  String id;
+
+  String name;
+
+  @override
+  List<Object> get props => [id, name];
+  Map<String, dynamic> toJson() =>
+      _$DeleteTodo$Mutation$deleteTodoPayload$TodoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteTodo$Mutation$deleteTodoPayload with EquatableMixin {
+  DeleteTodo$Mutation$deleteTodoPayload();
+
+  factory DeleteTodo$Mutation$deleteTodoPayload.fromJson(
+          Map<String, dynamic> json) =>
+      _$DeleteTodo$Mutation$deleteTodoPayloadFromJson(json);
+
+  DeleteTodo$Mutation$deleteTodoPayload$Todo todo;
+
+  @override
+  List<Object> get props => [todo];
+  Map<String, dynamic> toJson() =>
+      _$DeleteTodo$Mutation$deleteTodoPayloadToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteTodo$Mutation with EquatableMixin {
+  DeleteTodo$Mutation();
+
+  factory DeleteTodo$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$DeleteTodo$MutationFromJson(json);
+
+  DeleteTodo$Mutation$deleteTodoPayload deleteTodo;
+
+  @override
+  List<Object> get props => [deleteTodo];
+  Map<String, dynamic> toJson() => _$DeleteTodo$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteTodoArguments extends JsonSerializable with EquatableMixin {
+  DeleteTodoArguments({@required this.todoId});
+
+  factory DeleteTodoArguments.fromJson(Map<String, dynamic> json) =>
+      _$DeleteTodoArgumentsFromJson(json);
+
+  final String todoId;
+
+  @override
+  List<Object> get props => [todoId];
+  Map<String, dynamic> toJson() => _$DeleteTodoArgumentsToJson(this);
+}
+
+class DeleteTodoMutation
+    extends GraphQLQuery<DeleteTodo$Mutation, DeleteTodoArguments> {
+  DeleteTodoMutation({this.variables});
+
+  @override
+  final DocumentNode document = DocumentNode(definitions: [
+    OperationDefinitionNode(
+        type: OperationType.mutation,
+        name: NameNode(value: 'deleteTodo'),
+        variableDefinitions: [
+          VariableDefinitionNode(
+              variable: VariableNode(name: NameNode(value: 'todoId')),
+              type: NamedTypeNode(name: NameNode(value: 'ID'), isNonNull: true),
+              defaultValue: DefaultValueNode(value: null),
+              directives: [])
+        ],
+        directives: [],
+        selectionSet: SelectionSetNode(selections: [
+          FieldNode(
+              name: NameNode(value: 'deleteTodo'),
+              alias: null,
+              arguments: [
+                ArgumentNode(
+                    name: NameNode(value: 'input'),
+                    value: ObjectValueNode(fields: [
+                      ObjectFieldNode(
+                          name: NameNode(value: 'where'),
+                          value: ObjectValueNode(fields: [
+                            ObjectFieldNode(
+                                name: NameNode(value: 'id'),
+                                value: VariableNode(
+                                    name: NameNode(value: 'todoId')))
+                          ]))
+                    ]))
+              ],
+              directives: [],
+              selectionSet: SelectionSetNode(selections: [
+                FieldNode(
+                    name: NameNode(value: 'todo'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                          name: NameNode(value: 'id'),
+                          alias: null,
+                          arguments: [],
+                          directives: [],
+                          selectionSet: null),
+                      FieldNode(
+                          name: NameNode(value: 'name'),
+                          alias: null,
+                          arguments: [],
+                          directives: [],
+                          selectionSet: null)
+                    ]))
+              ]))
+        ]))
+  ]);
+
+  @override
+  final String operationName = 'deleteTodo';
+
+  @override
+  final DeleteTodoArguments variables;
+
+  @override
+  List<Object> get props => [document, operationName, variables];
+  @override
+  DeleteTodo$Mutation parse(Map<String, dynamic> json) =>
+      DeleteTodo$Mutation.fromJson(json);
+}

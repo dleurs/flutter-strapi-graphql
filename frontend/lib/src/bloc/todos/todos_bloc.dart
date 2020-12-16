@@ -41,7 +41,7 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
     }
 
     if (event is UpdateTodo) {
-      yield UpdateDeleteTodoLoading();
+      yield UpdateTodoLoading();
       try {
         Todo todo = await TodoApiProvider().updateTodo(
             todoId: event.todoId,
@@ -50,7 +50,19 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
             userId: event.userId);
         yield UpdateTodoSuccess(todo);
       } catch (e) {
-        yield UpdateDeleteTodoError(error: e);
+        yield UpdateTodoError(error: e);
+      }
+    }
+
+    if (event is DeleteTodo) {
+      yield DeleteTodoLoading();
+      try {
+        Todo todo = await TodoApiProvider().deleteTodo(
+          todoId: event.todoId,
+        );
+        yield DeleteTodoSuccess(todo);
+      } catch (e) {
+        yield DeleteTodoError(error: e);
       }
     }
   }

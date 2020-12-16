@@ -340,3 +340,89 @@ Map<String, dynamic> _$UpdateTodoArgumentsToJson(UpdateTodoArguments instance) {
   writeNotNull('authorId', instance.authorId);
   return val;
 }
+
+DeleteTodo$Mutation$deleteTodoPayload$Todo
+    _$DeleteTodo$Mutation$deleteTodoPayload$TodoFromJson(
+        Map<String, dynamic> json) {
+  return DeleteTodo$Mutation$deleteTodoPayload$Todo()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
+}
+
+Map<String, dynamic> _$DeleteTodo$Mutation$deleteTodoPayload$TodoToJson(
+    DeleteTodo$Mutation$deleteTodoPayload$Todo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  return val;
+}
+
+DeleteTodo$Mutation$deleteTodoPayload
+    _$DeleteTodo$Mutation$deleteTodoPayloadFromJson(Map<String, dynamic> json) {
+  return DeleteTodo$Mutation$deleteTodoPayload()
+    ..todo = json['todo'] == null
+        ? null
+        : DeleteTodo$Mutation$deleteTodoPayload$Todo.fromJson(
+            json['todo'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$DeleteTodo$Mutation$deleteTodoPayloadToJson(
+    DeleteTodo$Mutation$deleteTodoPayload instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('todo', instance.todo?.toJson());
+  return val;
+}
+
+DeleteTodo$Mutation _$DeleteTodo$MutationFromJson(Map<String, dynamic> json) {
+  return DeleteTodo$Mutation()
+    ..deleteTodo = json['deleteTodo'] == null
+        ? null
+        : DeleteTodo$Mutation$deleteTodoPayload.fromJson(
+            json['deleteTodo'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$DeleteTodo$MutationToJson(DeleteTodo$Mutation instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('deleteTodo', instance.deleteTodo?.toJson());
+  return val;
+}
+
+DeleteTodoArguments _$DeleteTodoArgumentsFromJson(Map<String, dynamic> json) {
+  return DeleteTodoArguments(
+    todoId: json['todoId'] as String,
+  );
+}
+
+Map<String, dynamic> _$DeleteTodoArgumentsToJson(DeleteTodoArguments instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('todoId', instance.todoId);
+  return val;
+}

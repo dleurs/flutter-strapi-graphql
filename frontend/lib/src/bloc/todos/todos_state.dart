@@ -38,11 +38,21 @@ class UpdateTodoSuccess extends TodosState {
   UpdateTodoSuccess(this.todo);
 }
 
-class DeleteTodoSuccess extends TodosState {}
+class DeleteTodoSuccess extends TodosState {
+  final Todo todo;
+  DeleteTodoSuccess(this.todo);
+}
 
-class UpdateDeleteTodoLoading extends TodosState {}
+class UpdateTodoLoading extends TodosState {}
 
-class UpdateDeleteTodoError extends TodosState {
+class DeleteTodoLoading extends TodosState {}
+
+class UpdateTodoError extends TodosState {
   final error;
-  UpdateDeleteTodoError({this.error});
+  UpdateTodoError({this.error});
+}
+
+class DeleteTodoError extends TodosState {
+  final error;
+  DeleteTodoError({this.error});
 }

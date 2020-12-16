@@ -1,9 +1,9 @@
 import 'package:artemis/client.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/config.dart';
-import 'package:frontend/src/api/requests/is_email_exist_request.dart';
-import 'package:frontend/src/api/requests/login_request.dart';
-import 'package:frontend/src/api/requests/register_request.dart';
+import 'package:frontend/src/api/requests/auth/is_email_exist_request.dart';
+import 'package:frontend/src/api/requests/auth/login_request.dart';
+import 'package:frontend/src/api/requests/auth/register_request.dart';
 import 'package:frontend/src/models/authentication/token.dart';
 import 'package:tuple/tuple.dart';
 
