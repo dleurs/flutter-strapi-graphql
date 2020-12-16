@@ -2,13 +2,10 @@
 
 Link Flutter and Strapi locally 
 
-![](/assets/phone.gif)
+![app-backend-demo](/assets/app-backend-demo.gif)
 
-![](/assets/bash-strapi.png)
+Strapi locally<a href="https://stackoverflow.com/questions/60001536/flutter-socketexception-socketexception-os-error-connection-refused-errno"> does not work with Flutter Android</a> but <strong>works with Flutter iOS on simulator</strong>.
 
-Strapi locally<a href="https://stackoverflow.com/questions/60001536/flutter-socketexception-socketexception-os-error-connection-refused-errno"> does not work with Flutter Android</a> but works with Flutter iOS.
-
-!! Security issue, GraphQL does not support findOne for now !!
 
 To run strapi locally :
 ```bash
@@ -82,5 +79,4 @@ yarn create strapi-app my-project --quickstart
 - In Permissions, application > todos, add find and findone. Save
 - In Permissions, users-permissions > user, add find and findone. Save
 
-It is dangerous to leave find !!
 
