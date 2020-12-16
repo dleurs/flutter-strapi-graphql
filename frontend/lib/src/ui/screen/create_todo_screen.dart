@@ -121,14 +121,19 @@ class _CreateTodoScreenState extends BaseScreenState<CreateTodoScreen> {
                           if (state is CreateTodoSuccess) {
                             return Column(
                               children: [
-                                Text("Todo created"),
+                                Text(
+                                  "Todo created",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
                                 Text(state.todo.toString()),
                               ],
                             );
                           } else {
                             return Column(
                               children: [
-                                Text("Error"),
+                                Text("Error",
+                                    style:
+                                        Theme.of(context).textTheme.headline5),
                                 (state is CreateTodoError)
                                     ? Text(state.error)
                                     : SizedBox(),

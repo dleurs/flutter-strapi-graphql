@@ -5,7 +5,7 @@ class User {
 
   String toString() {
     String str = "User{";
-    str += "if:" + (id ?? "null") + ", ";
+    str += "id:" + (id ?? "null") + ", ";
     str += "name:" + (email ?? "null");
     str += "}";
     return str;

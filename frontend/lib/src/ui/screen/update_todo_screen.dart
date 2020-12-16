@@ -100,7 +100,7 @@ class _UpdateTodoScreenState extends BaseScreenState<UpdateTodoScreen> {
                                   _bloc.add(UpdateTodo(
                                       todoId: widget.todo.id,
                                       todoName: _todoName.text,
-                                      //todoDone: _todoDone,
+                                      todoDone: _todoDone,
                                       userId: AuthenticationManager
                                           .instance.userId));
                                 }
@@ -124,14 +124,20 @@ class _UpdateTodoScreenState extends BaseScreenState<UpdateTodoScreen> {
                           if (state is UpdateTodoSuccess) {
                             return Column(
                               children: [
-                                Text("Todo edited"),
+                                Text(
+                                  "Todo edited",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
                                 Text(state.todo.toString()),
                               ],
                             );
                           } else {
                             return Column(
                               children: [
-                                Text("Error"),
+                                Text(
+                                  "Error",
+                                  style: Theme.of(context).textTheme.headline5,
+                                ),
                                 (state is UpdateDeleteTodoError)
                                     ? Text(state.error)
                                     : SizedBox(),
