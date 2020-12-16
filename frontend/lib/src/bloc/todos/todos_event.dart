@@ -7,4 +7,11 @@ abstract class TodosEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetTodos extends TodosEvent {}
+class GetTodos extends TodosEvent {
+  final String userId;
+
+  GetTodos({@required this.userId});
+
+  @override
+  List<Object> get props => [userId];
+}

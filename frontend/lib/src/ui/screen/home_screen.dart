@@ -20,8 +20,15 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    print("AuthenticationManager.instance.userId : " +
+            AuthenticationManager.instance.userId.toString() ??
+        null);
     _bloc = TodosBloc();
-    _bloc.add(GetTodos());
+    _bloc.add(
+      GetTodos(
+        userId: AuthenticationManager.instance.userId,
+      ),
+    );
   }
 
   @override
@@ -36,7 +43,7 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
       IconButton(
           icon: Icon(Icons.refresh),
           onPressed: () {
-            _bloc.add(GetTodos());
+            _bloc.add(GetTodos(userId: AuthenticationManager.instance.userId));
           }),
       IconButton(
           icon: Icon(Icons.power_settings_new), onPressed: this.doLogout),

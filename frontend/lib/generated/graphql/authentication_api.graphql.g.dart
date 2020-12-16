@@ -6,17 +6,37 @@ part of 'authentication_api.graphql.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+    _$Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeFromJson(
+        Map<String, dynamic> json) {
+  return Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe()
+    ..id = json['id'] as String;
+}
+
+Map<String, dynamic>
+    _$Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeToJson(
+            Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+                instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+        };
+
 Login$Mutation$UsersPermissionsLoginPayload
     _$Login$Mutation$UsersPermissionsLoginPayloadFromJson(
         Map<String, dynamic> json) {
   return Login$Mutation$UsersPermissionsLoginPayload()
-    ..jwt = json['jwt'] as String;
+    ..jwt = json['jwt'] as String
+    ..user = json['user'] == null
+        ? null
+        : Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+            .fromJson(json['user'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$Login$Mutation$UsersPermissionsLoginPayloadToJson(
         Login$Mutation$UsersPermissionsLoginPayload instance) =>
     <String, dynamic>{
       'jwt': instance.jwt,
+      'user': instance.user?.toJson(),
     };
 
 Login$Mutation _$Login$MutationFromJson(Map<String, dynamic> json) {
@@ -45,17 +65,37 @@ Map<String, dynamic> _$LoginArgumentsToJson(LoginArguments instance) =>
       'password': instance.password,
     };
 
+Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+    _$Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeFromJson(
+        Map<String, dynamic> json) {
+  return Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe()
+    ..id = json['id'] as String;
+}
+
+Map<String, dynamic>
+    _$Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeToJson(
+            Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+                instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+        };
+
 Register$Mutation$UsersPermissionsLoginPayload
     _$Register$Mutation$UsersPermissionsLoginPayloadFromJson(
         Map<String, dynamic> json) {
   return Register$Mutation$UsersPermissionsLoginPayload()
-    ..jwt = json['jwt'] as String;
+    ..jwt = json['jwt'] as String
+    ..user = json['user'] == null
+        ? null
+        : Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+            .fromJson(json['user'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$Register$Mutation$UsersPermissionsLoginPayloadToJson(
         Register$Mutation$UsersPermissionsLoginPayload instance) =>
     <String, dynamic>{
       'jwt': instance.jwt,
+      'user': instance.user?.toJson(),
     };
 
 Register$Mutation _$Register$MutationFromJson(Map<String, dynamic> json) {

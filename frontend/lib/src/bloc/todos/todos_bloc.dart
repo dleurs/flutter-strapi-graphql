@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend/src/api/todo_api_provider.dart';
 import 'package:frontend/src/models/todo.dart';
 
@@ -18,7 +19,8 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
     if (event is GetTodos) {
       yield GetTodosLoading();
       try {
-        List<Todo> todos = await TodoApiProvider().getTodos();
+        List<Todo> todos =
+            await TodoApiProvider().getTodos(userId: event.userId);
         yield GetTodosSuccess(todos);
       } catch (e) {
         yield GetTodosError();

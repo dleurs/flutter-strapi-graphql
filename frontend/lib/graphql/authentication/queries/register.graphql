@@ -3,6 +3,9 @@ register(input: {
   email: $email, 
   username: $email,
   password: $password }) {
-    jwt
+    jwt,
+    user{
+      id
+    }
   }
 }

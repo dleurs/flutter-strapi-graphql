@@ -6,8 +6,10 @@ import 'package:frontend/src/models/authentication/token.dart';
 import 'package:json_annotation/src/json_serializable.dart';
 
 import 'package:frontend/src/api/base/graphql_request.dart';
+import 'package:tuple/tuple.dart';
 
-class RegisterRequest extends GraphQLRequest<Token, Register$Mutation> {
+class RegisterRequest
+    extends GraphQLRequest<Tuple2<Token, String>, Register$Mutation> {
   final String email;
   final String password;
   RegisterRequest(ArtemisClient client,
@@ -21,7 +23,10 @@ class RegisterRequest extends GraphQLRequest<Token, Register$Mutation> {
   }
 
   @override
-  Token buildResponse(Register$Mutation data) {
-    return Token(accessToken: data.register.jwt);
+  Tuple2<Token, String> buildResponse(Register$Mutation data) {
+    Token token = Token(accessToken: data.register.jwt);
+    String userId = data.register.user.id;
+
+    return Tuple2<Token, String>(token, userId);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:artemis/client.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend/config.dart';
 import 'package:frontend/src/api/base/graphql_client.dart';
 import 'package:frontend/src/api/interceptor/authorization_interceptor.dart';
@@ -11,7 +12,7 @@ class TodoApiProvider {
           .addInterceptor(AuthorizationInterceptor())
           .build());
 
-  Future<List<Todo>> getTodos() {
-    return GetTodosRequest(client).call();
+  Future<List<Todo>> getTodos({@required String userId}) {
+    return GetTodosRequest(client, userId: userId).call();
   }
 }

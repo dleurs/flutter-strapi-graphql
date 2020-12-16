@@ -59,11 +59,13 @@ class AuthenticationManager {
     }
   }
 
-  Future<void> doLogin(String login, String password, Token token) async {
+  Future<void> doLogin(
+      {String login, String password, Token token, String userId}) async {
     _isLoggedIn = true;
     _login = login;
     _password = password;
     _token = token;
+    _userId = userId;
     await _save();
   }
 
@@ -73,7 +75,7 @@ class AuthenticationManager {
   }
 
   Future<void> updateCredentials(
-      {String login, String password, Token token}) async {
+      {String login, String password, Token token, String userId}) async {
     if (login != null) {
       _login = login;
     }

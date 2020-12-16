@@ -1,13 +1,11 @@
 import 'package:artemis/client.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/config.dart';
-import 'package:frontend/generated/graphql/authentication_api.graphql.dart';
-import 'package:frontend/src/api/base/graphql_client.dart';
-import 'package:frontend/src/api/interceptor/authorization_interceptor.dart';
 import 'package:frontend/src/api/requests/is_email_exist_request.dart';
 import 'package:frontend/src/api/requests/login_request.dart';
 import 'package:frontend/src/api/requests/register_request.dart';
 import 'package:frontend/src/models/authentication/token.dart';
+import 'package:tuple/tuple.dart';
 
 class AuthenticationApiProvider {
   ArtemisClient get _client => ArtemisClient(Config.authApiEndpoint);
@@ -18,11 +16,13 @@ class AuthenticationApiProvider {
     return IsEmailExistRequest(_client, email: email).call();
   }
 
-  Future<Token> login({@required String email, @required String password}) {
+  Future<Tuple2<Token, String>> login(
+      {@required String email, @required String password}) {
     return LoginRequest(_client, email: email, password: password).call();
   }
 
-  Future<Token> register({@required String email, @required String password}) {
+  Future<Tuple2<Token, String>> register(
+      {@required String email, @required String password}) {
     return RegisterRequest(_client, email: email, password: password).call();
   }
 

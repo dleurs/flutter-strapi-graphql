@@ -8,6 +8,25 @@ import 'package:gql/ast.dart';
 part 'authentication_api.graphql.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+class Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+    with EquatableMixin {
+  Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe();
+
+  factory Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe.fromJson(
+          Map<String, dynamic> json) =>
+      _$Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeFromJson(
+          json);
+
+  String id;
+
+  @override
+  List<Object> get props => [id];
+  Map<String, dynamic> toJson() =>
+      _$Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Login$Mutation$UsersPermissionsLoginPayload with EquatableMixin {
   Login$Mutation$UsersPermissionsLoginPayload();
 
@@ -17,8 +36,10 @@ class Login$Mutation$UsersPermissionsLoginPayload with EquatableMixin {
 
   String jwt;
 
+  Login$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe user;
+
   @override
-  List<Object> get props => [jwt];
+  List<Object> get props => [jwt, user];
   Map<String, dynamic> toJson() =>
       _$Login$Mutation$UsersPermissionsLoginPayloadToJson(this);
 }
@@ -100,7 +121,20 @@ class LoginMutation extends GraphQLQuery<Login$Mutation, LoginArguments> {
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: null)
+                    selectionSet: null),
+                FieldNode(
+                    name: NameNode(value: 'user'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                          name: NameNode(value: 'id'),
+                          alias: null,
+                          arguments: [],
+                          directives: [],
+                          selectionSet: null)
+                    ]))
               ]))
         ]))
   ]);
@@ -119,6 +153,25 @@ class LoginMutation extends GraphQLQuery<Login$Mutation, LoginArguments> {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe
+    with EquatableMixin {
+  Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe();
+
+  factory Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe.fromJson(
+          Map<String, dynamic> json) =>
+      _$Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeFromJson(
+          json);
+
+  String id;
+
+  @override
+  List<Object> get props => [id];
+  Map<String, dynamic> toJson() =>
+      _$Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMeToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Register$Mutation$UsersPermissionsLoginPayload with EquatableMixin {
   Register$Mutation$UsersPermissionsLoginPayload();
 
@@ -128,8 +181,10 @@ class Register$Mutation$UsersPermissionsLoginPayload with EquatableMixin {
 
   String jwt;
 
+  Register$Mutation$UsersPermissionsLoginPayload$UsersPermissionsMe user;
+
   @override
-  List<Object> get props => [jwt];
+  List<Object> get props => [jwt, user];
   Map<String, dynamic> toJson() =>
       _$Register$Mutation$UsersPermissionsLoginPayloadToJson(this);
 }
@@ -215,7 +270,20 @@ class RegisterMutation
                     alias: null,
                     arguments: [],
                     directives: [],
-                    selectionSet: null)
+                    selectionSet: null),
+                FieldNode(
+                    name: NameNode(value: 'user'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: SelectionSetNode(selections: [
+                      FieldNode(
+                          name: NameNode(value: 'id'),
+                          alias: null,
+                          arguments: [],
+                          directives: [],
+                          selectionSet: null)
+                    ]))
               ]))
         ]))
   ]);

@@ -13,6 +13,7 @@ import 'package:frontend/src/models/authentication/token.dart';
 import 'package:http/io_client.dart';
 import 'package:http/src/base_request.dart';
 import 'package:http/src/streamed_response.dart';
+import 'package:tuple/tuple.dart';
 
 class AuthorizationInterceptor implements Interceptor {
   static const String _authorizationKey = "Authorization";
@@ -22,8 +23,11 @@ class AuthorizationInterceptor implements Interceptor {
   Future<StreamedResponse> intercept(BaseRequest request) async {
     Token tokenObj = AuthenticationManager.instance.token;
     if (tokenObj == null) {
-      tokenObj = await getToken();
-      await AuthenticationManager.instance.updateCredentials(token: tokenObj);
+      Tuple2<Token, String> res = await getToken();
+      tokenObj = res.item1;
+      String userId = res.item2;
+      await AuthenticationManager.instance
+          .updateCredentials(token: tokenObj, userId: userId);
     }
 
     addTokenToRequest(request, tokenObj);
@@ -45,7 +49,7 @@ class AuthorizationInterceptor implements Interceptor {
     return Future.value(_rebuildResponse(responseBody));
   }
 
-  Future<Token> getToken() async {
+  Future<Tuple2<Token, String>> getToken() async {
     if (AuthenticationManager.instance.isLoggedIn) {
       String login = AuthenticationManager.instance.login;
       String password = AuthenticationManager.instance.password;

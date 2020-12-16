@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:frontend/src/api/authentication_api_provider.dart';
 import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/models/authentication/token.dart';
+import 'package:tuple/tuple.dart';
 
 import './bloc.dart';
 
@@ -28,10 +29,15 @@ class AuthenticationBloc
 
     if (event is LoginEvent) {
       try {
-        Token token = await _provider.login(
+        Tuple2<Token, String> tuble = await _provider.login(
             email: event.login.toLowerCase(), password: event.password);
-        await AuthenticationManager.instance
-            .doLogin(event.login, event.password, token);
+        Token token = tuble.item1;
+        String userId = tuble.item2;
+        await AuthenticationManager.instance.doLogin(
+            login: event.login,
+            password: event.password,
+            token: token,
+            userId: userId);
         yield AuthenticationSuccess();
       } catch (e) {
         if ((e?.errors?.last?.extensions["exception"]["data"]["message"]

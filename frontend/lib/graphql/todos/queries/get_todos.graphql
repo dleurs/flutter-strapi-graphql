@@ -1,6 +1,10 @@
-query getTodos {
-  todos {
+query getTodos($userId: ID!) {
+  todos(where: {author: $userId}) {
     id
     name
+    author {
+      id,
+      email
+    }
   }
 }
