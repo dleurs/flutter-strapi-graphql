@@ -9,10 +9,10 @@ class Todo {
 
   String toString() {
     String str = "Todo{";
-    str += "if:" + id + ", ";
-    str += "name:" + name + ", ";
-    str += "done:" + done.toString() + ", ";
-    str += "author:" + author.toString();
+    str += "if:" + (id ?? "null") + ", ";
+    str += "name:" + (name ?? "null") + ", ";
+    str += "done:" + (done?.toString() ?? "null") + ", ";
+    str += "author:" + (author?.toString() ?? "null");
     str += "}";
     return str;
   }

@@ -87,6 +87,7 @@ CreateTodo$Mutation$createTodoPayload$Todo
   return CreateTodo$Mutation$createTodoPayload$Todo()
     ..id = json['id'] as String
     ..name = json['name'] as String
+    ..done = json['done'] as bool
     ..author = json['author'] == null
         ? null
         : CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUser
@@ -98,6 +99,7 @@ Map<String, dynamic> _$CreateTodo$Mutation$createTodoPayload$TodoToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'done': instance.done,
       'author': instance.author?.toJson(),
     };
 

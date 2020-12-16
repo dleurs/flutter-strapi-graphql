@@ -9,6 +9,7 @@ createTodo(input:
   }){todo{
     id,
     name, 
+    done,
     author{
       id},
   }}

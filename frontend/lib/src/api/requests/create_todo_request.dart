@@ -1,6 +1,7 @@
 import 'package:artemis/client.dart';
 import 'package:artemis/schema/graphql_query.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/src/models/user.dart';
 import 'package:json_annotation/src/json_serializable.dart';
 
 import 'package:frontend/generated/graphql/todo_api.graphql.dart';
@@ -27,6 +28,8 @@ class CreateTodoRequest extends GraphQLRequest<Todo, CreateTodo$Mutation> {
     return Todo(
       id: jsonTodo.id,
       name: jsonTodo.name,
+      done: jsonTodo.done,
+      author: User(id: jsonTodo.author.id),
     );
   }
 }

@@ -189,10 +189,12 @@ class CreateTodo$Mutation$createTodoPayload$Todo with EquatableMixin {
 
   String name;
 
+  bool done;
+
   CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUser author;
 
   @override
-  List<Object> get props => [id, name, author];
+  List<Object> get props => [id, name, done, author];
   Map<String, dynamic> toJson() =>
       _$CreateTodo$Mutation$createTodoPayload$TodoToJson(this);
 }
@@ -316,6 +318,12 @@ class CreateTodoMutation
                           selectionSet: null),
                       FieldNode(
                           name: NameNode(value: 'name'),
+                          alias: null,
+                          arguments: [],
+                          directives: [],
+                          selectionSet: null),
+                      FieldNode(
+                          name: NameNode(value: 'done'),
                           alias: null,
                           arguments: [],
                           directives: [],
