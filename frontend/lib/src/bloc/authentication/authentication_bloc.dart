@@ -27,6 +27,23 @@ class AuthenticationBloc
       yield AuthenticationLocalLoaded();
     }
 
+    if (event is RegisterEvent) {
+      try {
+        Tuple2<Token, String> tuble = await _provider.register(
+            email: event.login.toLowerCase(), password: event.password);
+        Token token = tuble.item1;
+        String userId = tuble.item2;
+        await AuthenticationManager.instance.doLogin(
+            login: event.login,
+            password: event.password,
+            token: token,
+            userId: userId);
+        yield AuthenticationSuccess();
+      } catch (e) {
+        yield AuthenticationError(error: 'Login failed');
+      }
+    }
+
     if (event is LoginEvent) {
       try {
         Tuple2<Token, String> tuble = await _provider.login(

@@ -266,7 +266,15 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                                                                 .fontSize),
                                                   ))
                                               : ElevatedButton(
-                                                  onPressed: () {}, //TODO
+                                                  onPressed: () {
+                                                    BlocProvider.of<
+                                                                AuthenticationBloc>(
+                                                            context)
+                                                        .add(RegisterEvent(
+                                                            login: _email.text,
+                                                            password: _password
+                                                                .text));
+                                                  }, //TODO
                                                   child: Text(
                                                     'Signup',
                                                     style: TextStyle(
