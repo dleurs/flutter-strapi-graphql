@@ -6,6 +6,7 @@ import 'package:frontend/src/core/authentication/authentication_manager.dart';
 import 'package:frontend/src/helpers/log.dart';
 import 'package:frontend/src/models/route_config.dart';
 import 'package:frontend/src/ui/screen/base_screen.dart';
+import 'package:frontend/src/ui/screen/update_todo_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -97,6 +98,12 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
                                   : Icons.check_box_outline_blank_rounded),
                               title: Text(state.todos[index].name),
                               subtitle: Text(state.todos[index].id),
+                              onTap: () {
+                                Navigator.pushNamed(
+                                    context, AppRoutes.updateTodo,
+                                    arguments: UpdateTodoScreenArguments(
+                                        todo: state.todos[index]));
+                              },
                             ));
                       },
                     ));

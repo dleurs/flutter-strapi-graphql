@@ -32,3 +32,17 @@ class CreateTodoError extends TodosState {
   final error;
   CreateTodoError({this.error});
 }
+
+class UpdateTodoSuccess extends TodosState {
+  final Todo todo;
+  UpdateTodoSuccess(this.todo);
+}
+
+class DeleteTodoSuccess extends TodosState {}
+
+class UpdateDeleteTodoLoading extends TodosState {}
+
+class UpdateDeleteTodoError extends TodosState {
+  final error;
+  UpdateDeleteTodoError({this.error});
+}

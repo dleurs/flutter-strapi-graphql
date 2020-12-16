@@ -29,3 +29,27 @@ class CreateTodo extends TodosEvent {
   @override
   List<Object> get props => [todoName, todoDone, userId];
 }
+
+class UpdateTodo extends TodosEvent {
+  final String todoId;
+  final String todoName;
+  final bool todoDone;
+  final String userId;
+
+  UpdateTodo(
+      {@required this.todoId, this.todoName, this.todoDone, this.userId});
+
+  @override
+  List<Object> get props => [todoName, todoDone, userId];
+}
+
+class DeleteTodo extends TodosEvent {
+  final String todoId;
+
+  DeleteTodo({
+    @required this.todoId,
+  });
+
+  @override
+  List<Object> get props => [todoId];
+}
