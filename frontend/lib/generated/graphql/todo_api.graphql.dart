@@ -264,7 +264,7 @@ class CreateTodoMutation
           VariableDefinitionNode(
               variable: VariableNode(name: NameNode(value: 'done')),
               type: NamedTypeNode(
-                  name: NameNode(value: 'bool'), isNonNull: false),
+                  name: NameNode(value: 'Boolean'), isNonNull: false),
               defaultValue: DefaultValueNode(value: null),
               directives: []),
           VariableDefinitionNode(

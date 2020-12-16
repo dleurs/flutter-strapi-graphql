@@ -17,6 +17,8 @@ targets:
               queries_glob: lib/graphql/todos/queries/*.graphql
               schema: lib/graphql/schema.graphql
           scalar_mapping:
+            - graphql_type: Boolean
+              dart_type: bool
             - graphql_type: UUID
               dart_type: String
             - graphql_type: URL

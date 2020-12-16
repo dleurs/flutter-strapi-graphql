@@ -92,7 +92,9 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
                             margin: new EdgeInsets.symmetric(
                                 horizontal: 6.0, vertical: 4.0),
                             child: ListTile(
-                              leading: Icon(Icons.card_travel),
+                              leading: Icon((state.todos[index].done)
+                                  ? Icons.check_box_outlined
+                                  : Icons.check_box_outline_blank_rounded),
                               title: Text(state.todos[index].name),
                               subtitle: Text(state.todos[index].id),
                             ));

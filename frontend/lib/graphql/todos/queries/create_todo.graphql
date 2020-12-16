@@ -1,4 +1,4 @@
-mutation createTodo($name: String!, $done: bool, $userId: ID!){
+mutation createTodo($name: String!, $done: Boolean, $userId: ID!){
 createTodo(input: 
   { data:
     {
