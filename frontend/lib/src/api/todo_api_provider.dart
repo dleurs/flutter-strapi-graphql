@@ -5,6 +5,7 @@ import 'package:frontend/src/api/base/graphql_client.dart';
 import 'package:frontend/src/api/interceptor/authorization_interceptor.dart';
 import 'package:frontend/src/api/requests/create_todo_request.dart';
 import 'package:frontend/src/api/requests/get_todos_request.dart';
+import 'package:frontend/src/api/requests/update_todo_request.dart';
 import 'package:frontend/src/models/todo.dart';
 
 class TodoApiProvider {
@@ -22,6 +23,13 @@ class TodoApiProvider {
       @required bool done,
       @required String userId}) {
     return CreateTodoRequest(client, name: todoName, done: done, userId: userId)
+        .call();
+  }
+
+  Future<Todo> updateTodo(
+      {@required String todoId, String todoName, bool done, String userId}) {
+    return UpdateTodoRequest(client,
+            todoId: todoId, name: todoName, done: done, authorId: userId)
         .call();
   }
 }

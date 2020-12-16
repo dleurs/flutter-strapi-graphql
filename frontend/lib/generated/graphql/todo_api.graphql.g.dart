@@ -15,11 +15,19 @@ GetTodos$Query$Todo$UsersPermissionsUser
 }
 
 Map<String, dynamic> _$GetTodos$Query$Todo$UsersPermissionsUserToJson(
-        GetTodos$Query$Todo$UsersPermissionsUser instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'email': instance.email,
-    };
+    GetTodos$Query$Todo$UsersPermissionsUser instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('email', instance.email);
+  return val;
+}
 
 GetTodos$Query$Todo _$GetTodos$Query$TodoFromJson(Map<String, dynamic> json) {
   return GetTodos$Query$Todo()
@@ -32,14 +40,21 @@ GetTodos$Query$Todo _$GetTodos$Query$TodoFromJson(Map<String, dynamic> json) {
             json['author'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$GetTodos$Query$TodoToJson(
-        GetTodos$Query$Todo instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'done': instance.done,
-      'author': instance.author?.toJson(),
-    };
+Map<String, dynamic> _$GetTodos$Query$TodoToJson(GetTodos$Query$Todo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  writeNotNull('done', instance.done);
+  writeNotNull('author', instance.author?.toJson());
+  return val;
+}
 
 GetTodos$Query _$GetTodos$QueryFromJson(Map<String, dynamic> json) {
   return GetTodos$Query()
@@ -50,10 +65,18 @@ GetTodos$Query _$GetTodos$QueryFromJson(Map<String, dynamic> json) {
         ?.toList();
 }
 
-Map<String, dynamic> _$GetTodos$QueryToJson(GetTodos$Query instance) =>
-    <String, dynamic>{
-      'todos': instance.todos?.map((e) => e?.toJson())?.toList(),
-    };
+Map<String, dynamic> _$GetTodos$QueryToJson(GetTodos$Query instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('todos', instance.todos?.map((e) => e?.toJson())?.toList());
+  return val;
+}
 
 GetTodosArguments _$GetTodosArgumentsFromJson(Map<String, dynamic> json) {
   return GetTodosArguments(
@@ -61,10 +84,18 @@ GetTodosArguments _$GetTodosArgumentsFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$GetTodosArgumentsToJson(GetTodosArguments instance) =>
-    <String, dynamic>{
-      'userId': instance.userId,
-    };
+Map<String, dynamic> _$GetTodosArgumentsToJson(GetTodosArguments instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('userId', instance.userId);
+  return val;
+}
 
 CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUser
     _$CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUserFromJson(
@@ -75,11 +106,19 @@ CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUser
 
 Map<String, dynamic>
     _$CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUserToJson(
-            CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUser
-                instance) =>
-        <String, dynamic>{
-          'id': instance.id,
-        };
+        CreateTodo$Mutation$createTodoPayload$Todo$UsersPermissionsUser
+            instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  return val;
+}
 
 CreateTodo$Mutation$createTodoPayload$Todo
     _$CreateTodo$Mutation$createTodoPayload$TodoFromJson(
@@ -95,13 +134,21 @@ CreateTodo$Mutation$createTodoPayload$Todo
 }
 
 Map<String, dynamic> _$CreateTodo$Mutation$createTodoPayload$TodoToJson(
-        CreateTodo$Mutation$createTodoPayload$Todo instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'done': instance.done,
-      'author': instance.author?.toJson(),
-    };
+    CreateTodo$Mutation$createTodoPayload$Todo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  writeNotNull('done', instance.done);
+  writeNotNull('author', instance.author?.toJson());
+  return val;
+}
 
 CreateTodo$Mutation$createTodoPayload
     _$CreateTodo$Mutation$createTodoPayloadFromJson(Map<String, dynamic> json) {
@@ -113,10 +160,18 @@ CreateTodo$Mutation$createTodoPayload
 }
 
 Map<String, dynamic> _$CreateTodo$Mutation$createTodoPayloadToJson(
-        CreateTodo$Mutation$createTodoPayload instance) =>
-    <String, dynamic>{
-      'todo': instance.todo?.toJson(),
-    };
+    CreateTodo$Mutation$createTodoPayload instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('todo', instance.todo?.toJson());
+  return val;
+}
 
 CreateTodo$Mutation _$CreateTodo$MutationFromJson(Map<String, dynamic> json) {
   return CreateTodo$Mutation()
@@ -126,11 +181,18 @@ CreateTodo$Mutation _$CreateTodo$MutationFromJson(Map<String, dynamic> json) {
             json['createTodo'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$CreateTodo$MutationToJson(
-        CreateTodo$Mutation instance) =>
-    <String, dynamic>{
-      'createTodo': instance.createTodo?.toJson(),
-    };
+Map<String, dynamic> _$CreateTodo$MutationToJson(CreateTodo$Mutation instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('createTodo', instance.createTodo?.toJson());
+  return val;
+}
 
 CreateTodoArguments _$CreateTodoArgumentsFromJson(Map<String, dynamic> json) {
   return CreateTodoArguments(
@@ -140,10 +202,141 @@ CreateTodoArguments _$CreateTodoArgumentsFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CreateTodoArgumentsToJson(
-        CreateTodoArguments instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'done': instance.done,
-      'userId': instance.userId,
-    };
+Map<String, dynamic> _$CreateTodoArgumentsToJson(CreateTodoArguments instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('name', instance.name);
+  writeNotNull('done', instance.done);
+  writeNotNull('userId', instance.userId);
+  return val;
+}
+
+UpdateTodo$Mutation$updateTodoPayload$Todo$UsersPermissionsUser
+    _$UpdateTodo$Mutation$updateTodoPayload$Todo$UsersPermissionsUserFromJson(
+        Map<String, dynamic> json) {
+  return UpdateTodo$Mutation$updateTodoPayload$Todo$UsersPermissionsUser()
+    ..id = json['id'] as String
+    ..email = json['email'] as String;
+}
+
+Map<String, dynamic>
+    _$UpdateTodo$Mutation$updateTodoPayload$Todo$UsersPermissionsUserToJson(
+        UpdateTodo$Mutation$updateTodoPayload$Todo$UsersPermissionsUser
+            instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('email', instance.email);
+  return val;
+}
+
+UpdateTodo$Mutation$updateTodoPayload$Todo
+    _$UpdateTodo$Mutation$updateTodoPayload$TodoFromJson(
+        Map<String, dynamic> json) {
+  return UpdateTodo$Mutation$updateTodoPayload$Todo()
+    ..id = json['id'] as String
+    ..name = json['name'] as String
+    ..done = json['done'] as bool
+    ..author = json['author'] == null
+        ? null
+        : UpdateTodo$Mutation$updateTodoPayload$Todo$UsersPermissionsUser
+            .fromJson(json['author'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UpdateTodo$Mutation$updateTodoPayload$TodoToJson(
+    UpdateTodo$Mutation$updateTodoPayload$Todo instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  writeNotNull('name', instance.name);
+  writeNotNull('done', instance.done);
+  writeNotNull('author', instance.author?.toJson());
+  return val;
+}
+
+UpdateTodo$Mutation$updateTodoPayload
+    _$UpdateTodo$Mutation$updateTodoPayloadFromJson(Map<String, dynamic> json) {
+  return UpdateTodo$Mutation$updateTodoPayload()
+    ..todo = json['todo'] == null
+        ? null
+        : UpdateTodo$Mutation$updateTodoPayload$Todo.fromJson(
+            json['todo'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UpdateTodo$Mutation$updateTodoPayloadToJson(
+    UpdateTodo$Mutation$updateTodoPayload instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('todo', instance.todo?.toJson());
+  return val;
+}
+
+UpdateTodo$Mutation _$UpdateTodo$MutationFromJson(Map<String, dynamic> json) {
+  return UpdateTodo$Mutation()
+    ..updateTodo = json['updateTodo'] == null
+        ? null
+        : UpdateTodo$Mutation$updateTodoPayload.fromJson(
+            json['updateTodo'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UpdateTodo$MutationToJson(UpdateTodo$Mutation instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('updateTodo', instance.updateTodo?.toJson());
+  return val;
+}
+
+UpdateTodoArguments _$UpdateTodoArgumentsFromJson(Map<String, dynamic> json) {
+  return UpdateTodoArguments(
+    todoId: json['todoId'] as String,
+    todoName: json['todoName'] as String,
+    todoDone: json['todoDone'] as bool,
+    authorId: json['authorId'] as String,
+  );
+}
+
+Map<String, dynamic> _$UpdateTodoArgumentsToJson(UpdateTodoArguments instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('todoId', instance.todoId);
+  writeNotNull('todoName', instance.todoName);
+  writeNotNull('todoDone', instance.todoDone);
+  writeNotNull('authorId', instance.authorId);
+  return val;
+}

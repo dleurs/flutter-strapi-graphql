@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "moods",
+  "info": {
+    "name": "Mood"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "mood": {
+      "type": "string"
+    },
+    "todos": {
+      "via": "moods",
+      "collection": "todo"
+    }
+  }
+}

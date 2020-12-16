@@ -1,0 +1,22 @@
+mutation updateTodo($todoId: ID!, $todoName: String, $todoDone: Boolean, $authorId: ID)
+{
+    updateTodo(input: { 
+        where: {id:$todoId},
+        data:{
+            name:$todoName,
+            done: $todoDone,
+            author: $authorId
+  }
+})  
+{
+    todo {    
+        id,
+        name,
+        done,
+        author {
+            id,
+            email
+        }, 
+    }
+    }
+}

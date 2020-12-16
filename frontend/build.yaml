@@ -33,3 +33,5 @@ targets:
             #  graphql_type: Date
             #  dart_type: DateTime
       json_serializable:
+        options:
+          include_if_null: false

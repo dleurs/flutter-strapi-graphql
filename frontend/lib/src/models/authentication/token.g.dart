@@ -12,6 +12,15 @@ Token _$TokenFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$TokenToJson(Token instance) => <String, dynamic>{
-      'accessToken': instance.accessToken,
-    };
+Map<String, dynamic> _$TokenToJson(Token instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('accessToken', instance.accessToken);
+  return val;
+}

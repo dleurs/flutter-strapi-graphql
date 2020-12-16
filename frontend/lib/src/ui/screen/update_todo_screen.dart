@@ -97,16 +97,16 @@ class _UpdateTodoScreenState extends BaseScreenState<UpdateTodoScreen> {
                             return ElevatedButton(
                               onPressed: () async {
                                 if (_formKey.currentState.validate()) {
-                                  /* _bloc.add(UpdateTodo(
-                                      todoId: "O", //TODO
+                                  _bloc.add(UpdateTodo(
+                                      todoId: widget.todo.id,
                                       todoName: _todoName.text,
-                                      todoDone: _todoDone,
+                                      //todoDone: _todoDone,
                                       userId: AuthenticationManager
-                                          .instance.userId)); */
+                                          .instance.userId));
                                 }
                               },
                               child: Text(
-                                'Add todo',
+                                'Edit todo',
                                 style: TextStyle(
                                     fontSize: Theme.of(context)
                                         .textTheme

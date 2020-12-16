@@ -39,5 +39,19 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
         yield CreateTodoError(error: e);
       }
     }
+
+    if (event is UpdateTodo) {
+      yield UpdateDeleteTodoLoading();
+      try {
+        Todo todo = await TodoApiProvider().updateTodo(
+            todoId: event.todoId,
+            todoName: event.todoName,
+            done: event.todoDone,
+            userId: event.userId);
+        yield UpdateTodoSuccess(todo);
+      } catch (e) {
+        yield UpdateDeleteTodoError(error: e);
+      }
+    }
   }
 }

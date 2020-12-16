@@ -54,7 +54,6 @@ class App extends StatelessWidget {
         return MaterialPageRoute(builder: (context) => CreateTodoScreen());
       case AppRoutes.updateTodo:
         final UpdateTodoScreenArguments args = settings.arguments;
-        print(args.todo);
         return MaterialPageRoute(
             builder: (context) => UpdateTodoScreen(todo: args.todo));
       case AppRoutes.login:
