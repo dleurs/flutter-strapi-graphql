@@ -28,8 +28,8 @@ class Token {
   }
 
   String toShortString() {
-    String firstFive = accessToken.substring(0, 5);
-    String lastFive = accessToken.substring(accessToken.length - 5);
-    return '$firstFive[...]$lastFive';
+    String firstFive = accessToken.substring(0, 3);
+    String lastFive = accessToken.substring(accessToken.length - 3);
+    return '$firstFive...$lastFive';
   }
 }

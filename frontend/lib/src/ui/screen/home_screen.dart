@@ -114,10 +114,16 @@ class _HomeScreenState extends BaseScreenState<HomeScreen> {
           ),
         ),
         SizedBox(height: 20),
-        Center(
-            child: Text(
-          AuthenticationManager.instance.toString(),
-        )),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Center(
+              child: Text(
+            AuthenticationManager.instance.toString(),
+            style: TextStyle(
+                color: Colors.grey,
+                fontSize: Theme.of(context).textTheme.bodyText1.fontSize * 0.8),
+          )),
+        ),
       ],
     );
   }
