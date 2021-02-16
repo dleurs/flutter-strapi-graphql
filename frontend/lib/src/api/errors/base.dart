@@ -35,6 +35,9 @@ class RequestException implements Exception {
 }
 
 class ErrorCodes {
+  static final String BACKEND_PERMISSION_ERROR_FORBIDDEN =
+      "backend_exception_error_forbidden";
+
   static final String EMAIL_EXIST = "email_exist";
   static final String PHONE_EXIST = "phone_exist";
   static final String WRONG_CREDENTIALS = "wrong_credentials";

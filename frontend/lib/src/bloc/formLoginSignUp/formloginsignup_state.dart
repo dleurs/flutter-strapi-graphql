@@ -38,6 +38,6 @@ class CheckEmailError extends FormLoginSignupState {
 
   @override
   String toString() {
-    return 'CheckEmailError';
+    return 'CheckEmailError{error: $error}';
   }
 }

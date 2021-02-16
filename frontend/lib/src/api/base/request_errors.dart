@@ -24,10 +24,9 @@ class RequestException implements Exception {
 }
 
 class ErrorCodes {
-  static final String WRONG_CREDENTIALS = "wrong_credentials";
-  static final String NOT_FOUND = "not_found";
-  static final String LOGIN_REQUIRED = "login_required";
-  static final String UNAUTHORIZED = "unauthorized";
-  static final String ARGUMENT_ERROR = "argument_error";
-  static final String INTERNAL_ERROR = "internal_error";
+  static final String INTERNAL_SERVER_ERROR = "INTERNAL_SERVER_ERROR";
+}
+
+class ErrorMessages {
+  static final String FORBIDDEN = "Forbidden";
 }

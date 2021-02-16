@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:frontend/src/api/authentication_api_provider.dart';
+import 'package:frontend/src/api/errors/base.dart';
 import 'package:frontend/src/bloc/authentication/bloc.dart';
 import 'package:frontend/src/bloc/formLoginSignUp/bloc.dart';
 import 'package:frontend/src/helpers/constant.dart';
@@ -158,7 +159,7 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                                 SizedBox(height: Const.smallHeight),
                                 ElevatedButton(
                                   child: Text(
-                                    'Login / Signup',
+                                    'Enter',
                                     style: TextStyle(
                                         fontSize: Theme.of(context)
                                             .textTheme
@@ -211,7 +212,8 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
                                 SizedBox(height: Const.smallHeight),
                                 Center(
                                   child: Text(
-                                      "An error occured. Internet or server problem.",
+                                      errorCodeToErrorMessage(
+                                          context, formState.error),
                                       style: TextStyle(color: Colors.red)),
                                 ),
                               ],
@@ -304,6 +306,15 @@ class _LoginSignupScreenState extends BaseScreenState<LoginSignupScreen> {
   @override
   PreferredSizeWidget buildAppBar(BuildContext context) {
     return AppBar(title: Text('Register & Login'));
+  }
+
+  String errorCodeToErrorMessage(BuildContext context, String errorCode) {
+    if (errorCode == ErrorCodes.BACKEND_PERMISSION_ERROR_FORBIDDEN)
+      return "Backend error : Forbidden. Permissions badly configured in Strapi>Settings>Role>Public. Check user : Select all";
+    else if (errorCode == ErrorCodes.INTERNAL_ERROR)
+      return "Internal server error";
+    else
+      return "Unknown error";
   }
 
   @override

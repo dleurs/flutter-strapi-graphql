@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:frontend/src/api/authentication_api_provider.dart';
+import 'package:frontend/src/api/errors/base.dart';
+import 'package:frontend/src/api/errors/user.dart';
 import 'package:frontend/src/bloc/formLoginSignUp/bloc.dart';
 
 class FormLoginSignupBloc
@@ -23,7 +25,12 @@ class FormLoginSignupBloc
           yield EmailDoesNotExist();
         }
       } catch (e) {
-        yield CheckEmailError(error: 'Checking email failed');
+        if (e is BackendErrorNoPermissionException) {
+          yield CheckEmailError(
+              error: ErrorCodes.BACKEND_PERMISSION_ERROR_FORBIDDEN);
+        } else {
+          yield CheckEmailError(error: ErrorCodes.INTERNAL_ERROR);
+        }
       }
     }
     if (event is CheckEmailReset) {
