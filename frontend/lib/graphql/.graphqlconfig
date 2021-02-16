@@ -1,6 +1,6 @@
 {
   "name": "Schema",
-  "schemaPath": "lib/graphql/schema.graphql",
+  "schemaPath": "schema.graphql",
   "extensions": {
     "endpoints": {
       "Default": {
