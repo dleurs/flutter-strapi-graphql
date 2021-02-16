@@ -23,8 +23,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b267109-8524-4fb5-a620-027ecefbf1bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/frontend/lib/graphql/.graphqlconfig" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/graphql/.graphqlconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/lib/graphql/lib/graphql/schema.graphql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-strapi/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend-strapi/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-strapi/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend-strapi/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-strapi/yarn.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/ios/Podfile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/lib/graphql/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/lib/graphql/schema.graphql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -74,5 +77,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

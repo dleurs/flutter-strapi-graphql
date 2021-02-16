@@ -22,11 +22,6 @@
     "done": {
       "type": "boolean",
       "default": false
-    },
-    "moods": {
-      "collection": "mood",
-      "via": "todos",
-      "dominant": true
     }
   }
 }

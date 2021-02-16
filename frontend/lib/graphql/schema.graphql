@@ -5,7 +5,7 @@ schema {
     mutation: Mutation
 }
 
-union Morph = Todo | TodoAggregator | TodoConnection | TodoConnectionCreated_at | TodoConnectionDone | TodoConnectionId | TodoConnectionName | TodoConnectionPublished_at | TodoConnectionSatisfaction | TodoConnectionUpdated_at | TodoGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_at | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_at | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | createRolePayload | createTodoPayload | createUserPayload | deleteFilePayload | deleteRolePayload | deleteTodoPayload | deleteUserPayload | updateRolePayload | updateTodoPayload | updateUserPayload
+union Morph = Mood | MoodAggregator | MoodConnection | MoodConnectionCreated_at | MoodConnectionId | MoodConnectionMood | MoodConnectionPublished_at | MoodConnectionUpdated_at | MoodGroupBy | Todo | TodoAggregator | TodoConnection | TodoConnectionAuthor | TodoConnectionCreated_at | TodoConnectionDone | TodoConnectionId | TodoConnectionName | TodoConnectionPublished_at | TodoConnectionUpdated_at | TodoGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_at | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_at | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | createMoodPayload | createRolePayload | createTodoPayload | createUserPayload | deleteFilePayload | deleteMoodPayload | deleteRolePayload | deleteTodoPayload | deleteUserPayload | updateMoodPayload | updateRolePayload | updateTodoPayload | updateUserPayload
 
 type AdminUser {
     firstname: String!
@@ -14,7 +14,61 @@ type AdminUser {
     username: String
 }
 
+type Mood {
+    created_at: DateTime!
+    id: ID!
+    mood: String
+    published_at: DateTime
+    todos(limit: Int, sort: String, start: Int, where: JSON): [Todo]
+    updated_at: DateTime!
+}
+
+type MoodAggregator {
+    count: Int
+    totalCount: Int
+}
+
+type MoodConnection {
+    aggregate: MoodAggregator
+    groupBy: MoodGroupBy
+    values: [Mood]
+}
+
+type MoodConnectionCreated_at {
+    connection: MoodConnection
+    key: DateTime
+}
+
+type MoodConnectionId {
+    connection: MoodConnection
+    key: ID
+}
+
+type MoodConnectionMood {
+    connection: MoodConnection
+    key: String
+}
+
+type MoodConnectionPublished_at {
+    connection: MoodConnection
+    key: DateTime
+}
+
+type MoodConnectionUpdated_at {
+    connection: MoodConnection
+    key: DateTime
+}
+
+type MoodGroupBy {
+    created_at: [MoodConnectionCreated_at]
+    id: [MoodConnectionId]
+    mood: [MoodConnectionMood]
+    published_at: [MoodConnectionPublished_at]
+    updated_at: [MoodConnectionUpdated_at]
+}
+
 type Mutation {
+    createMood(input: createMoodInput): createMoodPayload
     "Create a new role"
     createRole(input: createRoleInput): createRolePayload
     createTodo(input: createTodoInput): createTodoPayload
@@ -22,6 +76,7 @@ type Mutation {
     createUser(input: createUserInput): createUserPayload
     "Delete one file"
     deleteFile(input: deleteFileInput): deleteFilePayload
+    deleteMood(input: deleteMoodInput): deleteMoodPayload
     "Delete an existing role"
     deleteRole(input: deleteRoleInput): deleteRolePayload
     deleteTodo(input: deleteTodoInput): deleteTodoPayload
@@ -34,18 +89,23 @@ type Mutation {
     register(input: UsersPermissionsRegisterInput!): UsersPermissionsLoginPayload!
     resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
     updateFileInfo(id: ID!, info: FileInfoInput!): UploadFile!
+    updateMood(input: updateMoodInput): updateMoodPayload
     "Update an existing role"
     updateRole(input: updateRoleInput): updateRolePayload
     updateTodo(input: updateTodoInput): updateTodoPayload
     "Update an existing user"
     updateUser(input: updateUserInput): updateUserPayload
-    upload(field: String, file: Upload!, ref: String, refId: ID, source: String): UploadFile!
+    upload(field: String, file: Upload!, info: FileInfoInput, ref: String, refId: ID, source: String): UploadFile!
 }
 
 type Query {
     files(limit: Int, publicationState: PublicationState, sort: String, start: Int, where: JSON): [UploadFile]
     filesConnection(limit: Int, sort: String, start: Int, where: JSON): UploadFileConnection
+    isEmailExist(email: String): Boolean
     me: UsersPermissionsMe
+    mood(id: ID!, publicationState: PublicationState): Mood
+    moods(limit: Int, publicationState: PublicationState, sort: String, start: Int, where: JSON): [Mood]
+    moodsConnection(limit: Int, sort: String, start: Int, where: JSON): MoodConnection
     role(id: ID!, publicationState: PublicationState): UsersPermissionsRole
     "Retrieve all the existing roles. You can't apply filters on this query."
     roles(limit: Int, publicationState: PublicationState, sort: String, start: Int, where: JSON): [UsersPermissionsRole]
@@ -59,12 +119,13 @@ type Query {
 }
 
 type Todo {
+    author: UsersPermissionsUser
     created_at: DateTime!
     done: Boolean
     id: ID!
+    moods(limit: Int, sort: String, start: Int, where: JSON): [Mood]
     name: String
     published_at: DateTime
-    satisfaction: String
     updated_at: DateTime!
 }
 
@@ -77,6 +138,11 @@ type TodoConnection {
     aggregate: TodoAggregator
     groupBy: TodoGroupBy
     values: [Todo]
+}
+
+type TodoConnectionAuthor {
+    connection: TodoConnection
+    key: ID
 }
 
 type TodoConnectionCreated_at {
@@ -104,23 +170,18 @@ type TodoConnectionPublished_at {
     key: DateTime
 }
 
-type TodoConnectionSatisfaction {
-    connection: TodoConnection
-    key: String
-}
-
 type TodoConnectionUpdated_at {
     connection: TodoConnection
     key: DateTime
 }
 
 type TodoGroupBy {
+    author: [TodoConnectionAuthor]
     created_at: [TodoConnectionCreated_at]
     done: [TodoConnectionDone]
     id: [TodoConnectionId]
     name: [TodoConnectionName]
     published_at: [TodoConnectionPublished_at]
-    satisfaction: [TodoConnectionSatisfaction]
     updated_at: [TodoConnectionUpdated_at]
 }
 
@@ -379,6 +440,7 @@ type UsersPermissionsUser {
     id: ID!
     provider: String
     role: UsersPermissionsRole
+    todos(limit: Int, sort: String, start: Int, where: JSON): [Todo]
     updated_at: DateTime!
     username: String!
 }
@@ -451,6 +513,10 @@ type UsersPermissionsUserGroupBy {
     username: [UsersPermissionsUserConnectionUsername]
 }
 
+type createMoodPayload {
+    mood: Mood
+}
+
 type createRolePayload {
     role: UsersPermissionsRole
 }
@@ -467,6 +533,10 @@ type deleteFilePayload {
     file: UploadFile
 }
 
+type deleteMoodPayload {
+    mood: Mood
+}
+
 type deleteRolePayload {
     role: UsersPermissionsRole
 }
@@ -479,6 +549,10 @@ type deleteUserPayload {
     user: UsersPermissionsUser
 }
 
+type updateMoodPayload {
+    mood: Mood
+}
+
 type updateRolePayload {
     role: UsersPermissionsRole
 }
@@ -489,11 +563,6 @@ type updateTodoPayload {
 
 type updateUserPayload {
     user: UsersPermissionsUser
-}
-
-enum CacheControlScope {
-    PRIVATE
-    PUBLIC
 }
 
 enum PublicationState {
@@ -531,6 +600,14 @@ input InputID {
     id: ID!
 }
 
+input MoodInput {
+    created_by: ID
+    mood: String
+    published_at: DateTime
+    todos: [ID]
+    updated_by: ID
+}
+
 input RoleInput {
     created_by: ID
     description: String
@@ -542,11 +619,12 @@ input RoleInput {
 }
 
 input TodoInput {
+    author: ID
     created_by: ID
     done: Boolean
+    moods: [ID]
     name: String
     published_at: DateTime
-    satisfaction: String
     updated_by: ID
 }
 
@@ -560,6 +638,7 @@ input UserInput {
     provider: String
     resetPasswordToken: String
     role: ID
+    todos: [ID]
     updated_by: ID
     username: String!
 }
@@ -576,6 +655,10 @@ input UsersPermissionsRegisterInput {
     username: String!
 }
 
+input createMoodInput {
+    data: MoodInput
+}
+
 input createRoleInput {
     data: RoleInput
 }
@@ -589,6 +672,10 @@ input createUserInput {
 }
 
 input deleteFileInput {
+    where: InputID
+}
+
+input deleteMoodInput {
     where: InputID
 }
 
@@ -624,6 +711,14 @@ input editFileInput {
     width: Int
 }
 
+input editMoodInput {
+    created_by: ID
+    mood: String
+    published_at: DateTime
+    todos: [ID]
+    updated_by: ID
+}
+
 input editRoleInput {
     created_by: ID
     description: String
@@ -635,11 +730,12 @@ input editRoleInput {
 }
 
 input editTodoInput {
+    author: ID
     created_by: ID
     done: Boolean
+    moods: [ID]
     name: String
     published_at: DateTime
-    satisfaction: String
     updated_by: ID
 }
 
@@ -653,8 +749,14 @@ input editUserInput {
     provider: String
     resetPasswordToken: String
     role: ID
+    todos: [ID]
     updated_by: ID
     username: String
+}
+
+input updateMoodInput {
+    data: editMoodInput
+    where: InputID
 }
 
 input updateRoleInput {
