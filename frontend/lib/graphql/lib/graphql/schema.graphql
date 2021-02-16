@@ -1,0 +1,692 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+union Morph = Todo | TodoAggregator | TodoConnection | TodoConnectionCreated_at | TodoConnectionDone | TodoConnectionId | TodoConnectionName | TodoConnectionPublished_at | TodoConnectionSatisfaction | TodoConnectionUpdated_at | TodoGroupBy | UploadFile | UploadFileAggregator | UploadFileAggregatorAvg | UploadFileAggregatorMax | UploadFileAggregatorMin | UploadFileAggregatorSum | UploadFileConnection | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionCreated_at | UploadFileConnectionExt | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionHeight | UploadFileConnectionId | UploadFileConnectionMime | UploadFileConnectionName | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionSize | UploadFileConnectionUpdated_at | UploadFileConnectionUrl | UploadFileConnectionWidth | UploadFileGroupBy | UserPermissionsPasswordPayload | UsersPermissionsLoginPayload | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleAggregator | UsersPermissionsRoleConnection | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionType | UsersPermissionsRoleGroupBy | UsersPermissionsUser | UsersPermissionsUserAggregator | UsersPermissionsUserConnection | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserGroupBy | createRolePayload | createTodoPayload | createUserPayload | deleteFilePayload | deleteRolePayload | deleteTodoPayload | deleteUserPayload | updateRolePayload | updateTodoPayload | updateUserPayload
+
+type AdminUser {
+    firstname: String!
+    id: ID!
+    lastname: String!
+    username: String
+}
+
+type Mutation {
+    "Create a new role"
+    createRole(input: createRoleInput): createRolePayload
+    createTodo(input: createTodoInput): createTodoPayload
+    "Create a new user"
+    createUser(input: createUserInput): createUserPayload
+    "Delete one file"
+    deleteFile(input: deleteFileInput): deleteFilePayload
+    "Delete an existing role"
+    deleteRole(input: deleteRoleInput): deleteRolePayload
+    deleteTodo(input: deleteTodoInput): deleteTodoPayload
+    "Delete an existing user"
+    deleteUser(input: deleteUserInput): deleteUserPayload
+    emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
+    forgotPassword(email: String!): UserPermissionsPasswordPayload
+    login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
+    multipleUpload(field: String, files: [Upload]!, ref: String, refId: ID, source: String): [UploadFile]!
+    register(input: UsersPermissionsRegisterInput!): UsersPermissionsLoginPayload!
+    resetPassword(code: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
+    updateFileInfo(id: ID!, info: FileInfoInput!): UploadFile!
+    "Update an existing role"
+    updateRole(input: updateRoleInput): updateRolePayload
+    updateTodo(input: updateTodoInput): updateTodoPayload
+    "Update an existing user"
+    updateUser(input: updateUserInput): updateUserPayload
+    upload(field: String, file: Upload!, ref: String, refId: ID, source: String): UploadFile!
+}
+
+type Query {
+    files(limit: Int, publicationState: PublicationState, sort: String, start: Int, where: JSON): [UploadFile]
+    filesConnection(limit: Int, sort: String, start: Int, where: JSON): UploadFileConnection
+    me: UsersPermissionsMe
+    role(id: ID!, publicationState: PublicationState): UsersPermissionsRole
+    "Retrieve all the existing roles. You can't apply filters on this query."
+    roles(limit: Int, publicationState: PublicationState, sort: String, start: Int, where: JSON): [UsersPermissionsRole]
+    rolesConnection(limit: Int, sort: String, start: Int, where: JSON): UsersPermissionsRoleConnection
+    todo(id: ID!, publicationState: PublicationState): Todo
+    todos(limit: Int, publicationState: PublicationState, sort: String, start: Int, where: JSON): [Todo]
+    todosConnection(limit: Int, sort: String, start: Int, where: JSON): TodoConnection
+    user(id: ID!, publicationState: PublicationState): UsersPermissionsUser
+    users(limit: Int, publicationState: PublicationState, sort: String, start: Int, where: JSON): [UsersPermissionsUser]
+    usersConnection(limit: Int, sort: String, start: Int, where: JSON): UsersPermissionsUserConnection
+}
+
+type Todo {
+    created_at: DateTime!
+    done: Boolean
+    id: ID!
+    name: String
+    published_at: DateTime
+    satisfaction: String
+    updated_at: DateTime!
+}
+
+type TodoAggregator {
+    count: Int
+    totalCount: Int
+}
+
+type TodoConnection {
+    aggregate: TodoAggregator
+    groupBy: TodoGroupBy
+    values: [Todo]
+}
+
+type TodoConnectionCreated_at {
+    connection: TodoConnection
+    key: DateTime
+}
+
+type TodoConnectionDone {
+    connection: TodoConnection
+    key: Boolean
+}
+
+type TodoConnectionId {
+    connection: TodoConnection
+    key: ID
+}
+
+type TodoConnectionName {
+    connection: TodoConnection
+    key: String
+}
+
+type TodoConnectionPublished_at {
+    connection: TodoConnection
+    key: DateTime
+}
+
+type TodoConnectionSatisfaction {
+    connection: TodoConnection
+    key: String
+}
+
+type TodoConnectionUpdated_at {
+    connection: TodoConnection
+    key: DateTime
+}
+
+type TodoGroupBy {
+    created_at: [TodoConnectionCreated_at]
+    done: [TodoConnectionDone]
+    id: [TodoConnectionId]
+    name: [TodoConnectionName]
+    published_at: [TodoConnectionPublished_at]
+    satisfaction: [TodoConnectionSatisfaction]
+    updated_at: [TodoConnectionUpdated_at]
+}
+
+type UploadFile {
+    alternativeText: String
+    caption: String
+    created_at: DateTime!
+    ext: String
+    formats: JSON
+    hash: String!
+    height: Int
+    id: ID!
+    mime: String!
+    name: String!
+    previewUrl: String
+    provider: String!
+    provider_metadata: JSON
+    related(limit: Int, sort: String, start: Int, where: JSON): [Morph]
+    size: Float!
+    updated_at: DateTime!
+    url: String!
+    width: Int
+}
+
+type UploadFileAggregator {
+    avg: UploadFileAggregatorAvg
+    count: Int
+    max: UploadFileAggregatorMax
+    min: UploadFileAggregatorMin
+    sum: UploadFileAggregatorSum
+    totalCount: Int
+}
+
+type UploadFileAggregatorAvg {
+    height: Float
+    size: Float
+    width: Float
+}
+
+type UploadFileAggregatorMax {
+    height: Float
+    size: Float
+    width: Float
+}
+
+type UploadFileAggregatorMin {
+    height: Float
+    size: Float
+    width: Float
+}
+
+type UploadFileAggregatorSum {
+    height: Float
+    size: Float
+    width: Float
+}
+
+type UploadFileConnection {
+    aggregate: UploadFileAggregator
+    groupBy: UploadFileGroupBy
+    values: [UploadFile]
+}
+
+type UploadFileConnectionAlternativeText {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionCaption {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionCreated_at {
+    connection: UploadFileConnection
+    key: DateTime
+}
+
+type UploadFileConnectionExt {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionFormats {
+    connection: UploadFileConnection
+    key: JSON
+}
+
+type UploadFileConnectionHash {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionHeight {
+    connection: UploadFileConnection
+    key: Int
+}
+
+type UploadFileConnectionId {
+    connection: UploadFileConnection
+    key: ID
+}
+
+type UploadFileConnectionMime {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionName {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionPreviewUrl {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionProvider {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionProvider_metadata {
+    connection: UploadFileConnection
+    key: JSON
+}
+
+type UploadFileConnectionSize {
+    connection: UploadFileConnection
+    key: Float
+}
+
+type UploadFileConnectionUpdated_at {
+    connection: UploadFileConnection
+    key: DateTime
+}
+
+type UploadFileConnectionUrl {
+    connection: UploadFileConnection
+    key: String
+}
+
+type UploadFileConnectionWidth {
+    connection: UploadFileConnection
+    key: Int
+}
+
+type UploadFileGroupBy {
+    alternativeText: [UploadFileConnectionAlternativeText]
+    caption: [UploadFileConnectionCaption]
+    created_at: [UploadFileConnectionCreated_at]
+    ext: [UploadFileConnectionExt]
+    formats: [UploadFileConnectionFormats]
+    hash: [UploadFileConnectionHash]
+    height: [UploadFileConnectionHeight]
+    id: [UploadFileConnectionId]
+    mime: [UploadFileConnectionMime]
+    name: [UploadFileConnectionName]
+    previewUrl: [UploadFileConnectionPreviewUrl]
+    provider: [UploadFileConnectionProvider]
+    provider_metadata: [UploadFileConnectionProvider_metadata]
+    size: [UploadFileConnectionSize]
+    updated_at: [UploadFileConnectionUpdated_at]
+    url: [UploadFileConnectionUrl]
+    width: [UploadFileConnectionWidth]
+}
+
+type UserPermissionsPasswordPayload {
+    ok: Boolean!
+}
+
+type UsersPermissionsLoginPayload {
+    jwt: String
+    user: UsersPermissionsMe!
+}
+
+type UsersPermissionsMe {
+    blocked: Boolean
+    confirmed: Boolean
+    email: String!
+    id: ID!
+    role: UsersPermissionsMeRole
+    username: String!
+}
+
+type UsersPermissionsMeRole {
+    description: String
+    id: ID!
+    name: String!
+    type: String
+}
+
+type UsersPermissionsPermission {
+    action: String!
+    controller: String!
+    enabled: Boolean!
+    id: ID!
+    policy: String
+    role: UsersPermissionsRole
+    type: String!
+}
+
+type UsersPermissionsRole {
+    description: String
+    id: ID!
+    name: String!
+    permissions(limit: Int, sort: String, start: Int, where: JSON): [UsersPermissionsPermission]
+    type: String
+    users(limit: Int, sort: String, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+type UsersPermissionsRoleAggregator {
+    count: Int
+    totalCount: Int
+}
+
+type UsersPermissionsRoleConnection {
+    aggregate: UsersPermissionsRoleAggregator
+    groupBy: UsersPermissionsRoleGroupBy
+    values: [UsersPermissionsRole]
+}
+
+type UsersPermissionsRoleConnectionDescription {
+    connection: UsersPermissionsRoleConnection
+    key: String
+}
+
+type UsersPermissionsRoleConnectionId {
+    connection: UsersPermissionsRoleConnection
+    key: ID
+}
+
+type UsersPermissionsRoleConnectionName {
+    connection: UsersPermissionsRoleConnection
+    key: String
+}
+
+type UsersPermissionsRoleConnectionType {
+    connection: UsersPermissionsRoleConnection
+    key: String
+}
+
+type UsersPermissionsRoleGroupBy {
+    description: [UsersPermissionsRoleConnectionDescription]
+    id: [UsersPermissionsRoleConnectionId]
+    name: [UsersPermissionsRoleConnectionName]
+    type: [UsersPermissionsRoleConnectionType]
+}
+
+type UsersPermissionsUser {
+    blocked: Boolean
+    confirmed: Boolean
+    created_at: DateTime!
+    email: String!
+    id: ID!
+    provider: String
+    role: UsersPermissionsRole
+    updated_at: DateTime!
+    username: String!
+}
+
+type UsersPermissionsUserAggregator {
+    count: Int
+    totalCount: Int
+}
+
+type UsersPermissionsUserConnection {
+    aggregate: UsersPermissionsUserAggregator
+    groupBy: UsersPermissionsUserGroupBy
+    values: [UsersPermissionsUser]
+}
+
+type UsersPermissionsUserConnectionBlocked {
+    connection: UsersPermissionsUserConnection
+    key: Boolean
+}
+
+type UsersPermissionsUserConnectionConfirmed {
+    connection: UsersPermissionsUserConnection
+    key: Boolean
+}
+
+type UsersPermissionsUserConnectionCreated_at {
+    connection: UsersPermissionsUserConnection
+    key: DateTime
+}
+
+type UsersPermissionsUserConnectionEmail {
+    connection: UsersPermissionsUserConnection
+    key: String
+}
+
+type UsersPermissionsUserConnectionId {
+    connection: UsersPermissionsUserConnection
+    key: ID
+}
+
+type UsersPermissionsUserConnectionProvider {
+    connection: UsersPermissionsUserConnection
+    key: String
+}
+
+type UsersPermissionsUserConnectionRole {
+    connection: UsersPermissionsUserConnection
+    key: ID
+}
+
+type UsersPermissionsUserConnectionUpdated_at {
+    connection: UsersPermissionsUserConnection
+    key: DateTime
+}
+
+type UsersPermissionsUserConnectionUsername {
+    connection: UsersPermissionsUserConnection
+    key: String
+}
+
+type UsersPermissionsUserGroupBy {
+    blocked: [UsersPermissionsUserConnectionBlocked]
+    confirmed: [UsersPermissionsUserConnectionConfirmed]
+    created_at: [UsersPermissionsUserConnectionCreated_at]
+    email: [UsersPermissionsUserConnectionEmail]
+    id: [UsersPermissionsUserConnectionId]
+    provider: [UsersPermissionsUserConnectionProvider]
+    role: [UsersPermissionsUserConnectionRole]
+    updated_at: [UsersPermissionsUserConnectionUpdated_at]
+    username: [UsersPermissionsUserConnectionUsername]
+}
+
+type createRolePayload {
+    role: UsersPermissionsRole
+}
+
+type createTodoPayload {
+    todo: Todo
+}
+
+type createUserPayload {
+    user: UsersPermissionsUser
+}
+
+type deleteFilePayload {
+    file: UploadFile
+}
+
+type deleteRolePayload {
+    role: UsersPermissionsRole
+}
+
+type deleteTodoPayload {
+    todo: Todo
+}
+
+type deleteUserPayload {
+    user: UsersPermissionsUser
+}
+
+type updateRolePayload {
+    role: UsersPermissionsRole
+}
+
+type updateTodoPayload {
+    todo: Todo
+}
+
+type updateUserPayload {
+    user: UsersPermissionsUser
+}
+
+enum CacheControlScope {
+    PRIVATE
+    PUBLIC
+}
+
+enum PublicationState {
+    LIVE
+    PREVIEW
+}
+
+input FileInfoInput {
+    alternativeText: String
+    caption: String
+    name: String
+}
+
+input FileInput {
+    alternativeText: String
+    caption: String
+    created_by: ID
+    ext: String
+    formats: JSON
+    hash: String!
+    height: Int
+    mime: String!
+    name: String!
+    previewUrl: String
+    provider: String!
+    provider_metadata: JSON
+    related: [ID]
+    size: Float!
+    updated_by: ID
+    url: String!
+    width: Int
+}
+
+input InputID {
+    id: ID!
+}
+
+input RoleInput {
+    created_by: ID
+    description: String
+    name: String!
+    permissions: [ID]
+    type: String
+    updated_by: ID
+    users: [ID]
+}
+
+input TodoInput {
+    created_by: ID
+    done: Boolean
+    name: String
+    published_at: DateTime
+    satisfaction: String
+    updated_by: ID
+}
+
+input UserInput {
+    blocked: Boolean
+    confirmationToken: String
+    confirmed: Boolean
+    created_by: ID
+    email: String!
+    password: String
+    provider: String
+    resetPasswordToken: String
+    role: ID
+    updated_by: ID
+    username: String!
+}
+
+input UsersPermissionsLoginInput {
+    identifier: String!
+    password: String!
+    provider: String = "local"
+}
+
+input UsersPermissionsRegisterInput {
+    email: String!
+    password: String!
+    username: String!
+}
+
+input createRoleInput {
+    data: RoleInput
+}
+
+input createTodoInput {
+    data: TodoInput
+}
+
+input createUserInput {
+    data: UserInput
+}
+
+input deleteFileInput {
+    where: InputID
+}
+
+input deleteRoleInput {
+    where: InputID
+}
+
+input deleteTodoInput {
+    where: InputID
+}
+
+input deleteUserInput {
+    where: InputID
+}
+
+input editFileInput {
+    alternativeText: String
+    caption: String
+    created_by: ID
+    ext: String
+    formats: JSON
+    hash: String
+    height: Int
+    mime: String
+    name: String
+    previewUrl: String
+    provider: String
+    provider_metadata: JSON
+    related: [ID]
+    size: Float
+    updated_by: ID
+    url: String
+    width: Int
+}
+
+input editRoleInput {
+    created_by: ID
+    description: String
+    name: String
+    permissions: [ID]
+    type: String
+    updated_by: ID
+    users: [ID]
+}
+
+input editTodoInput {
+    created_by: ID
+    done: Boolean
+    name: String
+    published_at: DateTime
+    satisfaction: String
+    updated_by: ID
+}
+
+input editUserInput {
+    blocked: Boolean
+    confirmationToken: String
+    confirmed: Boolean
+    created_by: ID
+    email: String
+    password: String
+    provider: String
+    resetPasswordToken: String
+    role: ID
+    updated_by: ID
+    username: String
+}
+
+input updateRoleInput {
+    data: editRoleInput
+    where: InputID
+}
+
+input updateTodoInput {
+    data: editTodoInput
+    where: InputID
+}
+
+input updateUserInput {
+    data: editUserInput
+    where: InputID
+}
+
+
+"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
+scalar JSON
+
+"A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
+scalar DateTime
+
+"A time string with format: HH:mm:ss.SSS"
+scalar Time
+
+"A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar."
+scalar Date
+
+"The `Long` scalar type represents 52-bit integers"
+scalar Long
+
+"The `Upload` scalar type represents a file upload."
+scalar Upload
