@@ -46,6 +46,11 @@ VSCode :<br/>
 https://www.youtube.com/watch?v=M7PvukaN6PM<br/>
 https://github.com/itsmaheshkariya/flutter-strapi-crud
 
+# To reset GraphQL schema, use GraphQL plugin on Android Studio 
+
+I just use Android Studio to update GraphQL, follow guide :
+
+https://medium.com/@v.ditsyak/ultimate-toolchain-to-work-with-graphql-in-flutter-13aef79c6484
 
 # Json_serializable
 
