@@ -10,6 +10,10 @@ Strapi locally<a href="https://stackoverflow.com/questions/60001536/flutter-sock
 To run strapi locally :
 ```bash
 cd backend-strapi;
+
+npm install -g npm
+npm install 
+
 yarn develop;
 ```
 You can also setup an online demo of strapi <a href="https://strapi.io/demo">here</a>. Instructions to setup this live demo below.
